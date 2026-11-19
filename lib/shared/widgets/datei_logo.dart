@@ -1,64 +1,67 @@
-import 'dart:math' as math;
-
 import 'package:material_ui/material_ui.dart';
 
 import '../../app/theme/app_theme.dart';
 
-/// Provisional geometric mark: a "D" built from a straight stem and a
-/// quarter-arc bowl, with a gold dot marking "a point in time".
-/// Final icon directions are explored in Phase 2.
+/// Datei mark — direction A "Geometric D" (ADR-036): a solid D (stem + bowl)
+/// with a soft-gold point inside, a single moment in time.
+///
+/// Geometry matches `assets/branding/datei_icon.svg` (1024-unit canvas).
 class DateiLogo extends StatelessWidget {
-  const DateiLogo({super.key, this.size = 96});
+  const DateiLogo({super.key, this.size = 96, this.withBackground = true});
+
   final double size;
+
+  /// Rounded olive tile behind the mark (app-icon look). Without it the mark is drawn in olive.
+  final bool withBackground;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       label: 'Datei',
+      image: true,
       child: SizedBox.square(
         dimension: size,
-        child: CustomPaint(painter: _LogoPainter()),
+        child: CustomPaint(painter: _DateiMarkPainter(withBackground: withBackground)),
       ),
     );
   }
 }
 
-class _LogoPainter extends CustomPainter {
+class _DateiMarkPainter extends CustomPainter {
+  const _DateiMarkPainter({required this.withBackground});
+  final bool withBackground;
+
   @override
   void paint(Canvas canvas, Size size) {
-    final s = size.width;
-    final bg = RRect.fromRectAndRadius(Offset.zero & size, Radius.circular(s * 0.26));
-    canvas.drawRRect(bg, Paint()..color = BrandColors.primaryOlive);
+    final k = size.width / 1024;
+    canvas.scale(k);
 
-    final stroke = Paint()
-      ..color = BrandColors.warmCream
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = s * 0.11
-      ..strokeCap = StrokeCap.round;
+    if (withBackground) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(const Rect.fromLTWH(0, 0, 1024, 1024), const Radius.circular(230)),
+        Paint()..color = BrandColors.primaryOlive,
+      );
+    }
 
-    final left = s * 0.30;
-    final top = s * 0.26;
-    final bottom = s * 0.74;
-    final h = bottom - top;
-    // Stem
-    canvas.drawLine(Offset(left, top), Offset(left, bottom), stroke);
-    // Bowl: top bar, arc, bottom bar
-    final bowlRect = Rect.fromLTWH(left + h * 0.05, top, h, h);
-    final path = Path()
-      ..moveTo(left, top)
-      ..lineTo(bowlRect.center.dx, top)
-      ..arcTo(Rect.fromCircle(center: bowlRect.center, radius: h / 2), -math.pi / 2, math.pi, false)
-      ..lineTo(left, bottom);
-    canvas.drawPath(path, stroke);
+    // Outer D: stem from x=271 to the bowl, bowl radius 262 centred at (491, 512).
+    final d = Path()
+      ..fillType = PathFillType.evenOdd
+      ..moveTo(271, 250)
+      ..lineTo(491, 250)
+      ..arcToPoint(const Offset(491, 774), radius: const Radius.circular(262))
+      ..lineTo(271, 774)
+      ..close()
+      // Counter (inner cut-out), radius 152.
+      ..moveTo(381, 360)
+      ..lineTo(491, 360)
+      ..arcToPoint(const Offset(491, 664), radius: const Radius.circular(152))
+      ..lineTo(381, 664)
+      ..close();
+    canvas.drawPath(d, Paint()..color = withBackground ? BrandColors.warmCream : BrandColors.primaryOlive);
 
-    // Gold time marker
-    canvas.drawCircle(
-      Offset(bowlRect.center.dx - h * 0.02, bowlRect.center.dy),
-      s * 0.07,
-      Paint()..color = BrandColors.softGold,
-    );
+    canvas.drawCircle(const Offset(500, 512), 62, Paint()..color = BrandColors.softGold);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _DateiMarkPainter oldDelegate) => oldDelegate.withBackground != withBackground;
 }

@@ -7,7 +7,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | 0 | Inspection & planning | ✅ 2026-11-19 | Environment report, planning docs, open decisions listed |
 | P | Prototype v0.1 (owner request) | ✅ 2026-11-19 | Installable APK to try the UX: language picker, welcome, guest, home, people, events, month calendar, settings |
 | 1 | Foundation | ✅ 2026-11-19 | Flutter project, folder structure, Riverpod, GoRouter shell (5 tabs + quick add), Drift DB v1 (settings/profile/account tables + seeds), ARB AR/EN, RTL/LTR, M3 theme light/dark, fonts; analyze clean; smoke tests |
-| 2 | Branding & onboarding | ⏳ | 3 icon directions presented → owner picks; adaptive icon, wordmark, splash; language picker (first-run only), welcome, auth choice screen, Guest mode |
+| 2 | Branding & onboarding | ✅ 2026-11-19 | 3 icon directions presented → owner picks; adaptive icon, wordmark, splash; language picker (first-run only), welcome, auth choice screen, Guest mode |
 | 3 | Authentication | ⏳ | AuthService + Firebase impl, Google, Facebook, linking, account page, sign-out, delete (re-auth), guest→registered; mocked tests; **real-config device test before marking ready** |
 | 4 | People | ⏳ | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
 | 5 | Events & calendar | ⏳ | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
@@ -43,3 +43,10 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Bootstrap before first frame: local profile, one-time prototype import, settings load.
 - Tests: 31 passing (time engine, agenda, repositories CRUD/soft-delete/recurrence/links, constraints, erase-all, legacy import, widget flows AR/EN). `flutter analyze`: no issues.
 - Not in Phase 1 (planned): custom categories/types UI (Phase 4/5), full recurrence engine (Phase 5), tz capture (ADR-034), account linking (Phase 3).
+
+## Phase 2 outcome (2026-11-19)
+- Three icon directions presented with real-size previews; owner chose **A — Geometric D** (ADR-036).
+- `assets/branding/`: SVG sources (icon, square, adaptive foreground, monochrome, olive mark, wordmark), PNG renders (1024 icon, Play Store 512, wordmark light/dark), README.
+- Android: legacy + adaptive launcher icons (all densities), Android 13 themed (monochrome) icon, Android 12+ splash (light/dark) and pre-12 launch screen in brand colours. Web icons/favicon updated.
+- In-app `DateiLogo` redrawn with the final geometry. Onboarding (language picker, welcome, guest) already in place since v0.1/v0.2.
+- `flutter analyze` clean; 34 tests passing.
