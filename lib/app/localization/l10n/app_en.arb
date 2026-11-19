@@ -370,5 +370,216 @@
       }
     }
   },
-  "add": "Add"
+  "add": "Add",
+  "repeat": "Repeat",
+  "repeatNone": "Does not repeat",
+  "repeatDaily": "Daily",
+  "repeatWeekly": "Weekly",
+  "repeatMonthly": "Monthly",
+  "repeatYearly": "Yearly",
+  "everyLabel": "Every",
+  "unitDays": "{count, plural, =1{day} other{days}}",
+  "@unitDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unitWeeks": "{count, plural, =1{week} other{weeks}}",
+  "@unitWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unitMonths": "{count, plural, =1{month} other{months}}",
+  "@unitMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unitYears": "{count, plural, =1{year} other{years}}",
+  "@unitYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "everyN": "Every {count} {unit}",
+  "@everyN": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "onWeekdays": "On",
+  "monthlyOnDay": "On day {day}",
+  "@monthlyOnDay": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "monthlyOnNth": "On the {position} {weekday}",
+  "@monthlyOnNth": {
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "weekday": {
+        "type": "String"
+      }
+    }
+  },
+  "posFirst": "first",
+  "posSecond": "second",
+  "posThird": "third",
+  "posFourth": "fourth",
+  "posLast": "last",
+  "skipShortMonths": "Skip months without this day",
+  "ends": "Ends",
+  "endsNever": "Never",
+  "endsOnDate": "On a date",
+  "endsAfter": "After",
+  "occurrencesCount": "{count, plural, =1{1 time} other{{count} times}}",
+  "@occurrencesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "untilDate": "until {date}",
+  "@untilDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldEndDate": "End date (optional)",
+  "fieldEndTime": "End time (optional)",
+  "fieldPriority": "Priority",
+  "priorityLow": "Low",
+  "priorityNormal": "Normal",
+  "priorityHigh": "High",
+  "priorityCritical": "Critical",
+  "fieldStatus": "Status",
+  "statusPlanned": "Planned",
+  "statusDone": "Done",
+  "statusCancelled": "Cancelled",
+  "errorEndBeforeStart": "End can't be before the start",
+  "errorInterval": "Enter a number from 1 to 999",
+  "errorWeekdays": "Choose at least one day",
+  "hijriInput": "Enter a Hijri date",
+  "hijriDay": "Day",
+  "hijriMonth": "Month",
+  "hijriYear": "Year",
+  "hijriInvalid": "This Hijri date isn't valid or is outside 1356–1500 AH",
+  "hijriConverted": "Gregorian: {date}",
+  "@hijriConverted": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "hijriFormat": "{day} {month} {year} AH",
+  "@hijriFormat": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "hijriMonth1": "Muharram",
+  "hijriMonth2": "Safar",
+  "hijriMonth3": "Rabi al-Awwal",
+  "hijriMonth4": "Rabi al-Thani",
+  "hijriMonth5": "Jumada al-Ula",
+  "hijriMonth6": "Jumada al-Akhirah",
+  "hijriMonth7": "Rajab",
+  "hijriMonth8": "Shaban",
+  "hijriMonth9": "Ramadan",
+  "hijriMonth10": "Shawwal",
+  "hijriMonth11": "Dhu al-Qadah",
+  "hijriMonth12": "Dhu al-Hijjah",
+  "editScopeTitle": "Edit recurring event",
+  "deleteScopeTitle": "Delete recurring event",
+  "scopeThis": "This event only",
+  "scopeFollowing": "This and following events",
+  "scopeAll": "All events in the series",
+  "occurrenceOf": "Occurrence on {date}",
+  "@occurrenceOf": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "manageEventTypes": "Event types",
+  "addEventType": "New type",
+  "editEventType": "Edit type",
+  "eventTypeName": "Type name",
+  "deleteEventTypeConfirm": "Delete the type “{name}”? Its events will move to “Other”.",
+  "@deleteEventTypeConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "yourEventTypes": "Your types",
+  "noCustomEventTypes": "You haven't created any event types yet.",
+  "systemEventTypesNote": "Built-in types can't be renamed or deleted.",
+  "viewMonth": "Month",
+  "viewWeek": "Week",
+  "viewDay": "Day",
+  "goToDate": "Go to date",
+  "calendarFilter": "Show in calendar",
+  "birthdaysLabel": "Birthdays",
+  "searchCalendar": "Search calendar",
+  "searchCalendarHint": "Search events and birthdays…",
+  "searchCalendarScope": "Showing matches from a year ago to a year ahead",
+  "allDay": "All day",
+  "previousPeriod": "Previous",
+  "nextPeriod": "Next",
+  "settingsCalendar": "Calendar",
+  "showHijri": "Show Hijri dates",
+  "hijriAdjustment": "Hijri adjustment",
+  "hijriNote": "Calculated with the Umm al-Qura calendar. Local moon sighting can differ by a day or two — adjust if needed. Gregorian dates are never changed.",
+  "repeatsLabel": "Repeats",
+  "hijriAdjustmentNone": "No adjustment",
+  "hijriAdjustmentDays": "{value} day(s)",
+  "@hijriAdjustmentDays": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "unitTimes": "{count, plural, =1{time} other{times}}",
+  "@unitTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

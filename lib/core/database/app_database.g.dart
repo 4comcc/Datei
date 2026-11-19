@@ -7443,6 +7443,491 @@ class SavedFiltersCompanion extends UpdateCompanion<SavedFilterRow> {
   }
 }
 
+class $EventExceptionsTable extends EventExceptions
+    with TableInfo<$EventExceptionsTable, EventExceptionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $EventExceptionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _eventIdMeta = const VerificationMeta(
+    'eventId',
+  );
+  @override
+  late final GeneratedColumn<String> eventId = GeneratedColumn<String>(
+    'event_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES events (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _originalDateMeta = const VerificationMeta(
+    'originalDate',
+  );
+  @override
+  late final GeneratedColumn<String> originalDate = GeneratedColumn<String>(
+    'original_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _overrideJsonMeta = const VerificationMeta(
+    'overrideJson',
+  );
+  @override
+  late final GeneratedColumn<String> overrideJson = GeneratedColumn<String>(
+    'override_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    createdAt,
+    updatedAt,
+    id,
+    eventId,
+    originalDate,
+    kind,
+    overrideJson,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'event_exceptions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<EventExceptionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('event_id')) {
+      context.handle(
+        _eventIdMeta,
+        eventId.isAcceptableOrUnknown(data['event_id']!, _eventIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_eventIdMeta);
+    }
+    if (data.containsKey('original_date')) {
+      context.handle(
+        _originalDateMeta,
+        originalDate.isAcceptableOrUnknown(
+          data['original_date']!,
+          _originalDateMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_originalDateMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('override_json')) {
+      context.handle(
+        _overrideJsonMeta,
+        overrideJson.isAcceptableOrUnknown(
+          data['override_json']!,
+          _overrideJsonMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {eventId, originalDate},
+  ];
+  @override
+  EventExceptionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return EventExceptionRow(
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      eventId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}event_id'],
+      )!,
+      originalDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}original_date'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      overrideJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}override_json'],
+      ),
+    );
+  }
+
+  @override
+  $EventExceptionsTable createAlias(String alias) {
+    return $EventExceptionsTable(attachedDatabase, alias);
+  }
+}
+
+class EventExceptionRow extends DataClass
+    implements Insertable<EventExceptionRow> {
+  final int createdAt;
+  final int updatedAt;
+  final String id;
+  final String eventId;
+
+  /// The occurrence's original date in the series ('YYYY-MM-DD').
+  final String originalDate;
+
+  /// cancelled | overridden
+  final String kind;
+  final String? overrideJson;
+  const EventExceptionRow({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.eventId,
+    required this.originalDate,
+    required this.kind,
+    this.overrideJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['id'] = Variable<String>(id);
+    map['event_id'] = Variable<String>(eventId);
+    map['original_date'] = Variable<String>(originalDate);
+    map['kind'] = Variable<String>(kind);
+    if (!nullToAbsent || overrideJson != null) {
+      map['override_json'] = Variable<String>(overrideJson);
+    }
+    return map;
+  }
+
+  EventExceptionsCompanion toCompanion(bool nullToAbsent) {
+    return EventExceptionsCompanion(
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      id: Value(id),
+      eventId: Value(eventId),
+      originalDate: Value(originalDate),
+      kind: Value(kind),
+      overrideJson: overrideJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(overrideJson),
+    );
+  }
+
+  factory EventExceptionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return EventExceptionRow(
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      id: serializer.fromJson<String>(json['id']),
+      eventId: serializer.fromJson<String>(json['eventId']),
+      originalDate: serializer.fromJson<String>(json['originalDate']),
+      kind: serializer.fromJson<String>(json['kind']),
+      overrideJson: serializer.fromJson<String?>(json['overrideJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'id': serializer.toJson<String>(id),
+      'eventId': serializer.toJson<String>(eventId),
+      'originalDate': serializer.toJson<String>(originalDate),
+      'kind': serializer.toJson<String>(kind),
+      'overrideJson': serializer.toJson<String?>(overrideJson),
+    };
+  }
+
+  EventExceptionRow copyWith({
+    int? createdAt,
+    int? updatedAt,
+    String? id,
+    String? eventId,
+    String? originalDate,
+    String? kind,
+    Value<String?> overrideJson = const Value.absent(),
+  }) => EventExceptionRow(
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    id: id ?? this.id,
+    eventId: eventId ?? this.eventId,
+    originalDate: originalDate ?? this.originalDate,
+    kind: kind ?? this.kind,
+    overrideJson: overrideJson.present ? overrideJson.value : this.overrideJson,
+  );
+  EventExceptionRow copyWithCompanion(EventExceptionsCompanion data) {
+    return EventExceptionRow(
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      id: data.id.present ? data.id.value : this.id,
+      eventId: data.eventId.present ? data.eventId.value : this.eventId,
+      originalDate: data.originalDate.present
+          ? data.originalDate.value
+          : this.originalDate,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      overrideJson: data.overrideJson.present
+          ? data.overrideJson.value
+          : this.overrideJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EventExceptionRow(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('eventId: $eventId, ')
+          ..write('originalDate: $originalDate, ')
+          ..write('kind: $kind, ')
+          ..write('overrideJson: $overrideJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    createdAt,
+    updatedAt,
+    id,
+    eventId,
+    originalDate,
+    kind,
+    overrideJson,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is EventExceptionRow &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.id == this.id &&
+          other.eventId == this.eventId &&
+          other.originalDate == this.originalDate &&
+          other.kind == this.kind &&
+          other.overrideJson == this.overrideJson);
+}
+
+class EventExceptionsCompanion extends UpdateCompanion<EventExceptionRow> {
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<String> id;
+  final Value<String> eventId;
+  final Value<String> originalDate;
+  final Value<String> kind;
+  final Value<String?> overrideJson;
+  final Value<int> rowid;
+  const EventExceptionsCompanion({
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.id = const Value.absent(),
+    this.eventId = const Value.absent(),
+    this.originalDate = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.overrideJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  EventExceptionsCompanion.insert({
+    required int createdAt,
+    required int updatedAt,
+    required String id,
+    required String eventId,
+    required String originalDate,
+    required String kind,
+    this.overrideJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       id = Value(id),
+       eventId = Value(eventId),
+       originalDate = Value(originalDate),
+       kind = Value(kind);
+  static Insertable<EventExceptionRow> custom({
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<String>? id,
+    Expression<String>? eventId,
+    Expression<String>? originalDate,
+    Expression<String>? kind,
+    Expression<String>? overrideJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (id != null) 'id': id,
+      if (eventId != null) 'event_id': eventId,
+      if (originalDate != null) 'original_date': originalDate,
+      if (kind != null) 'kind': kind,
+      if (overrideJson != null) 'override_json': overrideJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  EventExceptionsCompanion copyWith({
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<String>? id,
+    Value<String>? eventId,
+    Value<String>? originalDate,
+    Value<String>? kind,
+    Value<String?>? overrideJson,
+    Value<int>? rowid,
+  }) {
+    return EventExceptionsCompanion(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      id: id ?? this.id,
+      eventId: eventId ?? this.eventId,
+      originalDate: originalDate ?? this.originalDate,
+      kind: kind ?? this.kind,
+      overrideJson: overrideJson ?? this.overrideJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (eventId.present) {
+      map['event_id'] = Variable<String>(eventId.value);
+    }
+    if (originalDate.present) {
+      map['original_date'] = Variable<String>(originalDate.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (overrideJson.present) {
+      map['override_json'] = Variable<String>(overrideJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('EventExceptionsCompanion(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('eventId: $eventId, ')
+          ..write('originalDate: $originalDate, ')
+          ..write('kind: $kind, ')
+          ..write('overrideJson: $overrideJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7472,6 +7957,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $CustomFieldValuesTable customFieldValues =
       $CustomFieldValuesTable(this);
   late final $SavedFiltersTable savedFilters = $SavedFiltersTable(this);
+  late final $EventExceptionsTable eventExceptions = $EventExceptionsTable(
+    this,
+  );
   late final Index idxPersonsFullName = Index(
     'idx_persons_full_name',
     'CREATE INDEX idx_persons_full_name ON persons (full_name)',
@@ -7512,6 +8000,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     'idx_rel_related',
     'CREATE INDEX idx_rel_related ON person_relationships (related_person_id)',
   );
+  late final Index idxEventExceptionsEvent = Index(
+    'idx_event_exceptions_event',
+    'CREATE INDEX idx_event_exceptions_event ON event_exceptions (event_id)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7531,6 +8023,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     customFieldDefinitions,
     customFieldValues,
     savedFilters,
+    eventExceptions,
     idxPersonsFullName,
     idxPersonsBirthDate,
     idxPersonsDeletedAt,
@@ -7541,6 +8034,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     idxEprPerson,
     idxRelPerson,
     idxRelRelated,
+    idxEventExceptionsEvent,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -7610,6 +8104,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('custom_field_values', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'events',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('event_exceptions', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -11219,6 +11720,26 @@ final class $$EventsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$EventExceptionsTable, List<EventExceptionRow>>
+  _eventExceptionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.eventExceptions,
+    aliasName: 'events__id__event_exceptions__event_id',
+  );
+
+  $$EventExceptionsTableProcessedTableManager get eventExceptionsRefs {
+    final manager = $$EventExceptionsTableTableManager(
+      $_db,
+      $_db.eventExceptions,
+    ).filter((f) => f.eventId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _eventExceptionsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$EventsTableFilterComposer
@@ -11405,6 +11926,31 @@ class $$EventsTableFilterComposer
           }) => $$EventPersonRelationsTableFilterComposer(
             $db: $db,
             $table: $db.eventPersonRelations,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> eventExceptionsRefs(
+    Expression<bool> Function($$EventExceptionsTableFilterComposer f) f,
+  ) {
+    final $$EventExceptionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.eventExceptions,
+      getReferencedColumn: (t) => t.eventId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EventExceptionsTableFilterComposer(
+            $db: $db,
+            $table: $db.eventExceptions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -11746,6 +12292,31 @@ class $$EventsTableAnnotationComposer
         );
     return f(composer);
   }
+
+  Expression<T> eventExceptionsRefs<T extends Object>(
+    Expression<T> Function($$EventExceptionsTableAnnotationComposer a) f,
+  ) {
+    final $$EventExceptionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.eventExceptions,
+      getReferencedColumn: (t) => t.eventId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EventExceptionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.eventExceptions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$EventsTableTableManager
@@ -11766,6 +12337,7 @@ class $$EventsTableTableManager
             bool eventTypeId,
             bool recurrenceRuleId,
             bool eventPersonRelationsRefs,
+            bool eventExceptionsRefs,
           })
         > {
   $$EventsTableTableManager(_$AppDatabase db, $EventsTable table)
@@ -11889,11 +12461,13 @@ class $$EventsTableTableManager
                 eventTypeId = false,
                 recurrenceRuleId = false,
                 eventPersonRelationsRefs = false,
+                eventExceptionsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (eventPersonRelationsRefs) db.eventPersonRelations,
+                    if (eventExceptionsRefs) db.eventExceptions,
                   ],
                   addJoins:
                       <
@@ -11969,6 +12543,26 @@ class $$EventsTableTableManager
                           referencedColumn: 'event_id',
                           typedResults: items,
                         ),
+                      if (eventExceptionsRefs)
+                        await $_getPrefetchedDataByColumns<
+                          EventRow,
+                          $EventsTable,
+                          EventExceptionRow,
+                          $EventExceptionsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$EventsTableReferences
+                              ._eventExceptionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$EventsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).eventExceptionsRefs,
+                          currentColumn: 'id',
+                          referencedColumn: 'event_id',
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -11994,6 +12588,7 @@ typedef $$EventsTableProcessedTableManager =
         bool eventTypeId,
         bool recurrenceRuleId,
         bool eventPersonRelationsRefs,
+        bool eventExceptionsRefs,
       })
     >;
 typedef $$EventPersonRelationsTableCreateCompanionBuilder =
@@ -13756,6 +14351,374 @@ typedef $$SavedFiltersTableProcessedTableManager =
       SavedFilterRow,
       PrefetchHooks Function()
     >;
+typedef $$EventExceptionsTableCreateCompanionBuilder =
+    EventExceptionsCompanion Function({
+      required int createdAt,
+      required int updatedAt,
+      required String id,
+      required String eventId,
+      required String originalDate,
+      required String kind,
+      Value<String?> overrideJson,
+      Value<int> rowid,
+    });
+typedef $$EventExceptionsTableUpdateCompanionBuilder =
+    EventExceptionsCompanion Function({
+      Value<int> createdAt,
+      Value<int> updatedAt,
+      Value<String> id,
+      Value<String> eventId,
+      Value<String> originalDate,
+      Value<String> kind,
+      Value<String?> overrideJson,
+      Value<int> rowid,
+    });
+
+final class $$EventExceptionsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $EventExceptionsTable,
+          EventExceptionRow
+        > {
+  $$EventExceptionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $EventsTable _eventIdTable(_$AppDatabase db) =>
+      db.events.createAlias('event_exceptions__event_id__events__id');
+
+  $$EventsTableProcessedTableManager get eventId {
+    final $_column = $_itemColumn<String>('event_id')!;
+
+    final manager = $$EventsTableTableManager(
+      $_db,
+      $_db.events,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_eventIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$EventExceptionsTableFilterComposer
+    extends Composer<_$AppDatabase, $EventExceptionsTable> {
+  $$EventExceptionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get originalDate => $composableBuilder(
+    column: $table.originalDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get overrideJson => $composableBuilder(
+    column: $table.overrideJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$EventsTableFilterComposer get eventId {
+    final $$EventsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.eventId,
+      referencedTable: $db.events,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EventsTableFilterComposer(
+            $db: $db,
+            $table: $db.events,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EventExceptionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $EventExceptionsTable> {
+  $$EventExceptionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get originalDate => $composableBuilder(
+    column: $table.originalDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get overrideJson => $composableBuilder(
+    column: $table.overrideJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$EventsTableOrderingComposer get eventId {
+    final $$EventsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.eventId,
+      referencedTable: $db.events,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EventsTableOrderingComposer(
+            $db: $db,
+            $table: $db.events,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EventExceptionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $EventExceptionsTable> {
+  $$EventExceptionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get originalDate => $composableBuilder(
+    column: $table.originalDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get overrideJson => $composableBuilder(
+    column: $table.overrideJson,
+    builder: (column) => column,
+  );
+
+  $$EventsTableAnnotationComposer get eventId {
+    final $$EventsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.eventId,
+      referencedTable: $db.events,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$EventsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.events,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$EventExceptionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $EventExceptionsTable,
+          EventExceptionRow,
+          $$EventExceptionsTableFilterComposer,
+          $$EventExceptionsTableOrderingComposer,
+          $$EventExceptionsTableAnnotationComposer,
+          $$EventExceptionsTableCreateCompanionBuilder,
+          $$EventExceptionsTableUpdateCompanionBuilder,
+          (EventExceptionRow, $$EventExceptionsTableReferences),
+          EventExceptionRow,
+          PrefetchHooks Function({bool eventId})
+        > {
+  $$EventExceptionsTableTableManager(
+    _$AppDatabase db,
+    $EventExceptionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$EventExceptionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$EventExceptionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$EventExceptionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> createdAt = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> id = const Value.absent(),
+                Value<String> eventId = const Value.absent(),
+                Value<String> originalDate = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String?> overrideJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EventExceptionsCompanion(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                eventId: eventId,
+                originalDate: originalDate,
+                kind: kind,
+                overrideJson: overrideJson,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int createdAt,
+                required int updatedAt,
+                required String id,
+                required String eventId,
+                required String originalDate,
+                required String kind,
+                Value<String?> overrideJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => EventExceptionsCompanion.insert(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                eventId: eventId,
+                originalDate: originalDate,
+                kind: kind,
+                overrideJson: overrideJson,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$EventExceptionsTable, EventExceptionRow>(table),
+                  $$EventExceptionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({eventId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (eventId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.eventId,
+                        referencedTable: $$EventExceptionsTableReferences
+                            ._eventIdTable(db),
+                        referencedColumn: $$EventExceptionsTableReferences
+                            ._eventIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$EventExceptionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $EventExceptionsTable,
+      EventExceptionRow,
+      $$EventExceptionsTableFilterComposer,
+      $$EventExceptionsTableOrderingComposer,
+      $$EventExceptionsTableAnnotationComposer,
+      $$EventExceptionsTableCreateCompanionBuilder,
+      $$EventExceptionsTableUpdateCompanionBuilder,
+      (EventExceptionRow, $$EventExceptionsTableReferences),
+      EventExceptionRow,
+      PrefetchHooks Function({bool eventId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -13794,4 +14757,6 @@ class $AppDatabaseManager {
       $$CustomFieldValuesTableTableManager(_db, _db.customFieldValues);
   $$SavedFiltersTableTableManager get savedFilters =>
       $$SavedFiltersTableTableManager(_db, _db.savedFilters);
+  $$EventExceptionsTableTableManager get eventExceptions =>
+      $$EventExceptionsTableTableManager(_db, _db.eventExceptions);
 }

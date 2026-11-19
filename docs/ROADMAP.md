@@ -10,7 +10,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | 2 | Branding & onboarding | ✅ 2026-11-19 | 3 icon directions presented → owner picks; adaptive icon, wordmark, splash; language picker (first-run only), welcome, auth choice screen, Guest mode |
 | 3 | Authentication | ⏳ (deferred until Firebase/Facebook setup by owner) | AuthService + Firebase impl, Google, Facebook, linking, account page, sign-out, delete (re-auth), guest→registered; mocked tests; **real-config device test before marking ready** |
 | 4 | People | ✅ 2026-11-20 | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
-| 5 | Events & calendar | ⏳ | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
+| 5 | Events & calendar | ✅ 2026-11-20 | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
 | 6 | Commitments & reminders | ⏳ | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
 | 7 | Memories, milestones, timeline, projects | ⏳ | CRUD + global & per-person timeline with filters |
 | 8 | Search & reports | ⏳ | FTS unified search, AND/OR filter builder, saved filters, charts, CSV (UTF-8 BOM) |
@@ -61,3 +61,12 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Fixed during testing: a disposed-controller crash in the filter-name dialog; RTL ordering of user values like "O+".
 - `flutter analyze` clean; 59 tests (unit, database, migration, widget AR/EN).
 - Phase 3 (authentication) is deferred until the owner creates the Firebase project and Facebook app.
+
+## Phase 5 outcome (2026-11-20)
+- Recurrence engine + 17 tests; series splitting + tests.
+- Schema v3 (`event_exceptions`) with verified migrations v1→v3 and v2→v3.
+- Events: end date/time (multi-day), priority, status, custom types (More → Event types), full recurrence editor, edit/delete scopes (this / this and following / all), Hijri date entry.
+- Calendar: month / week / day (hour timeline) views, jump to date, filter by type and birthdays, search (±1 year), Hijri day numbers and month names.
+- Settings: show Hijri, Hijri adjustment −2…+2 days; Home shows today's Hijri date.
+- Fixed during testing: navigation crash when a form is opened without history; Hijri dialog field overflow; an outdated Phase 4 test assertion.
+- `flutter analyze` clean; 104 tests.

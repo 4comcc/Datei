@@ -260,3 +260,27 @@ class SavedFilters extends Table with Timestamps {
   @override
   Set<Column> get primaryKey => {id};
 }
+
+/// v3. Per-occurrence changes to a recurring event: a cancelled occurrence or an
+/// override (JSON of changed fields: title, date, time, endTime, location, notes).
+@DataClassName('EventExceptionRow')
+@TableIndex(name: 'idx_event_exceptions_event', columns: {#eventId})
+class EventExceptions extends Table with Timestamps {
+  TextColumn get id => text()();
+  TextColumn get eventId => text().references(Events, #id, onDelete: KeyAction.cascade)();
+
+  /// The occurrence's original date in the series ('YYYY-MM-DD').
+  TextColumn get originalDate => text()();
+
+  /// cancelled | overridden
+  TextColumn get kind => text()();
+  TextColumn get overrideJson => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+        {eventId, originalDate},
+      ];
+}

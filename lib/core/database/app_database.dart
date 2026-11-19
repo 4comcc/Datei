@@ -24,6 +24,7 @@ part 'app_database.g.dart';
   CustomFieldDefinitions,
   CustomFieldValues,
   SavedFilters,
+  EventExceptions,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
@@ -32,7 +33,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'datei'));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -46,6 +47,10 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(schema.customFieldDefinitions);
             await m.createTable(schema.customFieldValues);
             await m.createTable(schema.savedFilters);
+          },
+          from2To3: (m, schema) async {
+            await m.createTable(schema.eventExceptions);
+            await m.createIndex(schema.idxEventExceptionsEvent);
           },
         ),
         beforeOpen: (details) async {

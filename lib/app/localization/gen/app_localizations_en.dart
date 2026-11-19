@@ -745,4 +745,356 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get add => 'Add';
+
+  @override
+  String get repeat => 'Repeat';
+
+  @override
+  String get repeatNone => 'Does not repeat';
+
+  @override
+  String get repeatDaily => 'Daily';
+
+  @override
+  String get repeatWeekly => 'Weekly';
+
+  @override
+  String get repeatMonthly => 'Monthly';
+
+  @override
+  String get repeatYearly => 'Yearly';
+
+  @override
+  String get everyLabel => 'Every';
+
+  @override
+  String unitDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'weeks',
+      one: 'week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'months',
+      one: 'month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'years',
+      one: 'year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String everyN(int count, String unit) {
+    return 'Every $count $unit';
+  }
+
+  @override
+  String get onWeekdays => 'On';
+
+  @override
+  String monthlyOnDay(int day) {
+    return 'On day $day';
+  }
+
+  @override
+  String monthlyOnNth(String position, String weekday) {
+    return 'On the $position $weekday';
+  }
+
+  @override
+  String get posFirst => 'first';
+
+  @override
+  String get posSecond => 'second';
+
+  @override
+  String get posThird => 'third';
+
+  @override
+  String get posFourth => 'fourth';
+
+  @override
+  String get posLast => 'last';
+
+  @override
+  String get skipShortMonths => 'Skip months without this day';
+
+  @override
+  String get ends => 'Ends';
+
+  @override
+  String get endsNever => 'Never';
+
+  @override
+  String get endsOnDate => 'On a date';
+
+  @override
+  String get endsAfter => 'After';
+
+  @override
+  String occurrencesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count times',
+      one: '1 time',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String untilDate(String date) {
+    return 'until $date';
+  }
+
+  @override
+  String get fieldEndDate => 'End date (optional)';
+
+  @override
+  String get fieldEndTime => 'End time (optional)';
+
+  @override
+  String get fieldPriority => 'Priority';
+
+  @override
+  String get priorityLow => 'Low';
+
+  @override
+  String get priorityNormal => 'Normal';
+
+  @override
+  String get priorityHigh => 'High';
+
+  @override
+  String get priorityCritical => 'Critical';
+
+  @override
+  String get fieldStatus => 'Status';
+
+  @override
+  String get statusPlanned => 'Planned';
+
+  @override
+  String get statusDone => 'Done';
+
+  @override
+  String get statusCancelled => 'Cancelled';
+
+  @override
+  String get errorEndBeforeStart => 'End can\'t be before the start';
+
+  @override
+  String get errorInterval => 'Enter a number from 1 to 999';
+
+  @override
+  String get errorWeekdays => 'Choose at least one day';
+
+  @override
+  String get hijriInput => 'Enter a Hijri date';
+
+  @override
+  String get hijriDay => 'Day';
+
+  @override
+  String get hijriMonth => 'Month';
+
+  @override
+  String get hijriYear => 'Year';
+
+  @override
+  String get hijriInvalid =>
+      'This Hijri date isn\'t valid or is outside 1356–1500 AH';
+
+  @override
+  String hijriConverted(String date) {
+    return 'Gregorian: $date';
+  }
+
+  @override
+  String hijriFormat(int day, String month, int year) {
+    return '$day $month $year AH';
+  }
+
+  @override
+  String get hijriMonth1 => 'Muharram';
+
+  @override
+  String get hijriMonth2 => 'Safar';
+
+  @override
+  String get hijriMonth3 => 'Rabi al-Awwal';
+
+  @override
+  String get hijriMonth4 => 'Rabi al-Thani';
+
+  @override
+  String get hijriMonth5 => 'Jumada al-Ula';
+
+  @override
+  String get hijriMonth6 => 'Jumada al-Akhirah';
+
+  @override
+  String get hijriMonth7 => 'Rajab';
+
+  @override
+  String get hijriMonth8 => 'Shaban';
+
+  @override
+  String get hijriMonth9 => 'Ramadan';
+
+  @override
+  String get hijriMonth10 => 'Shawwal';
+
+  @override
+  String get hijriMonth11 => 'Dhu al-Qadah';
+
+  @override
+  String get hijriMonth12 => 'Dhu al-Hijjah';
+
+  @override
+  String get editScopeTitle => 'Edit recurring event';
+
+  @override
+  String get deleteScopeTitle => 'Delete recurring event';
+
+  @override
+  String get scopeThis => 'This event only';
+
+  @override
+  String get scopeFollowing => 'This and following events';
+
+  @override
+  String get scopeAll => 'All events in the series';
+
+  @override
+  String occurrenceOf(String date) {
+    return 'Occurrence on $date';
+  }
+
+  @override
+  String get manageEventTypes => 'Event types';
+
+  @override
+  String get addEventType => 'New type';
+
+  @override
+  String get editEventType => 'Edit type';
+
+  @override
+  String get eventTypeName => 'Type name';
+
+  @override
+  String deleteEventTypeConfirm(String name) {
+    return 'Delete the type “$name”? Its events will move to “Other”.';
+  }
+
+  @override
+  String get yourEventTypes => 'Your types';
+
+  @override
+  String get noCustomEventTypes => 'You haven\'t created any event types yet.';
+
+  @override
+  String get systemEventTypesNote =>
+      'Built-in types can\'t be renamed or deleted.';
+
+  @override
+  String get viewMonth => 'Month';
+
+  @override
+  String get viewWeek => 'Week';
+
+  @override
+  String get viewDay => 'Day';
+
+  @override
+  String get goToDate => 'Go to date';
+
+  @override
+  String get calendarFilter => 'Show in calendar';
+
+  @override
+  String get birthdaysLabel => 'Birthdays';
+
+  @override
+  String get searchCalendar => 'Search calendar';
+
+  @override
+  String get searchCalendarHint => 'Search events and birthdays…';
+
+  @override
+  String get searchCalendarScope =>
+      'Showing matches from a year ago to a year ahead';
+
+  @override
+  String get allDay => 'All day';
+
+  @override
+  String get previousPeriod => 'Previous';
+
+  @override
+  String get nextPeriod => 'Next';
+
+  @override
+  String get settingsCalendar => 'Calendar';
+
+  @override
+  String get showHijri => 'Show Hijri dates';
+
+  @override
+  String get hijriAdjustment => 'Hijri adjustment';
+
+  @override
+  String get hijriNote =>
+      'Calculated with the Umm al-Qura calendar. Local moon sighting can differ by a day or two — adjust if needed. Gregorian dates are never changed.';
+
+  @override
+  String get repeatsLabel => 'Repeats';
+
+  @override
+  String get hijriAdjustmentNone => 'No adjustment';
+
+  @override
+  String hijriAdjustmentDays(String value) {
+    return '$value day(s)';
+  }
+
+  @override
+  String unitTimes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'times',
+      one: 'time',
+    );
+    return '$_temp0';
+  }
 }

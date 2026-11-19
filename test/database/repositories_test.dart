@@ -1,4 +1,5 @@
 import 'package:datei/app/bootstrap.dart';
+import 'package:datei/core/recurrence_engine/recurrence.dart';
 import 'package:datei/core/database/app_database.dart';
 import 'package:datei/core/time_engine/local_date.dart';
 import 'package:datei/features/events/data/drift_events_repository.dart';
@@ -28,9 +29,9 @@ void main() {
   DateiEvent event(String id, {bool yearly = false, List<String> personIds = const []}) => DateiEvent(
         id: id,
         title: 'Event $id',
-        type: EventType.anniversary,
+        typeId: EventType.anniversary.id,
         date: LocalDate.parse('2020-05-01'),
-        repeatsYearly: yearly,
+        recurrence: yearly ? const RecurrenceRule.yearly() : null,
         personIds: personIds,
         createdAt: created,
       );
@@ -94,11 +95,11 @@ void main() {
   group('events', () {
     test('yearly creates a recurrence rule; turning it off removes it', () async {
       await events.save(event('e', yearly: true));
-      expect((await events.watchAll().first).single.repeatsYearly, isTrue);
+      expect((await events.watchAll().first).single.isRecurring, isTrue);
       expect(await db.select(db.recurrenceRules).get(), hasLength(1));
 
       await events.save(event('e'));
-      expect((await events.watchAll().first).single.repeatsYearly, isFalse);
+      expect((await events.watchAll().first).single.isRecurring, isFalse);
       expect(await db.select(db.recurrenceRules).get(), isEmpty);
     });
 

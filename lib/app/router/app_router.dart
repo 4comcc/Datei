@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../core/time_engine/local_date.dart';
 import '../../features/calendar/calendar_screen.dart';
 import '../../features/events/presentation/event_form_screen.dart';
+import '../../features/events/presentation/event_types_screen.dart';
 import '../../features/events/presentation/events_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/more/more_screen.dart';
@@ -90,6 +91,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, _) => const CustomFieldsScreen(),
       ),
       GoRoute(
+        path: '/settings/event-types',
+        parentNavigatorKey: _rootKey,
+        builder: (_, _) => const EventTypesScreen(),
+      ),
+      GoRoute(
         path: '/events/new',
         parentNavigatorKey: _rootKey,
         builder: (_, state) => EventFormScreen(
@@ -100,7 +106,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/events/:id/edit',
         parentNavigatorKey: _rootKey,
-        builder: (_, state) => EventFormScreen(eventId: state.pathParameters['id']),
+        builder: (_, state) => EventFormScreen(
+          eventId: state.pathParameters['id'],
+          occurrenceDate: parseDate(state.uri.queryParameters['occurrence']),
+        ),
       ),
     ],
   );

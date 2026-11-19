@@ -86,7 +86,7 @@ void main() {
     router(tester, c).go('/people/a');
     await settle(tester);
     expect(find.textContaining('years old'), findsNothing);
-    expect(find.text('November 24'), findsOneWidget);
+    expect(find.textContaining('November 24'), findsOneWidget); // value is wrapped in a bidi isolate
     expect(find.textContaining('In 5 days'), findsOneWidget);
     expect(find.textContaining('Turns'), findsNothing);
   });

@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:datei/app/app.dart';
 import 'package:datei/app/router/app_router.dart';
+import 'package:datei/core/recurrence_engine/recurrence.dart';
+import 'package:datei/core/time_engine/local_date.dart';
 import 'package:datei/features/events/domain/event.dart';
 import 'package:datei/features/events/presentation/events_providers.dart';
 import 'package:datei/features/people/domain/custom_field.dart';
@@ -41,7 +43,8 @@ final events = [
   {'id': 'e3', 'title': 'رحلة الإسكندرية', 'type': 'travel', 'date': '2026-12-05', 'createdAt': '2026-01-01T00:00:00.000'},
 ];
 
-Future<void> shoot(WidgetTester tester, String lang, String route, String name, {bool dark = false}) async {
+Future<void> shoot(WidgetTester tester, String lang, String route, String name,
+    {bool dark = false, bool hijri = false, Future<void> Function(WidgetTester t)? then}) async {
   tester.view.physicalSize = const Size(1080, 3400);
   tester.view.devicePixelRatio = 2.75;
   addTearDown(tester.view.reset);
@@ -50,6 +53,7 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name, 
         if (route != '/language') SettingKeys.language: lang,
         SettingKeys.onboardingDone: '$onboarded',
         SettingKeys.themeMode: dark ? 'dark' : 'light',
+        if (hijri) SettingKeys.showHijri: 'true',
       })))!;
   await tester.runAsync(() async {
     for (final p in people) {
@@ -70,6 +74,24 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name, 
         .add(const Relationship(id: 'r1', personId: 'p1', type: RelationshipType.sister));
     await container.read(relationshipsRepositoryProvider)
         .add(const Relationship(id: 'r2', personId: 'p3', relatedPersonId: 'p1', type: RelationshipType.colleague));
+    await container.read(eventsRepositoryProvider).save(DateiEvent(
+          id: 'w',
+          title: 'درس العربية',
+          typeId: EventType.personal.id,
+          date: LocalDate.parse('2026-11-05'),
+          time: '18:00',
+          endTime: '19:30',
+          recurrence: const RecurrenceRule(frequency: RecurrenceFrequency.weekly, weekdays: {1, 4}),
+          createdAt: DateTime(2026),
+        ));
+    await container.read(eventsRepositoryProvider).save(DateiEvent(
+          id: 'trip',
+          title: 'مؤتمر دبي',
+          typeId: EventType.travel.id,
+          date: LocalDate.parse('2026-11-18'),
+          endDate: LocalDate.parse('2026-11-21'),
+          createdAt: DateTime(2026),
+        ));
   });
   addTearDown(() async {
     await tester.pumpWidget(const SizedBox());
@@ -82,6 +104,11 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name, 
   if (onboarded && route != '/home') container.read(routerProvider).go(route);
   await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 30)));
   await tester.pumpAndSettle();
+  if (then != null) {
+    await then(tester);
+    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 30)));
+    await tester.pumpAndSettle();
+  }
   await expectLater(find.byType(DateiApp), matchesGoldenFile('out/$name.png'));
 }
 
@@ -97,5 +124,14 @@ void main() {
     testWidgets('$lang categories', (t) => shoot(t, lang, '/settings/categories', '${lang}_8_categories'));
     testWidgets('$lang calendar', (t) => shoot(t, lang, '/calendar', '${lang}_5_calendar'));
   }
+  testWidgets('ar calendar hijri', (t) => shoot(t, 'ar', '/calendar', 'ar_9_calendar_hijri', hijri: true));
+  testWidgets('ar week', (t) => shoot(t, 'ar', '/calendar', 'ar_10_week', then: (t) => t.tap(find.text('أسبوع'))));
+  testWidgets('ar day', (t) => shoot(t, 'ar', '/calendar', 'ar_11_day', then: (t) => t.tap(find.text('يوم'))));
+  testWidgets('ar event form', (t) => shoot(t, 'ar', '/events/w/edit?occurrence=2026-11-19', 'ar_12_event_form', hijri: true));
+  testWidgets('ar recurrence', (t) => shoot(t, 'ar', '/events/w/edit', 'ar_13_recurrence',
+      then: (t) async {
+        await t.ensureVisible(find.byKey(const Key('recurrence-tile')));
+        await t.tap(find.byKey(const Key('recurrence-tile')));
+      }));
   testWidgets('ar home dark', (t) => shoot(t, 'ar', '/home', 'ar_6_home_dark', dark: true));
 }

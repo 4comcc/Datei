@@ -89,3 +89,15 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-042 · Accepted · People filter is a pure domain object (`PeopleFilter.matches`) combining criteria with AND (categories: any-of).** Saved filters store versioned JSON (`v: 1`) without the free-text query. Filter state lives in a Riverpod notifier, not in widgets.
 
 **ADR-043 · Accepted · Schema v2 migration via drift `stepByStep`, verified by the generated schema test plus a data-preservation test.** The verifier caught missing index creation during development.
+
+**ADR-044 · Accepted · Recurrence engine (`lib/core/recurrence_engine`): daily / weekly (weekday set) / monthly (day-of-month with clamp-or-skip, or nth/last weekday) / yearly (Feb-29 policy), interval, until | count.** Occurrences are generated lazily; uncounted series jump near the requested window instead of iterating from the start. Excluded dates still consume `count` (RFC 5545 EXDATE semantics).
+
+**ADR-045 · Accepted · Per-occurrence exceptions in `event_exceptions` (schema v3): cancelled or overridden (JSON: title, date, time, clearTime, location, notes); unique per (event, original date).** Edit scopes: *this* → exception; *this and following* → `SeriesEditing.split` ends the old series the day before (until) and starts a new one, carrying the remaining `count` when the rule is unchanged, dropping later exceptions; *all* → whole-series save, shifting the series start by the same number of days the shown occurrence was moved.
+
+**ADR-046 · Accepted · Hijri via `hijri` 3.0.1 (Umm al-Qura table 1356–1500 AH) wrapped in `HijriConverter` with a user offset of −2…+2 days.** Verified against known Umm al-Qura month starts and a two-year day-by-day round trip. Month names come from our ARB files (the package's global locale is not used). Display/input only; Gregorian stays stored.
+
+**ADR-047 · Accepted · Custom event types share the categories pattern (`sys:event_type:<key>` + user types).** Deleting a user type moves its events to "Other"; unknown type ids fall back to "Other" on save.
+
+**ADR-048 · Accepted · Multi-day events store `end_date`; every occurrence spans the same number of days.** The agenda marks each covered day; ongoing events count as "today" and as the next occurrence.
+
+**ADR-049 · Accepted · Screens closed after save/delete use `popOrGo(fallback)`.** Safe when a screen is opened directly (future notification deep links) — found by widget tests.

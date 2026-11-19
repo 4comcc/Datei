@@ -1363,6 +1363,570 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add'**
   String get add;
+
+  /// No description provided for @repeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get repeat;
+
+  /// No description provided for @repeatNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Does not repeat'**
+  String get repeatNone;
+
+  /// No description provided for @repeatDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get repeatDaily;
+
+  /// No description provided for @repeatWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get repeatWeekly;
+
+  /// No description provided for @repeatMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get repeatMonthly;
+
+  /// No description provided for @repeatYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get repeatYearly;
+
+  /// No description provided for @everyLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Every'**
+  String get everyLabel;
+
+  /// No description provided for @unitDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{day} other{days}}'**
+  String unitDays(int count);
+
+  /// No description provided for @unitWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{week} other{weeks}}'**
+  String unitWeeks(int count);
+
+  /// No description provided for @unitMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{month} other{months}}'**
+  String unitMonths(int count);
+
+  /// No description provided for @unitYears.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{year} other{years}}'**
+  String unitYears(int count);
+
+  /// No description provided for @everyN.
+  ///
+  /// In en, this message translates to:
+  /// **'Every {count} {unit}'**
+  String everyN(int count, String unit);
+
+  /// No description provided for @onWeekdays.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get onWeekdays;
+
+  /// No description provided for @monthlyOnDay.
+  ///
+  /// In en, this message translates to:
+  /// **'On day {day}'**
+  String monthlyOnDay(int day);
+
+  /// No description provided for @monthlyOnNth.
+  ///
+  /// In en, this message translates to:
+  /// **'On the {position} {weekday}'**
+  String monthlyOnNth(String position, String weekday);
+
+  /// No description provided for @posFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'first'**
+  String get posFirst;
+
+  /// No description provided for @posSecond.
+  ///
+  /// In en, this message translates to:
+  /// **'second'**
+  String get posSecond;
+
+  /// No description provided for @posThird.
+  ///
+  /// In en, this message translates to:
+  /// **'third'**
+  String get posThird;
+
+  /// No description provided for @posFourth.
+  ///
+  /// In en, this message translates to:
+  /// **'fourth'**
+  String get posFourth;
+
+  /// No description provided for @posLast.
+  ///
+  /// In en, this message translates to:
+  /// **'last'**
+  String get posLast;
+
+  /// No description provided for @skipShortMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip months without this day'**
+  String get skipShortMonths;
+
+  /// No description provided for @ends.
+  ///
+  /// In en, this message translates to:
+  /// **'Ends'**
+  String get ends;
+
+  /// No description provided for @endsNever.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get endsNever;
+
+  /// No description provided for @endsOnDate.
+  ///
+  /// In en, this message translates to:
+  /// **'On a date'**
+  String get endsOnDate;
+
+  /// No description provided for @endsAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'After'**
+  String get endsAfter;
+
+  /// No description provided for @occurrencesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 time} other{{count} times}}'**
+  String occurrencesCount(int count);
+
+  /// No description provided for @untilDate.
+  ///
+  /// In en, this message translates to:
+  /// **'until {date}'**
+  String untilDate(String date);
+
+  /// No description provided for @fieldEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End date (optional)'**
+  String get fieldEndDate;
+
+  /// No description provided for @fieldEndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'End time (optional)'**
+  String get fieldEndTime;
+
+  /// No description provided for @fieldPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get fieldPriority;
+
+  /// No description provided for @priorityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get priorityLow;
+
+  /// No description provided for @priorityNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get priorityNormal;
+
+  /// No description provided for @priorityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get priorityHigh;
+
+  /// No description provided for @priorityCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get priorityCritical;
+
+  /// No description provided for @fieldStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get fieldStatus;
+
+  /// No description provided for @statusPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get statusPlanned;
+
+  /// No description provided for @statusDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get statusDone;
+
+  /// No description provided for @statusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
+
+  /// No description provided for @errorEndBeforeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'End can\'t be before the start'**
+  String get errorEndBeforeStart;
+
+  /// No description provided for @errorInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a number from 1 to 999'**
+  String get errorInterval;
+
+  /// No description provided for @errorWeekdays.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at least one day'**
+  String get errorWeekdays;
+
+  /// No description provided for @hijriInput.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Hijri date'**
+  String get hijriInput;
+
+  /// No description provided for @hijriDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get hijriDay;
+
+  /// No description provided for @hijriMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get hijriMonth;
+
+  /// No description provided for @hijriYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get hijriYear;
+
+  /// No description provided for @hijriInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This Hijri date isn\'t valid or is outside 1356–1500 AH'**
+  String get hijriInvalid;
+
+  /// No description provided for @hijriConverted.
+  ///
+  /// In en, this message translates to:
+  /// **'Gregorian: {date}'**
+  String hijriConverted(String date);
+
+  /// No description provided for @hijriFormat.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {month} {year} AH'**
+  String hijriFormat(int day, String month, int year);
+
+  /// No description provided for @hijriMonth1.
+  ///
+  /// In en, this message translates to:
+  /// **'Muharram'**
+  String get hijriMonth1;
+
+  /// No description provided for @hijriMonth2.
+  ///
+  /// In en, this message translates to:
+  /// **'Safar'**
+  String get hijriMonth2;
+
+  /// No description provided for @hijriMonth3.
+  ///
+  /// In en, this message translates to:
+  /// **'Rabi al-Awwal'**
+  String get hijriMonth3;
+
+  /// No description provided for @hijriMonth4.
+  ///
+  /// In en, this message translates to:
+  /// **'Rabi al-Thani'**
+  String get hijriMonth4;
+
+  /// No description provided for @hijriMonth5.
+  ///
+  /// In en, this message translates to:
+  /// **'Jumada al-Ula'**
+  String get hijriMonth5;
+
+  /// No description provided for @hijriMonth6.
+  ///
+  /// In en, this message translates to:
+  /// **'Jumada al-Akhirah'**
+  String get hijriMonth6;
+
+  /// No description provided for @hijriMonth7.
+  ///
+  /// In en, this message translates to:
+  /// **'Rajab'**
+  String get hijriMonth7;
+
+  /// No description provided for @hijriMonth8.
+  ///
+  /// In en, this message translates to:
+  /// **'Shaban'**
+  String get hijriMonth8;
+
+  /// No description provided for @hijriMonth9.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan'**
+  String get hijriMonth9;
+
+  /// No description provided for @hijriMonth10.
+  ///
+  /// In en, this message translates to:
+  /// **'Shawwal'**
+  String get hijriMonth10;
+
+  /// No description provided for @hijriMonth11.
+  ///
+  /// In en, this message translates to:
+  /// **'Dhu al-Qadah'**
+  String get hijriMonth11;
+
+  /// No description provided for @hijriMonth12.
+  ///
+  /// In en, this message translates to:
+  /// **'Dhu al-Hijjah'**
+  String get hijriMonth12;
+
+  /// No description provided for @editScopeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit recurring event'**
+  String get editScopeTitle;
+
+  /// No description provided for @deleteScopeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete recurring event'**
+  String get deleteScopeTitle;
+
+  /// No description provided for @scopeThis.
+  ///
+  /// In en, this message translates to:
+  /// **'This event only'**
+  String get scopeThis;
+
+  /// No description provided for @scopeFollowing.
+  ///
+  /// In en, this message translates to:
+  /// **'This and following events'**
+  String get scopeFollowing;
+
+  /// No description provided for @scopeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All events in the series'**
+  String get scopeAll;
+
+  /// No description provided for @occurrenceOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Occurrence on {date}'**
+  String occurrenceOf(String date);
+
+  /// No description provided for @manageEventTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'Event types'**
+  String get manageEventTypes;
+
+  /// No description provided for @addEventType.
+  ///
+  /// In en, this message translates to:
+  /// **'New type'**
+  String get addEventType;
+
+  /// No description provided for @editEventType.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit type'**
+  String get editEventType;
+
+  /// No description provided for @eventTypeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Type name'**
+  String get eventTypeName;
+
+  /// No description provided for @deleteEventTypeConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the type “{name}”? Its events will move to “Other”.'**
+  String deleteEventTypeConfirm(String name);
+
+  /// No description provided for @yourEventTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'Your types'**
+  String get yourEventTypes;
+
+  /// No description provided for @noCustomEventTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t created any event types yet.'**
+  String get noCustomEventTypes;
+
+  /// No description provided for @systemEventTypesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in types can\'t be renamed or deleted.'**
+  String get systemEventTypesNote;
+
+  /// No description provided for @viewMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get viewMonth;
+
+  /// No description provided for @viewWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get viewWeek;
+
+  /// No description provided for @viewDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get viewDay;
+
+  /// No description provided for @goToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to date'**
+  String get goToDate;
+
+  /// No description provided for @calendarFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Show in calendar'**
+  String get calendarFilter;
+
+  /// No description provided for @birthdaysLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthdays'**
+  String get birthdaysLabel;
+
+  /// No description provided for @searchCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Search calendar'**
+  String get searchCalendar;
+
+  /// No description provided for @searchCalendarHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search events and birthdays…'**
+  String get searchCalendarHint;
+
+  /// No description provided for @searchCalendarScope.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing matches from a year ago to a year ahead'**
+  String get searchCalendarScope;
+
+  /// No description provided for @allDay.
+  ///
+  /// In en, this message translates to:
+  /// **'All day'**
+  String get allDay;
+
+  /// No description provided for @previousPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previousPeriod;
+
+  /// No description provided for @nextPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextPeriod;
+
+  /// No description provided for @settingsCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get settingsCalendar;
+
+  /// No description provided for @showHijri.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Hijri dates'**
+  String get showHijri;
+
+  /// No description provided for @hijriAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Hijri adjustment'**
+  String get hijriAdjustment;
+
+  /// No description provided for @hijriNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculated with the Umm al-Qura calendar. Local moon sighting can differ by a day or two — adjust if needed. Gregorian dates are never changed.'**
+  String get hijriNote;
+
+  /// No description provided for @repeatsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats'**
+  String get repeatsLabel;
+
+  /// No description provided for @hijriAdjustmentNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No adjustment'**
+  String get hijriAdjustmentNone;
+
+  /// No description provided for @hijriAdjustmentDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} day(s)'**
+  String hijriAdjustmentDays(String value);
+
+  /// No description provided for @unitTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{time} other{times}}'**
+  String unitTimes(int count);
 }
 
 class _AppLocalizationsDelegate

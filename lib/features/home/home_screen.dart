@@ -6,6 +6,7 @@ import '../../core/time_engine/local_date.dart';
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../agenda/agenda.dart';
+import '../settings/settings_controller.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -14,7 +15,10 @@ class HomeScreen extends ConsumerWidget {
     if (item.kind == AgendaKind.birthday) {
       context.push('/people/${item.person!.id}');
     } else {
-      context.push('/events/${item.event!.id}/edit');
+      final e = item.event!;
+      context.push(e.isRecurring
+          ? '/events/${e.id}/edit?occurrence=${item.occurrenceDate!.toIso()}'
+          : '/events/${e.id}/edit');
     }
   }
 
@@ -24,9 +28,11 @@ class HomeScreen extends ConsumerWidget {
     final theme = Theme.of(context);
     final today = ref.watch(todayProvider);
     final upcoming = ref.watch(upcomingAgendaProvider(30));
-    final todayItems = upcoming.where((i) => i.date == today).toList();
-    final birthdays = upcoming.where((i) => i.kind == AgendaKind.birthday && i.date != today).toList();
-    final events = upcoming.where((i) => i.kind == AgendaKind.event && i.date != today).toList();
+    final hijriToday =
+        ref.watch(settingsProvider.select((s) => s.showHijri)) ? ref.watch(hijriConverterProvider).fromGregorian(today) : null;
+    final todayItems = upcoming.where((i) => i.coversDay(today)).toList();
+    final birthdays = upcoming.where((i) => i.kind == AgendaKind.birthday && !i.coversDay(today)).toList();
+    final events = upcoming.where((i) => i.kind == AgendaKind.event && !i.coversDay(today)).toList();
 
     return Scaffold(
       body: SafeArea(
@@ -47,6 +53,10 @@ class HomeScreen extends ConsumerWidget {
                     Text(context.formatLongDate(today),
                         style: theme.textTheme.headlineSmall
                             ?.copyWith(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.w600)),
+                    if (hijriToday != null)
+                      Text(l.formatHijri(hijriToday),
+                          style: theme.textTheme.bodyMedium
+                              ?.copyWith(color: theme.colorScheme.onPrimary.withValues(alpha: 0.85))),
                     const SizedBox(height: 14),
                     Wrap(
                       spacing: 8,

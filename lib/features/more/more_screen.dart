@@ -6,7 +6,7 @@ import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../settings/settings_controller.dart';
 
-const appVersion = '0.4.0';
+const appVersion = '0.5.0';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -68,6 +68,51 @@ class MoreScreen extends ConsumerWidget {
             ],
             selected: {settings.themeMode},
             onSelectionChanged: (s) => controller.setThemeMode(s.first),
+          ),
+          SectionHeader(l.settingsCalendar),
+          Card(
+            child: Column(
+              children: [
+                SwitchListTile(
+                  key: const Key('show-hijri'),
+                  secondary: const Icon(Icons.nightlight_outlined),
+                  title: Text(l.showHijri),
+                  value: settings.showHijri,
+                  onChanged: controller.setShowHijri,
+                ),
+                if (settings.showHijri)
+                  ListTile(
+                    leading: const Icon(Icons.tune),
+                    title: Text(l.hijriAdjustment),
+                    subtitle: Text(l.hijriNote),
+                    isThreeLine: true,
+                  ),
+                if (settings.showHijri)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                    child: SegmentedButton<int>(
+                      showSelectedIcon: false,
+                      segments: [
+                        for (final d in const [-2, -1, 0, 1, 2])
+                          ButtonSegment(
+                            value: d,
+                            label: Text(d == 0 ? '0' : (d > 0 ? '+$d' : '−${-d}')),
+                            tooltip: d == 0 ? l.hijriAdjustmentNone : l.hijriAdjustmentDays(d > 0 ? '+$d' : '−${-d}'),
+                          ),
+                      ],
+                      selected: {settings.hijriOffset},
+                      onSelectionChanged: (s) => controller.setHijriOffset(s.first),
+                    ),
+                  ),
+                ListTile(
+                  key: const Key('open-event-types'),
+                  leading: const Icon(Icons.category_outlined),
+                  title: Text(l.manageEventTypes),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/settings/event-types'),
+                ),
+              ],
+            ),
           ),
           SectionHeader(l.navPeople),
           Card(

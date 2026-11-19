@@ -1,6 +1,6 @@
 # Datei — Database Schema (Drift / SQLite)
 
-Status: **schema v2 implemented** (v1 Phase 1; v2 Phase 4 adds persons.birth_year_known, person_relationships, custom_field_definitions, custom_field_values, saved_filters). Previously: **schema v1 implemented** (Phase 1, `lib/core/database/tables.dart`): local_user_profiles, account_metadata, app_settings, persons, person_categories, person_category_relations, event_types, recurrence_rules, events, event_person_relations. Remaining tables are added in their phase with a schema bump and migration test.
+Status: **schema v3 implemented** (v3 Phase 5 adds event_exceptions; recurrence_rules now fully used). Earlier: **schema v2 implemented** (v1 Phase 1; v2 Phase 4 adds persons.birth_year_known, person_relationships, custom_field_definitions, custom_field_values, saved_filters). Previously: **schema v1 implemented** (Phase 1, `lib/core/database/tables.dart`): local_user_profiles, account_metadata, app_settings, persons, person_categories, person_category_relations, event_types, recurrence_rules, events, event_person_relations. Remaining tables are added in their phase with a schema bump and migration test.
 Every schema change bumps `schemaVersion`, adds a step migration, and stores a schema dump
 (`drift_schemas/drift_schema_vN.json`) for migration tests.
 

@@ -1,7 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../core/time_engine/local_date.dart';
 import '../../features/agenda/agenda.dart';
+import '../../features/events/domain/event.dart';
+import '../../features/events/presentation/events_providers.dart';
 import '../l10n_labels.dart';
 
 class SectionHeader extends StatelessWidget {
@@ -94,7 +97,7 @@ class PersonAvatar extends StatelessWidget {
 }
 
 /// A list tile for an agenda occurrence (birthday or event).
-class AgendaTile extends StatelessWidget {
+class AgendaTile extends ConsumerWidget {
   const AgendaTile({super.key, required this.item, required this.today, this.onTap, this.showRelative = true});
   final AgendaItem item;
   final LocalDate today;
@@ -102,16 +105,24 @@ class AgendaTile extends StatelessWidget {
   final bool showRelative;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final scheme = Theme.of(context).colorScheme;
     final days = today.daysUntil(item.date);
     final isBirthday = item.kind == AgendaKind.birthday;
-    final title = isBirthday ? l.birthdayOf(item.person!.shownName) : item.event!.title;
+    final event = item.event;
+    final type = event == null ? null : ref.watch(eventTypeByIdProvider)[event.typeId];
+    final title = isBirthday ? l.birthdayOf(item.person!.shownName) : item.title!;
+    final cancelled = event?.status == EventStatus.cancelled;
     final subtitleParts = <String>[
-      context.formatDate(item.date),
+      if (item.endDate != null)
+        '${context.formatDayMonth(item.date)} – ${context.formatDate(item.endDate!)}'
+      else
+        context.formatDate(item.date),
       if (isBirthday && item.turningAge != null) l.turnsAge(item.turningAge!),
-      if (!isBirthday && item.event!.time != null) context.formatTime(item.event!.time!),
+      if (!isBirthday && item.time != null) context.formatTime(item.time!),
+      if (event != null && event.isRecurring) l.repeatsLabel,
+      if (event != null && event.status != EventStatus.planned) event.status.label(l),
     ];
     return Card(
       child: ListTile(
@@ -120,11 +131,16 @@ class AgendaTile extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: isBirthday ? scheme.tertiaryContainer : scheme.primaryContainer,
           child: Icon(
-            isBirthday ? Icons.cake_outlined : item.event!.type.icon,
+            isBirthday ? Icons.cake_outlined : (type?.icon ?? Icons.event_note_outlined),
             color: isBirthday ? scheme.onTertiaryContainer : scheme.onPrimaryContainer,
           ),
         ),
-        title: Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
+        title: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: cancelled ? const TextStyle(decoration: TextDecoration.lineThrough) : null,
+        ),
         subtitle: Text(subtitleParts.join(' · ')),
         trailing: showRelative && days >= 0
             ? Container(

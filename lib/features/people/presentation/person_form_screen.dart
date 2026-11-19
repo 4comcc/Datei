@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../core/time_engine/local_date.dart';
 import '../../../shared/l10n_labels.dart';
+import '../../../shared/navigation.dart';
 import '../../../shared/widgets/date_field.dart';
 import '../../agenda/agenda.dart';
 import '../domain/custom_field.dart';
@@ -116,7 +117,7 @@ class _PersonFormScreenState extends ConsumerState<PersonFormScreen> {
     if (_existing == null) {
       context.pushReplacement('/people/${person.id}');
     } else {
-      context.pop();
+      context.popOrGo('/people');
     }
   }
 

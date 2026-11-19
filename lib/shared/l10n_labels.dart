@@ -2,6 +2,8 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../app/localization/gen/app_localizations.dart';
+import '../core/recurrence_engine/recurrence.dart';
+import '../core/time_engine/hijri.dart';
 import '../core/time_engine/local_date.dart';
 import '../features/events/domain/event.dart';
 import '../features/people/domain/category.dart';
@@ -77,6 +79,77 @@ extension CustomFieldTypeLabel on CustomFieldType {
         CustomFieldType.number => l.fieldTypeNumber,
         CustomFieldType.date => l.fieldTypeDate,
         CustomFieldType.url => l.fieldTypeUrl,
+      };
+}
+
+extension EventTypeInfoLabel on EventTypeInfo {
+  String label(AppLocalizations l) => builtIn?.label(l) ?? name ?? '';
+  IconData get icon => builtIn?.icon ?? Icons.event_note_outlined;
+}
+
+extension EventPriorityLabel on EventPriority {
+  String label(AppLocalizations l) => switch (this) {
+        EventPriority.low => l.priorityLow,
+        EventPriority.normal => l.priorityNormal,
+        EventPriority.high => l.priorityHigh,
+        EventPriority.critical => l.priorityCritical,
+      };
+}
+
+extension EventStatusLabel on EventStatus {
+  String label(AppLocalizations l) => switch (this) {
+        EventStatus.planned => l.statusPlanned,
+        EventStatus.done => l.statusDone,
+        EventStatus.cancelled => l.statusCancelled,
+      };
+}
+
+extension HijriFormatting on AppLocalizations {
+  String hijriMonthName(int m) => [
+        hijriMonth1, hijriMonth2, hijriMonth3, hijriMonth4, hijriMonth5, hijriMonth6,
+        hijriMonth7, hijriMonth8, hijriMonth9, hijriMonth10, hijriMonth11, hijriMonth12,
+      ][m - 1];
+
+  String formatHijri(HijriDate h) => hijriFormat(h.day, hijriMonthName(h.month), h.year);
+}
+
+extension RecurrenceText on BuildContext {
+  String weekdayName(int isoWeekday) =>
+      DateFormat.EEEE(localeName).format(DateTime(2024, 1, isoWeekday)); // 2024-01-01 is a Monday
+
+  /// Human description of a rule, e.g. "Every 2 weeks · Monday, Thursday · until Mar 1, 2027".
+  String describeRecurrence(RecurrenceRule? rule, LocalDate start) {
+    final l = l10n;
+    if (rule == null) return l.repeatNone;
+    final n = rule.interval;
+    final base = switch (rule.frequency) {
+      RecurrenceFrequency.daily => n == 1 ? l.repeatDaily : l.everyN(n, l.unitDays(n)),
+      RecurrenceFrequency.weekly => n == 1 ? l.repeatWeekly : l.everyN(n, l.unitWeeks(n)),
+      RecurrenceFrequency.monthly => n == 1 ? l.repeatMonthly : l.everyN(n, l.unitMonths(n)),
+      RecurrenceFrequency.yearly => n == 1 ? l.repeatYearly : l.everyN(n, l.unitYears(n)),
+    };
+    final parts = <String>[base];
+    if (rule.frequency == RecurrenceFrequency.weekly) {
+      final days = (rule.weekdays.isEmpty ? {RecurrenceEngine.weekdayOf(start)} : rule.weekdays).toList()..sort();
+      parts.add(days.map(weekdayName).join(localeName.startsWith('ar') ? '، ' : ', '));
+    } else if (rule.frequency == RecurrenceFrequency.monthly) {
+      if (rule.isNthWeekday && rule.weekdays.isNotEmpty) {
+        parts.add(l.monthlyOnNth(positionName(rule.setPos!), weekdayName(rule.weekdays.first)));
+      } else {
+        parts.add(l.monthlyOnDay(rule.monthDay ?? start.day));
+      }
+    }
+    if (rule.until != null) parts.add(l.untilDate(formatDate(rule.until!)));
+    if (rule.count != null) parts.add(l.occurrencesCount(rule.count!));
+    return parts.join(' · ');
+  }
+
+  String positionName(int setPos) => switch (setPos) {
+        1 => l10n.posFirst,
+        2 => l10n.posSecond,
+        3 => l10n.posThird,
+        4 => l10n.posFourth,
+        _ => l10n.posLast,
       };
 }
 

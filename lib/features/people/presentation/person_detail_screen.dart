@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../../core/time_engine/local_date.dart';
 import '../../../shared/l10n_labels.dart';
+import '../../../shared/navigation.dart';
 import '../../../shared/widgets/common.dart';
 import '../../agenda/agenda.dart';
 import '../../events/presentation/events_providers.dart';
@@ -24,7 +25,7 @@ class PersonDetailScreen extends ConsumerWidget {
     await ref.read(peopleRepositoryProvider).delete(personId);
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.deletedSuccessfully)));
-    context.pop();
+    context.popOrGo('/people');
   }
 
   Future<void> _ageOnDate(BuildContext context, WidgetRef ref, LocalDate birth) async {
@@ -70,6 +71,7 @@ class PersonDetailScreen extends ConsumerWidget {
     final age = withYear == null ? null : engine.ageOn(withYear, today);
     final next = birth == null ? null : engine.nextBirthday(birth, today);
     final untilNext = next == null ? null : engine.difference(today, next);
+    final eventTypes = ref.watch(eventTypeByIdProvider);
     final linkedEvents = ref.watch(eventsProvider).where((e) => e.personIds.contains(person.id)).toList()
       ..sort((a, b) => a.date.compareTo(b.date));
 
@@ -237,12 +239,12 @@ class PersonDetailScreen extends ConsumerWidget {
                 child: Card(
                   child: ListTile(
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                    leading: Icon(e.type.icon, color: theme.colorScheme.primary),
+                    leading: Icon(eventTypes[e.typeId]?.icon ?? Icons.event_note_outlined, color: theme.colorScheme.primary),
                     title: Text(e.title),
                     subtitle: Text([
                       context.formatDate(e.date),
-                      e.type.label(l),
-                      if (e.repeatsYearly) l.yearly,
+                      ?eventTypes[e.typeId]?.label(l),
+                      if (e.isRecurring) context.describeRecurrence(e.recurrence, e.date),
                     ].join(' · ')),
                     onTap: () => context.push('/events/${e.id}/edit'),
                   ),

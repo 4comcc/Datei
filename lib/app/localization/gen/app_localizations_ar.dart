@@ -767,4 +767,372 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get add => 'إضافة';
+
+  @override
+  String get repeat => 'التكرار';
+
+  @override
+  String get repeatNone => 'لا يتكرر';
+
+  @override
+  String get repeatDaily => 'يومي';
+
+  @override
+  String get repeatWeekly => 'أسبوعي';
+
+  @override
+  String get repeatMonthly => 'شهري';
+
+  @override
+  String get repeatYearly => 'سنوي';
+
+  @override
+  String get everyLabel => 'كل';
+
+  @override
+  String unitDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'يوم',
+      many: 'يومًا',
+      few: 'أيام',
+      two: 'يومين',
+      one: 'يوم',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'أسبوع',
+      many: 'أسبوعًا',
+      few: 'أسابيع',
+      two: 'أسبوعين',
+      one: 'أسبوع',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'شهر',
+      many: 'شهرًا',
+      few: 'أشهر',
+      two: 'شهرين',
+      one: 'شهر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String unitYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'سنة',
+      many: 'سنة',
+      few: 'سنوات',
+      two: 'سنتين',
+      one: 'سنة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String everyN(int count, String unit) {
+    return 'كل $count $unit';
+  }
+
+  @override
+  String get onWeekdays => 'في أيام';
+
+  @override
+  String monthlyOnDay(int day) {
+    return 'في اليوم $day';
+  }
+
+  @override
+  String monthlyOnNth(String position, String weekday) {
+    return 'في $weekday $position';
+  }
+
+  @override
+  String get posFirst => 'الأول';
+
+  @override
+  String get posSecond => 'الثاني';
+
+  @override
+  String get posThird => 'الثالث';
+
+  @override
+  String get posFourth => 'الرابع';
+
+  @override
+  String get posLast => 'الأخير';
+
+  @override
+  String get skipShortMonths => 'تخطَّ الأشهر التي ليس فيها هذا اليوم';
+
+  @override
+  String get ends => 'ينتهي';
+
+  @override
+  String get endsNever => 'أبدًا';
+
+  @override
+  String get endsOnDate => 'في تاريخ';
+
+  @override
+  String get endsAfter => 'بعد';
+
+  @override
+  String occurrencesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count مرة',
+      many: '$count مرة',
+      few: '$count مرات',
+      two: 'مرتين',
+      one: 'مرة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String untilDate(String date) {
+    return 'حتى $date';
+  }
+
+  @override
+  String get fieldEndDate => 'تاريخ النهاية (اختياري)';
+
+  @override
+  String get fieldEndTime => 'وقت النهاية (اختياري)';
+
+  @override
+  String get fieldPriority => 'الأولوية';
+
+  @override
+  String get priorityLow => 'منخفضة';
+
+  @override
+  String get priorityNormal => 'عادية';
+
+  @override
+  String get priorityHigh => 'عالية';
+
+  @override
+  String get priorityCritical => 'حرجة';
+
+  @override
+  String get fieldStatus => 'الحالة';
+
+  @override
+  String get statusPlanned => 'مخطط';
+
+  @override
+  String get statusDone => 'تم';
+
+  @override
+  String get statusCancelled => 'ملغى';
+
+  @override
+  String get errorEndBeforeStart => 'لا يمكن أن تكون النهاية قبل البداية';
+
+  @override
+  String get errorInterval => 'أدخل رقمًا من 1 إلى 999';
+
+  @override
+  String get errorWeekdays => 'اختر يومًا واحدًا على الأقل';
+
+  @override
+  String get hijriInput => 'إدخال تاريخ هجري';
+
+  @override
+  String get hijriDay => 'اليوم';
+
+  @override
+  String get hijriMonth => 'الشهر';
+
+  @override
+  String get hijriYear => 'السنة';
+
+  @override
+  String get hijriInvalid =>
+      'هذا التاريخ الهجري غير صحيح أو خارج نطاق 1356–1500 هـ';
+
+  @override
+  String hijriConverted(String date) {
+    return 'بالميلادي: $date';
+  }
+
+  @override
+  String hijriFormat(int day, String month, int year) {
+    return '$day $month $year هـ';
+  }
+
+  @override
+  String get hijriMonth1 => 'محرم';
+
+  @override
+  String get hijriMonth2 => 'صفر';
+
+  @override
+  String get hijriMonth3 => 'ربيع الأول';
+
+  @override
+  String get hijriMonth4 => 'ربيع الآخر';
+
+  @override
+  String get hijriMonth5 => 'جمادى الأولى';
+
+  @override
+  String get hijriMonth6 => 'جمادى الآخرة';
+
+  @override
+  String get hijriMonth7 => 'رجب';
+
+  @override
+  String get hijriMonth8 => 'شعبان';
+
+  @override
+  String get hijriMonth9 => 'رمضان';
+
+  @override
+  String get hijriMonth10 => 'شوال';
+
+  @override
+  String get hijriMonth11 => 'ذو القعدة';
+
+  @override
+  String get hijriMonth12 => 'ذو الحجة';
+
+  @override
+  String get editScopeTitle => 'تعديل حدث متكرر';
+
+  @override
+  String get deleteScopeTitle => 'حذف حدث متكرر';
+
+  @override
+  String get scopeThis => 'هذا الموعد فقط';
+
+  @override
+  String get scopeFollowing => 'هذا الموعد وما بعده';
+
+  @override
+  String get scopeAll => 'كل مواعيد السلسلة';
+
+  @override
+  String occurrenceOf(String date) {
+    return 'موعد يوم $date';
+  }
+
+  @override
+  String get manageEventTypes => 'أنواع الأحداث';
+
+  @override
+  String get addEventType => 'نوع جديد';
+
+  @override
+  String get editEventType => 'تعديل النوع';
+
+  @override
+  String get eventTypeName => 'اسم النوع';
+
+  @override
+  String deleteEventTypeConfirm(String name) {
+    return 'هل تريد حذف النوع «$name»؟ ستنتقل أحداثه إلى «أخرى».';
+  }
+
+  @override
+  String get yourEventTypes => 'أنواعك';
+
+  @override
+  String get noCustomEventTypes => 'لم تنشئ أي نوع أحداث بعد.';
+
+  @override
+  String get systemEventTypesNote => 'لا يمكن تعديل الأنواع الأساسية أو حذفها.';
+
+  @override
+  String get viewMonth => 'شهر';
+
+  @override
+  String get viewWeek => 'أسبوع';
+
+  @override
+  String get viewDay => 'يوم';
+
+  @override
+  String get goToDate => 'الانتقال إلى تاريخ';
+
+  @override
+  String get calendarFilter => 'العرض في التقويم';
+
+  @override
+  String get birthdaysLabel => 'أعياد الميلاد';
+
+  @override
+  String get searchCalendar => 'البحث في التقويم';
+
+  @override
+  String get searchCalendarHint => 'ابحث في الأحداث وأعياد الميلاد…';
+
+  @override
+  String get searchCalendarScope => 'تُعرض النتائج من قبل سنة إلى بعد سنة';
+
+  @override
+  String get allDay => 'طوال اليوم';
+
+  @override
+  String get previousPeriod => 'السابق';
+
+  @override
+  String get nextPeriod => 'التالي';
+
+  @override
+  String get settingsCalendar => 'التقويم';
+
+  @override
+  String get showHijri => 'عرض التاريخ الهجري';
+
+  @override
+  String get hijriAdjustment => 'تعديل التاريخ الهجري';
+
+  @override
+  String get hijriNote =>
+      'يُحسب وفق تقويم أم القرى، وقد تختلف رؤية الهلال المحلية بيوم أو يومين، فعدّل عند الحاجة. لا تتغير التواريخ الميلادية أبدًا.';
+
+  @override
+  String get repeatsLabel => 'متكرر';
+
+  @override
+  String get hijriAdjustmentNone => 'بدون تعديل';
+
+  @override
+  String hijriAdjustmentDays(String value) {
+    return '$value يوم';
+  }
+
+  @override
+  String unitTimes(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مرة',
+      many: 'مرة',
+      few: 'مرات',
+      two: 'مرتين',
+      one: 'مرة',
+    );
+    return '$_temp0';
+  }
 }
