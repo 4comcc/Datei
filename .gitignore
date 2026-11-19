@@ -1,0 +1,23 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.idea/
+.vscode/
+coverage/
+
+# Secrets & local config — never commit
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+android/secrets.properties
+android/key.properties
+*.jks
+*.keystore
+!android/app/debug.keystore.example
+.env
+*.env
+local.properties
