@@ -49,3 +49,11 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-023 · Proposed · Sync conflict policy (future):** per-field last-writer-wins using `updated_at` + `row_version`, tombstones for deletes; revisit when sync is designed.
 
 **ADR-024 · Accepted · No analytics/crash-reporting SDK in v1.** Simplifies Data safety declaration; may be added later as opt-in.
+
+**ADR-025 · Accepted · Flutter 3.50 split libraries: import `package:material_ui/material_ui.dart` (and `cupertino_ui`), not `package:flutter/material.dart`.** `GlobalMaterialLocalizations`/`GlobalCupertinoLocalizations` now come from those packages; `flutter_localizations` is used only for `GlobalWidgetsLocalizations`.
+
+**ADR-026 · Accepted (prototype only) · Prototype v0.1 stores data as JSON in SharedPreferences behind `LocalStore`.** Fast to ship for UX validation; replaced by Drift in Phase 1. The time engine, agenda service, theme, l10n and screens are kept and evolved, not thrown away.
+
+**ADR-027 · Accepted · Fonts converted from IBM's official npm package `@ibm/plex-sans-arabic` 1.1.0 (WOFF2 → TTF via fontTools)** because Flutter cannot load WOFF; licence file shipped in `assets/fonts/`.
+
+**ADR-028 · Accepted (revisit) · Latin digits in both languages for v0.1.** intl renders Arabic dates with Arabic-Indic digits but numbers with Latin, producing mixed text. Unified to Latin; add a Settings option "Arabic-Indic digits" that switches both dates and numbers consistently.

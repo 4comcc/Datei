@@ -50,7 +50,7 @@ Cloud sync, AI assistant, home-screen widgets, premium tier, iOS release, web.
 - **Guest:** "Continue as guest" gives full access to every core module; no feature is gated behind sign-in.
 - **Sign in later:** a guest who signs in keeps 100% of local data — no deletion, no duplication.
 - **Sign-in ≠ sync:** signing in uploads nothing in v1.
-- **Age:** for a person born 2000-02-29, on 2025-02-28 age is 24, on 2025-03-01 age is 25 (rule documented in DECISIONS); "turning N in D days" always correct; age never stored.
+- **Age:** for a person born 2000-02-29, under the default policy (ADR-009) age becomes 25 on 2025-02-28 (on 2025-03-01 with the Mar-1 policy); "turning N in D days" always correct; age never stored.
 - **Birthday without year:** supported; age hidden, next birthday still shown.
 - **Recurring event:** one stored rule; occurrences computed; edit this / this-and-following / all.
 - **Commitment:** reminders at 30/14/7/3/1/0 days or custom; status computed (Upcoming/Due soon/Overdue…); "Renew" creates a history entry and advances dates.

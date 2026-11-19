@@ -1,0 +1,212 @@
+{
+  "@@locale": "en",
+  "appTitle": "Datei",
+  "tagline": "Every Date Has a Story.",
+  "chooseLanguageTitle": "Choose your language",
+  "chooseLanguageHint": "You can change it anytime from Settings.",
+  "continueAction": "Continue",
+  "welcomeTitle": "Welcome to Datei",
+  "welcomeBody": "Keep the people, events and dates that matter — organized in one calm place.",
+  "signInGoogle": "Continue with Google",
+  "signInFacebook": "Continue with Facebook",
+  "continueAsGuest": "Continue as guest",
+  "signInComingSoon": "Google and Facebook sign-in will be available in the full version. As a guest, everything works and your data stays on this device.",
+  "navHome": "Home",
+  "navPeople": "People",
+  "navEvents": "Events",
+  "navCalendar": "Calendar",
+  "navMore": "More",
+  "todaySummaryEvents": "{count, plural, =0{No events today} =1{1 event today} other{{count} events today}}",
+  "@todaySummaryEvents": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "todaySummaryUpcoming": "{count, plural, =0{Nothing in the next 30 days} =1{1 upcoming in 30 days} other{{count} upcoming in 30 days}}",
+  "@todaySummaryUpcoming": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sectionToday": "Today",
+  "sectionBirthdays": "Upcoming birthdays",
+  "sectionUpcomingEvents": "Upcoming events",
+  "sectionQuickActions": "Quick actions",
+  "emptyToday": "Nothing scheduled for today.",
+  "emptyBirthdays": "No birthdays in the next 30 days.",
+  "emptyUpcomingEvents": "No events in the next 30 days.",
+  "addPerson": "Add person",
+  "addEvent": "Add event",
+  "editPerson": "Edit person",
+  "editEvent": "Edit event",
+  "quickAddTitle": "What would you like to add?",
+  "comingInFullVersion": "Coming in the full version",
+  "addCommitment": "Add commitment",
+  "addMemory": "Add memory",
+  "peopleEmptyTitle": "No people yet",
+  "peopleEmptyBody": "Add the people who matter to you and Datei will keep track of their ages and birthdays.",
+  "eventsEmptyTitle": "No events yet",
+  "eventsEmptyBody": "Record appointments, anniversaries, trips and achievements.",
+  "searchPeopleHint": "Search by name, occupation…",
+  "filterAll": "All",
+  "noResults": "No matching results.",
+  "fieldFullName": "Full name",
+  "fieldDisplayName": "Display name (optional)",
+  "fieldBirthDate": "Birth date",
+  "fieldPhone": "Phone",
+  "fieldEmail": "Email",
+  "fieldOccupation": "Occupation",
+  "fieldNotes": "Notes",
+  "fieldCategories": "Categories",
+  "fieldTitle": "Title",
+  "fieldEventType": "Event type",
+  "fieldDate": "Date",
+  "fieldTime": "Time (optional)",
+  "fieldLocation": "Location",
+  "fieldLinkedPeople": "Linked people",
+  "fieldRepeatsYearly": "Repeats every year",
+  "notSet": "Not set",
+  "pickDate": "Pick a date",
+  "pickTime": "Pick a time",
+  "clear": "Clear",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "confirmDeleteTitle": "Delete?",
+  "confirmDeletePerson": "Delete {name}? Their links to events will be removed. This cannot be undone.",
+  "@confirmDeletePerson": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "confirmDeleteEvent": "Delete “{title}”? This cannot be undone.",
+  "@confirmDeleteEvent": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "errorRequired": "This field is required",
+  "errorInvalidEmail": "Enter a valid email address",
+  "errorFutureBirthDate": "Birth date can't be in the future",
+  "errorDateRequired": "Please pick a date",
+  "savedSuccessfully": "Saved",
+  "deletedSuccessfully": "Deleted",
+  "ageYears": "{count, plural, =0{Under 1 year} =1{1 year old} other{{count} years old}}",
+  "@ageYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ageBreakdown": "{years} y · {months} m · {days} d",
+  "@ageBreakdown": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      },
+      "months": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "totalDaysLived": "{count} days lived",
+  "@totalDaysLived": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "turnsAge": "Turns {age}",
+  "@turnsAge": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "relativeDays": "{count, plural, =0{Today} =1{Tomorrow} other{In {count} days}}",
+  "@relativeDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "birthdayOf": "{name}'s birthday",
+  "@birthdayOf": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "labelAge": "Age",
+  "labelNextBirthday": "Next birthday",
+  "labelContact": "Contact",
+  "labelLinkedEvents": "Linked events",
+  "noBirthDate": "No birth date",
+  "noLinkedEvents": "No linked events yet.",
+  "tabUpcoming": "Upcoming",
+  "tabPast": "Past",
+  "yearly": "Yearly",
+  "calendarNoItems": "Nothing on this day.",
+  "calendarToday": "Today",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
+  "settingsTitle": "Settings",
+  "settingsLanguage": "Language",
+  "settingsTheme": "Appearance",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsAccount": "Account",
+  "guestAccountStatus": "Guest — data is stored on this device only",
+  "moreModulesTitle": "Coming modules",
+  "moduleCommitments": "Commitments & renewals",
+  "moduleMemories": "Memories & milestones",
+  "moduleTimeline": "Timeline",
+  "moduleReports": "Reports",
+  "moduleBackup": "Backup & restore",
+  "settingsData": "Data",
+  "resetData": "Erase all data",
+  "resetDataConfirm": "This permanently deletes all people and events on this device. Continue?",
+  "aboutTitle": "About",
+  "prototypeNotice": "Early prototype (v{version}) for trying the experience. Data is stored locally on this device.",
+  "@prototypeNotice": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryFamily": "Family",
+  "categoryRelatives": "Relatives",
+  "categoryFriends": "Friends",
+  "categoryColleagues": "Colleagues",
+  "categoryClients": "Clients",
+  "categoryOther": "Other",
+  "eventTypeAnniversary": "Anniversary",
+  "eventTypeAppointment": "Appointment",
+  "eventTypeTravel": "Travel",
+  "eventTypeGraduation": "Graduation",
+  "eventTypeAchievement": "Achievement",
+  "eventTypeFamily": "Family event",
+  "eventTypeReligious": "Religious occasion",
+  "eventTypePersonal": "Personal",
+  "eventTypeOther": "Other"
+}

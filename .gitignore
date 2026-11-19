@@ -21,3 +21,4 @@ android/key.properties
 .env
 *.env
 local.properties
+test_screens/out/
