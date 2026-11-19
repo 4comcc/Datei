@@ -10,6 +10,8 @@ import '../../features/home/home_screen.dart';
 import '../../features/more/more_screen.dart';
 import '../../features/onboarding/language_screen.dart';
 import '../../features/onboarding/welcome_screen.dart';
+import '../../features/people/presentation/categories_screen.dart';
+import '../../features/people/presentation/custom_fields_screen.dart';
 import '../../features/people/presentation/people_screen.dart';
 import '../../features/people/presentation/person_detail_screen.dart';
 import '../../features/people/presentation/person_form_screen.dart';
@@ -76,6 +78,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/people/:id/edit',
         parentNavigatorKey: _rootKey,
         builder: (_, state) => PersonFormScreen(personId: state.pathParameters['id']),
+      ),
+      GoRoute(
+        path: '/settings/categories',
+        parentNavigatorKey: _rootKey,
+        builder: (_, _) => const CategoriesScreen(),
+      ),
+      GoRoute(
+        path: '/settings/custom-fields',
+        parentNavigatorKey: _rootKey,
+        builder: (_, _) => const CustomFieldsScreen(),
       ),
       GoRoute(
         path: '/events/new',

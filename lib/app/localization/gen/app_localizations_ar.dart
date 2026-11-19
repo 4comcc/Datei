@@ -474,4 +474,297 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get copied => 'تم النسخ';
+
+  @override
+  String get fieldGender => 'الجنس (اختياري)';
+
+  @override
+  String get genderUnspecified => 'غير محدد';
+
+  @override
+  String get genderMale => 'ذكر';
+
+  @override
+  String get genderFemale => 'أنثى';
+
+  @override
+  String get fieldAddress => 'العنوان';
+
+  @override
+  String get fieldOrganization => 'جهة العمل';
+
+  @override
+  String get birthYearUnknown => 'لا أعرف سنة الميلاد';
+
+  @override
+  String get birthYearUnknownHint =>
+      'سيُستخدم اليوم والشهر فقط، ولن يظهر العمر.';
+
+  @override
+  String get manageCategories => 'التصنيفات';
+
+  @override
+  String get addCategory => 'تصنيف جديد';
+
+  @override
+  String get categoryName => 'اسم التصنيف';
+
+  @override
+  String get editCategory => 'تعديل التصنيف';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return 'هل تريد حذف التصنيف «$name»؟ لن يُحذف الأشخاص، بل التصنيف فقط.';
+  }
+
+  @override
+  String get systemCategoriesNote =>
+      'لا يمكن تعديل التصنيفات الأساسية أو حذفها.';
+
+  @override
+  String get yourCategories => 'تصنيفاتك';
+
+  @override
+  String get builtInCategories => 'الأساسية';
+
+  @override
+  String get noCustomCategories => 'لم تنشئ أي تصنيف بعد.';
+
+  @override
+  String get sectionRelationships => 'العلاقات';
+
+  @override
+  String get addRelationship => 'إضافة علاقة';
+
+  @override
+  String relationshipIs(String name) {
+    return '$name هو/هي…';
+  }
+
+  @override
+  String get relationshipOf => '…لـ';
+
+  @override
+  String get relatedToMe => 'أنا';
+
+  @override
+  String get customRelationshipLabel => 'اسم العلاقة';
+
+  @override
+  String get noRelationships => 'لا توجد علاقات بعد.';
+
+  @override
+  String relationOfPerson(String relation, String name) {
+    return '$relation $name';
+  }
+
+  @override
+  String relationOfMe(String relation) {
+    return '$relation (بالنسبة لك)';
+  }
+
+  @override
+  String get relationFather => 'أب';
+
+  @override
+  String get relationMother => 'أم';
+
+  @override
+  String get relationSon => 'ابن';
+
+  @override
+  String get relationDaughter => 'ابنة';
+
+  @override
+  String get relationBrother => 'أخ';
+
+  @override
+  String get relationSister => 'أخت';
+
+  @override
+  String get relationSpouse => 'زوج/زوجة';
+
+  @override
+  String get relationRelative => 'قريب';
+
+  @override
+  String get relationFriend => 'صديق';
+
+  @override
+  String get relationColleague => 'زميل';
+
+  @override
+  String get relationCustom => 'أخرى…';
+
+  @override
+  String get removeRelationship => 'إزالة العلاقة';
+
+  @override
+  String get errorChoosePerson => 'اختر شخصًا';
+
+  @override
+  String get customFieldsTitle => 'الحقول المخصصة';
+
+  @override
+  String get customFieldsHint =>
+      'أضف حقولًا خاصة بك لكل شخص، مثل فصيلة الدم أو رقم الهوية.';
+
+  @override
+  String get addCustomField => 'حقل جديد';
+
+  @override
+  String get editCustomField => 'تعديل الحقل';
+
+  @override
+  String get customFieldLabel => 'اسم الحقل';
+
+  @override
+  String get customFieldType => 'نوع الحقل';
+
+  @override
+  String get fieldTypeText => 'نص';
+
+  @override
+  String get fieldTypeNumber => 'رقم';
+
+  @override
+  String get fieldTypeDate => 'تاريخ';
+
+  @override
+  String get fieldTypeUrl => 'رابط';
+
+  @override
+  String get noCustomFields => 'لا توجد حقول مخصصة بعد.';
+
+  @override
+  String deleteCustomFieldConfirm(String label) {
+    return 'هل تريد حذف الحقل «$label»؟ ستُحذف قيمه من جميع الأشخاص.';
+  }
+
+  @override
+  String get ageOnDate => 'العمر في تاريخ معيّن';
+
+  @override
+  String get notBornYet => 'لم يكن قد وُلد في هذا التاريخ.';
+
+  @override
+  String untilBirthday(int months, int days) {
+    return 'باقٍ $months شهر و$days يوم';
+  }
+
+  @override
+  String get filters => 'التصفية';
+
+  @override
+  String filtersActive(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count شرط',
+      many: '$count شرطًا',
+      few: '$count شروط',
+      two: 'شرطان',
+      one: 'شرط واحد',
+      zero: 'التصفية',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clearFilters => 'مسح الكل';
+
+  @override
+  String get showResults => 'عرض النتائج';
+
+  @override
+  String get ageRange => 'نطاق العمر';
+
+  @override
+  String get minAge => 'من';
+
+  @override
+  String get maxAge => 'إلى';
+
+  @override
+  String get birthMonth => 'شهر الميلاد';
+
+  @override
+  String get birthDayOfMonth => 'يوم الميلاد';
+
+  @override
+  String get birthYear => 'سنة الميلاد';
+
+  @override
+  String get anyValue => 'الكل';
+
+  @override
+  String get birthDateFilter => 'تاريخ الميلاد';
+
+  @override
+  String get withBirthDate => 'له تاريخ ميلاد';
+
+  @override
+  String get withoutBirthDate => 'بلا تاريخ ميلاد';
+
+  @override
+  String get birthdayWithin => 'عيد الميلاد خلال';
+
+  @override
+  String withinDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count يوم',
+      many: '$count يومًا',
+      few: '$count أيام',
+      two: 'يومين',
+      one: 'يوم واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get relationshipFilter => 'لديه علاقة';
+
+  @override
+  String get saveFilter => 'حفظ الفلتر';
+
+  @override
+  String get filterName => 'اسم الفلتر';
+
+  @override
+  String get filterSaved => 'تم حفظ الفلتر';
+
+  @override
+  String deleteSavedFilterConfirm(String name) {
+    return 'هل تريد حذف الفلتر المحفوظ «$name»؟';
+  }
+
+  @override
+  String get errorInvalidNumber => 'أدخل رقمًا صحيحًا';
+
+  @override
+  String get errorInvalidUrl =>
+      'أدخل رابطًا صحيحًا يبدأ بـ http:// أو https://';
+
+  @override
+  String get errorAgeRange => 'يجب ألا تكون قيمة «من» أكبر من «إلى»';
+
+  @override
+  String resultsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count شخص',
+      many: '$count شخصًا',
+      few: '$count أشخاص',
+      two: 'شخصان',
+      one: 'شخص واحد',
+      zero: 'لا أحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get add => 'إضافة';
 }

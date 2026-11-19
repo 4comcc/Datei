@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../settings/settings_controller.dart';
 
-const appVersion = '0.3.0';
+const appVersion = '0.4.0';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -67,6 +68,27 @@ class MoreScreen extends ConsumerWidget {
             ],
             selected: {settings.themeMode},
             onSelectionChanged: (s) => controller.setThemeMode(s.first),
+          ),
+          SectionHeader(l.navPeople),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  key: const Key('open-categories'),
+                  leading: const Icon(Icons.label_outline),
+                  title: Text(l.manageCategories),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/settings/categories'),
+                ),
+                ListTile(
+                  key: const Key('open-custom-fields'),
+                  leading: const Icon(Icons.tune),
+                  title: Text(l.customFieldsTitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/settings/custom-fields'),
+                ),
+              ],
+            ),
           ),
           SectionHeader(l.settingsAccount),
           Card(

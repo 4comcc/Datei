@@ -461,4 +461,288 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get copied => 'Copied';
+
+  @override
+  String get fieldGender => 'Gender (optional)';
+
+  @override
+  String get genderUnspecified => 'Not specified';
+
+  @override
+  String get genderMale => 'Male';
+
+  @override
+  String get genderFemale => 'Female';
+
+  @override
+  String get fieldAddress => 'Address';
+
+  @override
+  String get fieldOrganization => 'Workplace';
+
+  @override
+  String get birthYearUnknown => 'I don\'t know the year';
+
+  @override
+  String get birthYearUnknownHint =>
+      'Only the day and month will be used. Age won\'t be shown.';
+
+  @override
+  String get manageCategories => 'Categories';
+
+  @override
+  String get addCategory => 'New category';
+
+  @override
+  String get categoryName => 'Category name';
+
+  @override
+  String get editCategory => 'Edit category';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return 'Delete the category “$name”? People in it are kept; only the category is removed.';
+  }
+
+  @override
+  String get systemCategoriesNote =>
+      'Built-in categories can\'t be renamed or deleted.';
+
+  @override
+  String get yourCategories => 'Your categories';
+
+  @override
+  String get builtInCategories => 'Built-in';
+
+  @override
+  String get noCustomCategories => 'You haven\'t created any categories yet.';
+
+  @override
+  String get sectionRelationships => 'Relationships';
+
+  @override
+  String get addRelationship => 'Add relationship';
+
+  @override
+  String relationshipIs(String name) {
+    return '$name is…';
+  }
+
+  @override
+  String get relationshipOf => '…of';
+
+  @override
+  String get relatedToMe => 'Me';
+
+  @override
+  String get customRelationshipLabel => 'Relationship name';
+
+  @override
+  String get noRelationships => 'No relationships yet.';
+
+  @override
+  String relationOfPerson(String relation, String name) {
+    return '$relation of $name';
+  }
+
+  @override
+  String relationOfMe(String relation) {
+    return '$relation (to you)';
+  }
+
+  @override
+  String get relationFather => 'Father';
+
+  @override
+  String get relationMother => 'Mother';
+
+  @override
+  String get relationSon => 'Son';
+
+  @override
+  String get relationDaughter => 'Daughter';
+
+  @override
+  String get relationBrother => 'Brother';
+
+  @override
+  String get relationSister => 'Sister';
+
+  @override
+  String get relationSpouse => 'Spouse';
+
+  @override
+  String get relationRelative => 'Relative';
+
+  @override
+  String get relationFriend => 'Friend';
+
+  @override
+  String get relationColleague => 'Colleague';
+
+  @override
+  String get relationCustom => 'Other…';
+
+  @override
+  String get removeRelationship => 'Remove relationship';
+
+  @override
+  String get errorChoosePerson => 'Choose a person';
+
+  @override
+  String get customFieldsTitle => 'Custom fields';
+
+  @override
+  String get customFieldsHint =>
+      'Add your own fields to every person, such as blood type or ID number.';
+
+  @override
+  String get addCustomField => 'New field';
+
+  @override
+  String get editCustomField => 'Edit field';
+
+  @override
+  String get customFieldLabel => 'Field name';
+
+  @override
+  String get customFieldType => 'Field type';
+
+  @override
+  String get fieldTypeText => 'Text';
+
+  @override
+  String get fieldTypeNumber => 'Number';
+
+  @override
+  String get fieldTypeDate => 'Date';
+
+  @override
+  String get fieldTypeUrl => 'Link';
+
+  @override
+  String get noCustomFields => 'No custom fields yet.';
+
+  @override
+  String deleteCustomFieldConfirm(String label) {
+    return 'Delete the field “$label”? Its values will be removed from everyone.';
+  }
+
+  @override
+  String get ageOnDate => 'Age on a date';
+
+  @override
+  String get notBornYet => 'Not born yet on this date.';
+
+  @override
+  String untilBirthday(int months, int days) {
+    return '$months months and $days days to go';
+  }
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String filtersActive(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count filters',
+      one: '1 filter',
+      zero: 'Filters',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clearFilters => 'Clear all';
+
+  @override
+  String get showResults => 'Show results';
+
+  @override
+  String get ageRange => 'Age range';
+
+  @override
+  String get minAge => 'From';
+
+  @override
+  String get maxAge => 'To';
+
+  @override
+  String get birthMonth => 'Birth month';
+
+  @override
+  String get birthDayOfMonth => 'Birth day';
+
+  @override
+  String get birthYear => 'Birth year';
+
+  @override
+  String get anyValue => 'Any';
+
+  @override
+  String get birthDateFilter => 'Birth date';
+
+  @override
+  String get withBirthDate => 'Has a birth date';
+
+  @override
+  String get withoutBirthDate => 'No birth date';
+
+  @override
+  String get birthdayWithin => 'Birthday within';
+
+  @override
+  String withinDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get relationshipFilter => 'Has relationship';
+
+  @override
+  String get saveFilter => 'Save filter';
+
+  @override
+  String get filterName => 'Filter name';
+
+  @override
+  String get filterSaved => 'Filter saved';
+
+  @override
+  String deleteSavedFilterConfirm(String name) {
+    return 'Delete the saved filter “$name”?';
+  }
+
+  @override
+  String get errorInvalidNumber => 'Enter a valid number';
+
+  @override
+  String get errorInvalidUrl =>
+      'Enter a valid link starting with http:// or https://';
+
+  @override
+  String get errorAgeRange => '“From” must not be greater than “To”';
+
+  @override
+  String resultsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count people',
+      one: '1 person',
+      zero: 'No people',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get add => 'Add';
 }

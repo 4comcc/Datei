@@ -15,7 +15,7 @@ enum AgendaKind { birthday, event }
 
 /// One dated occurrence shown on Home / Calendar / Events.
 class AgendaItem {
-  const AgendaItem.birthday({required this.date, required Person this.person, required int this.turningAge})
+  const AgendaItem.birthday({required this.date, required Person this.person, required this.turningAge})
       : kind = AgendaKind.birthday,
         event = null;
 
@@ -28,6 +28,7 @@ class AgendaItem {
   final LocalDate date;
   final Person? person;
   final DateiEvent? event;
+  /// Age reached on this birthday; null when the birth year is unknown.
   final int? turningAge;
 
   String get sortTime => event?.time ?? '';
@@ -53,7 +54,7 @@ class AgendaService {
         final birth = p.birthDate;
         if (birth == null) continue;
         for (final d in _engine.yearlyOccurrences(birth, from, to, includeOrigin: false)) {
-          items.add(AgendaItem.birthday(date: d, person: p, turningAge: d.year - birth.year));
+          items.add(AgendaItem.birthday(date: d, person: p, turningAge: p.birthYearKnown ? d.year - birth.year : null));
         }
       }
     }

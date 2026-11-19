@@ -1367,6 +1367,21 @@ class $PersonsTable extends Persons with TableInfo<$PersonsTable, PersonRow> {
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _birthYearKnownMeta = const VerificationMeta(
+    'birthYearKnown',
+  );
+  @override
+  late final GeneratedColumn<bool> birthYearKnown = GeneratedColumn<bool>(
+    'birth_year_known',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("birth_year_known" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
   static const VerificationMeta _genderMeta = const VerificationMeta('gender');
   @override
   late final GeneratedColumn<String> gender = GeneratedColumn<String>(
@@ -1447,6 +1462,7 @@ class $PersonsTable extends Persons with TableInfo<$PersonsTable, PersonRow> {
     fullName,
     displayName,
     birthDate,
+    birthYearKnown,
     gender,
     phone,
     email,
@@ -1532,6 +1548,15 @@ class $PersonsTable extends Persons with TableInfo<$PersonsTable, PersonRow> {
       context.handle(
         _birthDateMeta,
         birthDate.isAcceptableOrUnknown(data['birth_date']!, _birthDateMeta),
+      );
+    }
+    if (data.containsKey('birth_year_known')) {
+      context.handle(
+        _birthYearKnownMeta,
+        birthYearKnown.isAcceptableOrUnknown(
+          data['birth_year_known']!,
+          _birthYearKnownMeta,
+        ),
       );
     }
     if (data.containsKey('gender')) {
@@ -1624,6 +1649,10 @@ class $PersonsTable extends Persons with TableInfo<$PersonsTable, PersonRow> {
         DriftSqlType.string,
         data['${effectivePrefix}birth_date'],
       ),
+      birthYearKnown: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}birth_year_known'],
+      )!,
       gender: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}gender'],
@@ -1671,6 +1700,12 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
   final String fullName;
   final String? displayName;
   final String? birthDate;
+
+  /// v2: false when only day and month are known (the stored year is then a
+  /// leap-year placeholder, 2000, and must never be shown or used for age).
+  final bool birthYearKnown;
+
+  /// male | female | null (not specified).
   final String? gender;
   final String? phone;
   final String? email;
@@ -1688,6 +1723,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
     required this.fullName,
     this.displayName,
     this.birthDate,
+    required this.birthYearKnown,
     this.gender,
     this.phone,
     this.email,
@@ -1714,6 +1750,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
     if (!nullToAbsent || birthDate != null) {
       map['birth_date'] = Variable<String>(birthDate);
     }
+    map['birth_year_known'] = Variable<bool>(birthYearKnown);
     if (!nullToAbsent || gender != null) {
       map['gender'] = Variable<String>(gender);
     }
@@ -1755,6 +1792,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
       birthDate: birthDate == null && nullToAbsent
           ? const Value.absent()
           : Value(birthDate),
+      birthYearKnown: Value(birthYearKnown),
       gender: gender == null && nullToAbsent
           ? const Value.absent()
           : Value(gender),
@@ -1794,6 +1832,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
       fullName: serializer.fromJson<String>(json['fullName']),
       displayName: serializer.fromJson<String?>(json['displayName']),
       birthDate: serializer.fromJson<String?>(json['birthDate']),
+      birthYearKnown: serializer.fromJson<bool>(json['birthYearKnown']),
       gender: serializer.fromJson<String?>(json['gender']),
       phone: serializer.fromJson<String?>(json['phone']),
       email: serializer.fromJson<String?>(json['email']),
@@ -1816,6 +1855,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
       'fullName': serializer.toJson<String>(fullName),
       'displayName': serializer.toJson<String?>(displayName),
       'birthDate': serializer.toJson<String?>(birthDate),
+      'birthYearKnown': serializer.toJson<bool>(birthYearKnown),
       'gender': serializer.toJson<String?>(gender),
       'phone': serializer.toJson<String?>(phone),
       'email': serializer.toJson<String?>(email),
@@ -1836,6 +1876,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
     String? fullName,
     Value<String?> displayName = const Value.absent(),
     Value<String?> birthDate = const Value.absent(),
+    bool? birthYearKnown,
     Value<String?> gender = const Value.absent(),
     Value<String?> phone = const Value.absent(),
     Value<String?> email = const Value.absent(),
@@ -1853,6 +1894,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
     fullName: fullName ?? this.fullName,
     displayName: displayName.present ? displayName.value : this.displayName,
     birthDate: birthDate.present ? birthDate.value : this.birthDate,
+    birthYearKnown: birthYearKnown ?? this.birthYearKnown,
     gender: gender.present ? gender.value : this.gender,
     phone: phone.present ? phone.value : this.phone,
     email: email.present ? email.value : this.email,
@@ -1878,6 +1920,9 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
           ? data.displayName.value
           : this.displayName,
       birthDate: data.birthDate.present ? data.birthDate.value : this.birthDate,
+      birthYearKnown: data.birthYearKnown.present
+          ? data.birthYearKnown.value
+          : this.birthYearKnown,
       gender: data.gender.present ? data.gender.value : this.gender,
       phone: data.phone.present ? data.phone.value : this.phone,
       email: data.email.present ? data.email.value : this.email,
@@ -1904,6 +1949,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
           ..write('fullName: $fullName, ')
           ..write('displayName: $displayName, ')
           ..write('birthDate: $birthDate, ')
+          ..write('birthYearKnown: $birthYearKnown, ')
           ..write('gender: $gender, ')
           ..write('phone: $phone, ')
           ..write('email: $email, ')
@@ -1926,6 +1972,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
     fullName,
     displayName,
     birthDate,
+    birthYearKnown,
     gender,
     phone,
     email,
@@ -1947,6 +1994,7 @@ class PersonRow extends DataClass implements Insertable<PersonRow> {
           other.fullName == this.fullName &&
           other.displayName == this.displayName &&
           other.birthDate == this.birthDate &&
+          other.birthYearKnown == this.birthYearKnown &&
           other.gender == this.gender &&
           other.phone == this.phone &&
           other.email == this.email &&
@@ -1966,6 +2014,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
   final Value<String> fullName;
   final Value<String?> displayName;
   final Value<String?> birthDate;
+  final Value<bool> birthYearKnown;
   final Value<String?> gender;
   final Value<String?> phone;
   final Value<String?> email;
@@ -1984,6 +2033,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
     this.fullName = const Value.absent(),
     this.displayName = const Value.absent(),
     this.birthDate = const Value.absent(),
+    this.birthYearKnown = const Value.absent(),
     this.gender = const Value.absent(),
     this.phone = const Value.absent(),
     this.email = const Value.absent(),
@@ -2003,6 +2053,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
     required String fullName,
     this.displayName = const Value.absent(),
     this.birthDate = const Value.absent(),
+    this.birthYearKnown = const Value.absent(),
     this.gender = const Value.absent(),
     this.phone = const Value.absent(),
     this.email = const Value.absent(),
@@ -2026,6 +2077,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
     Expression<String>? fullName,
     Expression<String>? displayName,
     Expression<String>? birthDate,
+    Expression<bool>? birthYearKnown,
     Expression<String>? gender,
     Expression<String>? phone,
     Expression<String>? email,
@@ -2045,6 +2097,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
       if (fullName != null) 'full_name': fullName,
       if (displayName != null) 'display_name': displayName,
       if (birthDate != null) 'birth_date': birthDate,
+      if (birthYearKnown != null) 'birth_year_known': birthYearKnown,
       if (gender != null) 'gender': gender,
       if (phone != null) 'phone': phone,
       if (email != null) 'email': email,
@@ -2066,6 +2119,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
     Value<String>? fullName,
     Value<String?>? displayName,
     Value<String?>? birthDate,
+    Value<bool>? birthYearKnown,
     Value<String?>? gender,
     Value<String?>? phone,
     Value<String?>? email,
@@ -2085,6 +2139,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
       fullName: fullName ?? this.fullName,
       displayName: displayName ?? this.displayName,
       birthDate: birthDate ?? this.birthDate,
+      birthYearKnown: birthYearKnown ?? this.birthYearKnown,
       gender: gender ?? this.gender,
       phone: phone ?? this.phone,
       email: email ?? this.email,
@@ -2126,6 +2181,9 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
     if (birthDate.present) {
       map['birth_date'] = Variable<String>(birthDate.value);
     }
+    if (birthYearKnown.present) {
+      map['birth_year_known'] = Variable<bool>(birthYearKnown.value);
+    }
     if (gender.present) {
       map['gender'] = Variable<String>(gender.value);
     }
@@ -2165,6 +2223,7 @@ class PersonsCompanion extends UpdateCompanion<PersonRow> {
           ..write('fullName: $fullName, ')
           ..write('displayName: $displayName, ')
           ..write('birthDate: $birthDate, ')
+          ..write('birthYearKnown: $birthYearKnown, ')
           ..write('gender: $gender, ')
           ..write('phone: $phone, ')
           ..write('email: $email, ')
@@ -5683,6 +5742,1707 @@ class EventPersonRelationsCompanion
   }
 }
 
+class $PersonRelationshipsTable extends PersonRelationships
+    with TableInfo<$PersonRelationshipsTable, PersonRelationshipRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PersonRelationshipsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _personIdMeta = const VerificationMeta(
+    'personId',
+  );
+  @override
+  late final GeneratedColumn<String> personId = GeneratedColumn<String>(
+    'person_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES persons (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _relatedPersonIdMeta = const VerificationMeta(
+    'relatedPersonId',
+  );
+  @override
+  late final GeneratedColumn<String> relatedPersonId = GeneratedColumn<String>(
+    'related_person_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES persons (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _relationTypeMeta = const VerificationMeta(
+    'relationType',
+  );
+  @override
+  late final GeneratedColumn<String> relationType = GeneratedColumn<String>(
+    'relation_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _customLabelMeta = const VerificationMeta(
+    'customLabel',
+  );
+  @override
+  late final GeneratedColumn<String> customLabel = GeneratedColumn<String>(
+    'custom_label',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    createdAt,
+    updatedAt,
+    id,
+    personId,
+    relatedPersonId,
+    relationType,
+    customLabel,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'person_relationships';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PersonRelationshipRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('person_id')) {
+      context.handle(
+        _personIdMeta,
+        personId.isAcceptableOrUnknown(data['person_id']!, _personIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_personIdMeta);
+    }
+    if (data.containsKey('related_person_id')) {
+      context.handle(
+        _relatedPersonIdMeta,
+        relatedPersonId.isAcceptableOrUnknown(
+          data['related_person_id']!,
+          _relatedPersonIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('relation_type')) {
+      context.handle(
+        _relationTypeMeta,
+        relationType.isAcceptableOrUnknown(
+          data['relation_type']!,
+          _relationTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_relationTypeMeta);
+    }
+    if (data.containsKey('custom_label')) {
+      context.handle(
+        _customLabelMeta,
+        customLabel.isAcceptableOrUnknown(
+          data['custom_label']!,
+          _customLabelMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PersonRelationshipRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PersonRelationshipRow(
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      personId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}person_id'],
+      )!,
+      relatedPersonId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}related_person_id'],
+      ),
+      relationType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}relation_type'],
+      )!,
+      customLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}custom_label'],
+      ),
+    );
+  }
+
+  @override
+  $PersonRelationshipsTable createAlias(String alias) {
+    return $PersonRelationshipsTable(attachedDatabase, alias);
+  }
+}
+
+class PersonRelationshipRow extends DataClass
+    implements Insertable<PersonRelationshipRow> {
+  final int createdAt;
+  final int updatedAt;
+  final String id;
+  final String personId;
+  final String? relatedPersonId;
+
+  /// father | mother | son | daughter | brother | sister | spouse | relative | friend | colleague | custom
+  final String relationType;
+  final String? customLabel;
+  const PersonRelationshipRow({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.personId,
+    this.relatedPersonId,
+    required this.relationType,
+    this.customLabel,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['id'] = Variable<String>(id);
+    map['person_id'] = Variable<String>(personId);
+    if (!nullToAbsent || relatedPersonId != null) {
+      map['related_person_id'] = Variable<String>(relatedPersonId);
+    }
+    map['relation_type'] = Variable<String>(relationType);
+    if (!nullToAbsent || customLabel != null) {
+      map['custom_label'] = Variable<String>(customLabel);
+    }
+    return map;
+  }
+
+  PersonRelationshipsCompanion toCompanion(bool nullToAbsent) {
+    return PersonRelationshipsCompanion(
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      id: Value(id),
+      personId: Value(personId),
+      relatedPersonId: relatedPersonId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(relatedPersonId),
+      relationType: Value(relationType),
+      customLabel: customLabel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(customLabel),
+    );
+  }
+
+  factory PersonRelationshipRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PersonRelationshipRow(
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      id: serializer.fromJson<String>(json['id']),
+      personId: serializer.fromJson<String>(json['personId']),
+      relatedPersonId: serializer.fromJson<String?>(json['relatedPersonId']),
+      relationType: serializer.fromJson<String>(json['relationType']),
+      customLabel: serializer.fromJson<String?>(json['customLabel']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'id': serializer.toJson<String>(id),
+      'personId': serializer.toJson<String>(personId),
+      'relatedPersonId': serializer.toJson<String?>(relatedPersonId),
+      'relationType': serializer.toJson<String>(relationType),
+      'customLabel': serializer.toJson<String?>(customLabel),
+    };
+  }
+
+  PersonRelationshipRow copyWith({
+    int? createdAt,
+    int? updatedAt,
+    String? id,
+    String? personId,
+    Value<String?> relatedPersonId = const Value.absent(),
+    String? relationType,
+    Value<String?> customLabel = const Value.absent(),
+  }) => PersonRelationshipRow(
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    id: id ?? this.id,
+    personId: personId ?? this.personId,
+    relatedPersonId: relatedPersonId.present
+        ? relatedPersonId.value
+        : this.relatedPersonId,
+    relationType: relationType ?? this.relationType,
+    customLabel: customLabel.present ? customLabel.value : this.customLabel,
+  );
+  PersonRelationshipRow copyWithCompanion(PersonRelationshipsCompanion data) {
+    return PersonRelationshipRow(
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      id: data.id.present ? data.id.value : this.id,
+      personId: data.personId.present ? data.personId.value : this.personId,
+      relatedPersonId: data.relatedPersonId.present
+          ? data.relatedPersonId.value
+          : this.relatedPersonId,
+      relationType: data.relationType.present
+          ? data.relationType.value
+          : this.relationType,
+      customLabel: data.customLabel.present
+          ? data.customLabel.value
+          : this.customLabel,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PersonRelationshipRow(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('personId: $personId, ')
+          ..write('relatedPersonId: $relatedPersonId, ')
+          ..write('relationType: $relationType, ')
+          ..write('customLabel: $customLabel')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    createdAt,
+    updatedAt,
+    id,
+    personId,
+    relatedPersonId,
+    relationType,
+    customLabel,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PersonRelationshipRow &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.id == this.id &&
+          other.personId == this.personId &&
+          other.relatedPersonId == this.relatedPersonId &&
+          other.relationType == this.relationType &&
+          other.customLabel == this.customLabel);
+}
+
+class PersonRelationshipsCompanion
+    extends UpdateCompanion<PersonRelationshipRow> {
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<String> id;
+  final Value<String> personId;
+  final Value<String?> relatedPersonId;
+  final Value<String> relationType;
+  final Value<String?> customLabel;
+  final Value<int> rowid;
+  const PersonRelationshipsCompanion({
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.id = const Value.absent(),
+    this.personId = const Value.absent(),
+    this.relatedPersonId = const Value.absent(),
+    this.relationType = const Value.absent(),
+    this.customLabel = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PersonRelationshipsCompanion.insert({
+    required int createdAt,
+    required int updatedAt,
+    required String id,
+    required String personId,
+    this.relatedPersonId = const Value.absent(),
+    required String relationType,
+    this.customLabel = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       id = Value(id),
+       personId = Value(personId),
+       relationType = Value(relationType);
+  static Insertable<PersonRelationshipRow> custom({
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<String>? id,
+    Expression<String>? personId,
+    Expression<String>? relatedPersonId,
+    Expression<String>? relationType,
+    Expression<String>? customLabel,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (id != null) 'id': id,
+      if (personId != null) 'person_id': personId,
+      if (relatedPersonId != null) 'related_person_id': relatedPersonId,
+      if (relationType != null) 'relation_type': relationType,
+      if (customLabel != null) 'custom_label': customLabel,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PersonRelationshipsCompanion copyWith({
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<String>? id,
+    Value<String>? personId,
+    Value<String?>? relatedPersonId,
+    Value<String>? relationType,
+    Value<String?>? customLabel,
+    Value<int>? rowid,
+  }) {
+    return PersonRelationshipsCompanion(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      id: id ?? this.id,
+      personId: personId ?? this.personId,
+      relatedPersonId: relatedPersonId ?? this.relatedPersonId,
+      relationType: relationType ?? this.relationType,
+      customLabel: customLabel ?? this.customLabel,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (personId.present) {
+      map['person_id'] = Variable<String>(personId.value);
+    }
+    if (relatedPersonId.present) {
+      map['related_person_id'] = Variable<String>(relatedPersonId.value);
+    }
+    if (relationType.present) {
+      map['relation_type'] = Variable<String>(relationType.value);
+    }
+    if (customLabel.present) {
+      map['custom_label'] = Variable<String>(customLabel.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PersonRelationshipsCompanion(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('personId: $personId, ')
+          ..write('relatedPersonId: $relatedPersonId, ')
+          ..write('relationType: $relationType, ')
+          ..write('customLabel: $customLabel, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CustomFieldDefinitionsTable extends CustomFieldDefinitions
+    with TableInfo<$CustomFieldDefinitionsTable, CustomFieldDefinitionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CustomFieldDefinitionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityTypeMeta = const VerificationMeta(
+    'entityType',
+  );
+  @override
+  late final GeneratedColumn<String> entityType = GeneratedColumn<String>(
+    'entity_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('person'),
+  );
+  static const VerificationMeta _labelMeta = const VerificationMeta('label');
+  @override
+  late final GeneratedColumn<String> label = GeneratedColumn<String>(
+    'label',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 80,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fieldTypeMeta = const VerificationMeta(
+    'fieldType',
+  );
+  @override
+  late final GeneratedColumn<String> fieldType = GeneratedColumn<String>(
+    'field_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('text'),
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    createdAt,
+    updatedAt,
+    id,
+    entityType,
+    label,
+    fieldType,
+    sortOrder,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'custom_field_definitions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CustomFieldDefinitionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('entity_type')) {
+      context.handle(
+        _entityTypeMeta,
+        entityType.isAcceptableOrUnknown(data['entity_type']!, _entityTypeMeta),
+      );
+    }
+    if (data.containsKey('label')) {
+      context.handle(
+        _labelMeta,
+        label.isAcceptableOrUnknown(data['label']!, _labelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_labelMeta);
+    }
+    if (data.containsKey('field_type')) {
+      context.handle(
+        _fieldTypeMeta,
+        fieldType.isAcceptableOrUnknown(data['field_type']!, _fieldTypeMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  CustomFieldDefinitionRow map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CustomFieldDefinitionRow(
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      entityType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_type'],
+      )!,
+      label: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}label'],
+      )!,
+      fieldType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}field_type'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+    );
+  }
+
+  @override
+  $CustomFieldDefinitionsTable createAlias(String alias) {
+    return $CustomFieldDefinitionsTable(attachedDatabase, alias);
+  }
+}
+
+class CustomFieldDefinitionRow extends DataClass
+    implements Insertable<CustomFieldDefinitionRow> {
+  final int createdAt;
+  final int updatedAt;
+  final String id;
+
+  /// 'person' (more entity types later).
+  final String entityType;
+  final String label;
+
+  /// text | number | date | url
+  final String fieldType;
+  final int sortOrder;
+  const CustomFieldDefinitionRow({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.entityType,
+    required this.label,
+    required this.fieldType,
+    required this.sortOrder,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['id'] = Variable<String>(id);
+    map['entity_type'] = Variable<String>(entityType);
+    map['label'] = Variable<String>(label);
+    map['field_type'] = Variable<String>(fieldType);
+    map['sort_order'] = Variable<int>(sortOrder);
+    return map;
+  }
+
+  CustomFieldDefinitionsCompanion toCompanion(bool nullToAbsent) {
+    return CustomFieldDefinitionsCompanion(
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      id: Value(id),
+      entityType: Value(entityType),
+      label: Value(label),
+      fieldType: Value(fieldType),
+      sortOrder: Value(sortOrder),
+    );
+  }
+
+  factory CustomFieldDefinitionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CustomFieldDefinitionRow(
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      id: serializer.fromJson<String>(json['id']),
+      entityType: serializer.fromJson<String>(json['entityType']),
+      label: serializer.fromJson<String>(json['label']),
+      fieldType: serializer.fromJson<String>(json['fieldType']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'id': serializer.toJson<String>(id),
+      'entityType': serializer.toJson<String>(entityType),
+      'label': serializer.toJson<String>(label),
+      'fieldType': serializer.toJson<String>(fieldType),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+    };
+  }
+
+  CustomFieldDefinitionRow copyWith({
+    int? createdAt,
+    int? updatedAt,
+    String? id,
+    String? entityType,
+    String? label,
+    String? fieldType,
+    int? sortOrder,
+  }) => CustomFieldDefinitionRow(
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    id: id ?? this.id,
+    entityType: entityType ?? this.entityType,
+    label: label ?? this.label,
+    fieldType: fieldType ?? this.fieldType,
+    sortOrder: sortOrder ?? this.sortOrder,
+  );
+  CustomFieldDefinitionRow copyWithCompanion(
+    CustomFieldDefinitionsCompanion data,
+  ) {
+    return CustomFieldDefinitionRow(
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      id: data.id.present ? data.id.value : this.id,
+      entityType: data.entityType.present
+          ? data.entityType.value
+          : this.entityType,
+      label: data.label.present ? data.label.value : this.label,
+      fieldType: data.fieldType.present ? data.fieldType.value : this.fieldType,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFieldDefinitionRow(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('entityType: $entityType, ')
+          ..write('label: $label, ')
+          ..write('fieldType: $fieldType, ')
+          ..write('sortOrder: $sortOrder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    createdAt,
+    updatedAt,
+    id,
+    entityType,
+    label,
+    fieldType,
+    sortOrder,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CustomFieldDefinitionRow &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.id == this.id &&
+          other.entityType == this.entityType &&
+          other.label == this.label &&
+          other.fieldType == this.fieldType &&
+          other.sortOrder == this.sortOrder);
+}
+
+class CustomFieldDefinitionsCompanion
+    extends UpdateCompanion<CustomFieldDefinitionRow> {
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<String> id;
+  final Value<String> entityType;
+  final Value<String> label;
+  final Value<String> fieldType;
+  final Value<int> sortOrder;
+  final Value<int> rowid;
+  const CustomFieldDefinitionsCompanion({
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.id = const Value.absent(),
+    this.entityType = const Value.absent(),
+    this.label = const Value.absent(),
+    this.fieldType = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CustomFieldDefinitionsCompanion.insert({
+    required int createdAt,
+    required int updatedAt,
+    required String id,
+    this.entityType = const Value.absent(),
+    required String label,
+    this.fieldType = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       id = Value(id),
+       label = Value(label);
+  static Insertable<CustomFieldDefinitionRow> custom({
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<String>? id,
+    Expression<String>? entityType,
+    Expression<String>? label,
+    Expression<String>? fieldType,
+    Expression<int>? sortOrder,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (id != null) 'id': id,
+      if (entityType != null) 'entity_type': entityType,
+      if (label != null) 'label': label,
+      if (fieldType != null) 'field_type': fieldType,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CustomFieldDefinitionsCompanion copyWith({
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<String>? id,
+    Value<String>? entityType,
+    Value<String>? label,
+    Value<String>? fieldType,
+    Value<int>? sortOrder,
+    Value<int>? rowid,
+  }) {
+    return CustomFieldDefinitionsCompanion(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      id: id ?? this.id,
+      entityType: entityType ?? this.entityType,
+      label: label ?? this.label,
+      fieldType: fieldType ?? this.fieldType,
+      sortOrder: sortOrder ?? this.sortOrder,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (entityType.present) {
+      map['entity_type'] = Variable<String>(entityType.value);
+    }
+    if (label.present) {
+      map['label'] = Variable<String>(label.value);
+    }
+    if (fieldType.present) {
+      map['field_type'] = Variable<String>(fieldType.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFieldDefinitionsCompanion(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('entityType: $entityType, ')
+          ..write('label: $label, ')
+          ..write('fieldType: $fieldType, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CustomFieldValuesTable extends CustomFieldValues
+    with TableInfo<$CustomFieldValuesTable, CustomFieldValueRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CustomFieldValuesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _definitionIdMeta = const VerificationMeta(
+    'definitionId',
+  );
+  @override
+  late final GeneratedColumn<String> definitionId = GeneratedColumn<String>(
+    'definition_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES custom_field_definitions (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _entityIdMeta = const VerificationMeta(
+    'entityId',
+  );
+  @override
+  late final GeneratedColumn<String> entityId = GeneratedColumn<String>(
+    'entity_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [definitionId, entityId, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'custom_field_values';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<CustomFieldValueRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('definition_id')) {
+      context.handle(
+        _definitionIdMeta,
+        definitionId.isAcceptableOrUnknown(
+          data['definition_id']!,
+          _definitionIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionIdMeta);
+    }
+    if (data.containsKey('entity_id')) {
+      context.handle(
+        _entityIdMeta,
+        entityId.isAcceptableOrUnknown(data['entity_id']!, _entityIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityIdMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {definitionId, entityId};
+  @override
+  CustomFieldValueRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CustomFieldValueRow(
+      definitionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_id'],
+      )!,
+      entityId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_id'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  $CustomFieldValuesTable createAlias(String alias) {
+    return $CustomFieldValuesTable(attachedDatabase, alias);
+  }
+}
+
+class CustomFieldValueRow extends DataClass
+    implements Insertable<CustomFieldValueRow> {
+  final String definitionId;
+  final String entityId;
+  final String value;
+  const CustomFieldValueRow({
+    required this.definitionId,
+    required this.entityId,
+    required this.value,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['definition_id'] = Variable<String>(definitionId);
+    map['entity_id'] = Variable<String>(entityId);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  CustomFieldValuesCompanion toCompanion(bool nullToAbsent) {
+    return CustomFieldValuesCompanion(
+      definitionId: Value(definitionId),
+      entityId: Value(entityId),
+      value: Value(value),
+    );
+  }
+
+  factory CustomFieldValueRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CustomFieldValueRow(
+      definitionId: serializer.fromJson<String>(json['definitionId']),
+      entityId: serializer.fromJson<String>(json['entityId']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'definitionId': serializer.toJson<String>(definitionId),
+      'entityId': serializer.toJson<String>(entityId),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  CustomFieldValueRow copyWith({
+    String? definitionId,
+    String? entityId,
+    String? value,
+  }) => CustomFieldValueRow(
+    definitionId: definitionId ?? this.definitionId,
+    entityId: entityId ?? this.entityId,
+    value: value ?? this.value,
+  );
+  CustomFieldValueRow copyWithCompanion(CustomFieldValuesCompanion data) {
+    return CustomFieldValueRow(
+      definitionId: data.definitionId.present
+          ? data.definitionId.value
+          : this.definitionId,
+      entityId: data.entityId.present ? data.entityId.value : this.entityId,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFieldValueRow(')
+          ..write('definitionId: $definitionId, ')
+          ..write('entityId: $entityId, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(definitionId, entityId, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CustomFieldValueRow &&
+          other.definitionId == this.definitionId &&
+          other.entityId == this.entityId &&
+          other.value == this.value);
+}
+
+class CustomFieldValuesCompanion extends UpdateCompanion<CustomFieldValueRow> {
+  final Value<String> definitionId;
+  final Value<String> entityId;
+  final Value<String> value;
+  final Value<int> rowid;
+  const CustomFieldValuesCompanion({
+    this.definitionId = const Value.absent(),
+    this.entityId = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CustomFieldValuesCompanion.insert({
+    required String definitionId,
+    required String entityId,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : definitionId = Value(definitionId),
+       entityId = Value(entityId),
+       value = Value(value);
+  static Insertable<CustomFieldValueRow> custom({
+    Expression<String>? definitionId,
+    Expression<String>? entityId,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (definitionId != null) 'definition_id': definitionId,
+      if (entityId != null) 'entity_id': entityId,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CustomFieldValuesCompanion copyWith({
+    Value<String>? definitionId,
+    Value<String>? entityId,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return CustomFieldValuesCompanion(
+      definitionId: definitionId ?? this.definitionId,
+      entityId: entityId ?? this.entityId,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (definitionId.present) {
+      map['definition_id'] = Variable<String>(definitionId.value);
+    }
+    if (entityId.present) {
+      map['entity_id'] = Variable<String>(entityId.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CustomFieldValuesCompanion(')
+          ..write('definitionId: $definitionId, ')
+          ..write('entityId: $entityId, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SavedFiltersTable extends SavedFilters
+    with TableInfo<$SavedFiltersTable, SavedFilterRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SavedFiltersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _scopeMeta = const VerificationMeta('scope');
+  @override
+  late final GeneratedColumn<String> scope = GeneratedColumn<String>(
+    'scope',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 80,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _definitionMeta = const VerificationMeta(
+    'definition',
+  );
+  @override
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    createdAt,
+    updatedAt,
+    id,
+    scope,
+    name,
+    definition,
+    sortOrder,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'saved_filters';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SavedFilterRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('scope')) {
+      context.handle(
+        _scopeMeta,
+        scope.isAcceptableOrUnknown(data['scope']!, _scopeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_scopeMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('definition')) {
+      context.handle(
+        _definitionMeta,
+        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionMeta);
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SavedFilterRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SavedFilterRow(
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      scope: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}scope'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      definition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition'],
+      )!,
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+    );
+  }
+
+  @override
+  $SavedFiltersTable createAlias(String alias) {
+    return $SavedFiltersTable(attachedDatabase, alias);
+  }
+}
+
+class SavedFilterRow extends DataClass implements Insertable<SavedFilterRow> {
+  final int createdAt;
+  final int updatedAt;
+  final String id;
+
+  /// people | events | commitments | global
+  final String scope;
+  final String name;
+  final String definition;
+  final int sortOrder;
+  const SavedFilterRow({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.scope,
+    required this.name,
+    required this.definition,
+    required this.sortOrder,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    map['id'] = Variable<String>(id);
+    map['scope'] = Variable<String>(scope);
+    map['name'] = Variable<String>(name);
+    map['definition'] = Variable<String>(definition);
+    map['sort_order'] = Variable<int>(sortOrder);
+    return map;
+  }
+
+  SavedFiltersCompanion toCompanion(bool nullToAbsent) {
+    return SavedFiltersCompanion(
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      id: Value(id),
+      scope: Value(scope),
+      name: Value(name),
+      definition: Value(definition),
+      sortOrder: Value(sortOrder),
+    );
+  }
+
+  factory SavedFilterRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SavedFilterRow(
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      id: serializer.fromJson<String>(json['id']),
+      scope: serializer.fromJson<String>(json['scope']),
+      name: serializer.fromJson<String>(json['name']),
+      definition: serializer.fromJson<String>(json['definition']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'id': serializer.toJson<String>(id),
+      'scope': serializer.toJson<String>(scope),
+      'name': serializer.toJson<String>(name),
+      'definition': serializer.toJson<String>(definition),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+    };
+  }
+
+  SavedFilterRow copyWith({
+    int? createdAt,
+    int? updatedAt,
+    String? id,
+    String? scope,
+    String? name,
+    String? definition,
+    int? sortOrder,
+  }) => SavedFilterRow(
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    id: id ?? this.id,
+    scope: scope ?? this.scope,
+    name: name ?? this.name,
+    definition: definition ?? this.definition,
+    sortOrder: sortOrder ?? this.sortOrder,
+  );
+  SavedFilterRow copyWithCompanion(SavedFiltersCompanion data) {
+    return SavedFilterRow(
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      id: data.id.present ? data.id.value : this.id,
+      scope: data.scope.present ? data.scope.value : this.scope,
+      name: data.name.present ? data.name.value : this.name,
+      definition: data.definition.present
+          ? data.definition.value
+          : this.definition,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SavedFilterRow(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('scope: $scope, ')
+          ..write('name: $name, ')
+          ..write('definition: $definition, ')
+          ..write('sortOrder: $sortOrder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(createdAt, updatedAt, id, scope, name, definition, sortOrder);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SavedFilterRow &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.id == this.id &&
+          other.scope == this.scope &&
+          other.name == this.name &&
+          other.definition == this.definition &&
+          other.sortOrder == this.sortOrder);
+}
+
+class SavedFiltersCompanion extends UpdateCompanion<SavedFilterRow> {
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<String> id;
+  final Value<String> scope;
+  final Value<String> name;
+  final Value<String> definition;
+  final Value<int> sortOrder;
+  final Value<int> rowid;
+  const SavedFiltersCompanion({
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.id = const Value.absent(),
+    this.scope = const Value.absent(),
+    this.name = const Value.absent(),
+    this.definition = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SavedFiltersCompanion.insert({
+    required int createdAt,
+    required int updatedAt,
+    required String id,
+    required String scope,
+    required String name,
+    required String definition,
+    this.sortOrder = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       id = Value(id),
+       scope = Value(scope),
+       name = Value(name),
+       definition = Value(definition);
+  static Insertable<SavedFilterRow> custom({
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<String>? id,
+    Expression<String>? scope,
+    Expression<String>? name,
+    Expression<String>? definition,
+    Expression<int>? sortOrder,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (id != null) 'id': id,
+      if (scope != null) 'scope': scope,
+      if (name != null) 'name': name,
+      if (definition != null) 'definition': definition,
+      if (sortOrder != null) 'sort_order': sortOrder,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SavedFiltersCompanion copyWith({
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<String>? id,
+    Value<String>? scope,
+    Value<String>? name,
+    Value<String>? definition,
+    Value<int>? sortOrder,
+    Value<int>? rowid,
+  }) {
+    return SavedFiltersCompanion(
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      id: id ?? this.id,
+      scope: scope ?? this.scope,
+      name: name ?? this.name,
+      definition: definition ?? this.definition,
+      sortOrder: sortOrder ?? this.sortOrder,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (scope.present) {
+      map['scope'] = Variable<String>(scope.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SavedFiltersCompanion(')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('id: $id, ')
+          ..write('scope: $scope, ')
+          ..write('name: $name, ')
+          ..write('definition: $definition, ')
+          ..write('sortOrder: $sortOrder, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -5705,6 +7465,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $EventsTable events = $EventsTable(this);
   late final $EventPersonRelationsTable eventPersonRelations =
       $EventPersonRelationsTable(this);
+  late final $PersonRelationshipsTable personRelationships =
+      $PersonRelationshipsTable(this);
+  late final $CustomFieldDefinitionsTable customFieldDefinitions =
+      $CustomFieldDefinitionsTable(this);
+  late final $CustomFieldValuesTable customFieldValues =
+      $CustomFieldValuesTable(this);
+  late final $SavedFiltersTable savedFilters = $SavedFiltersTable(this);
   late final Index idxPersonsFullName = Index(
     'idx_persons_full_name',
     'CREATE INDEX idx_persons_full_name ON persons (full_name)',
@@ -5737,6 +7504,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     'idx_epr_person',
     'CREATE INDEX idx_epr_person ON event_person_relations (person_id)',
   );
+  late final Index idxRelPerson = Index(
+    'idx_rel_person',
+    'CREATE INDEX idx_rel_person ON person_relationships (person_id)',
+  );
+  late final Index idxRelRelated = Index(
+    'idx_rel_related',
+    'CREATE INDEX idx_rel_related ON person_relationships (related_person_id)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5752,6 +7527,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     recurrenceRules,
     events,
     eventPersonRelations,
+    personRelationships,
+    customFieldDefinitions,
+    customFieldValues,
+    savedFilters,
     idxPersonsFullName,
     idxPersonsBirthDate,
     idxPersonsDeletedAt,
@@ -5760,6 +7539,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     idxEventsType,
     idxEventsDeletedAt,
     idxEprPerson,
+    idxRelPerson,
+    idxRelRelated,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -5808,6 +7589,27 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('event_person_relations', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'persons',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('person_relationships', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'persons',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('person_relationships', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'custom_field_definitions',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('custom_field_values', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -6937,6 +8739,7 @@ typedef $$PersonsTableCreateCompanionBuilder = PersonsCompanion Function({
   required String fullName,
   Value<String?> displayName,
   Value<String?> birthDate,
+  Value<bool> birthYearKnown,
   Value<String?> gender,
   Value<String?> phone,
   Value<String?> email,
@@ -6956,6 +8759,7 @@ typedef $$PersonsTableUpdateCompanionBuilder = PersonsCompanion Function({
   Value<String> fullName,
   Value<String?> displayName,
   Value<String?> birthDate,
+  Value<bool> birthYearKnown,
   Value<String?> gender,
   Value<String?> phone,
   Value<String?> email,
@@ -7085,6 +8889,11 @@ class $$PersonsTableFilterComposer
 
   ColumnFilters<String> get birthDate => $composableBuilder(
     column: $table.birthDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get birthYearKnown => $composableBuilder(
+    column: $table.birthYearKnown,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7247,6 +9056,11 @@ class $$PersonsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get birthYearKnown => $composableBuilder(
+    column: $table.birthYearKnown,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get gender => $composableBuilder(
     column: $table.gender,
     builder: (column) => ColumnOrderings(column),
@@ -7342,6 +9156,11 @@ class $$PersonsTableAnnotationComposer
 
   GeneratedColumn<String> get birthDate =>
       $composableBuilder(column: $table.birthDate, builder: (column) => column);
+
+  GeneratedColumn<bool> get birthYearKnown => $composableBuilder(
+    column: $table.birthYearKnown,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get gender =>
       $composableBuilder(column: $table.gender, builder: (column) => column);
@@ -7487,6 +9306,7 @@ class $$PersonsTableTableManager
                 Value<String> fullName = const Value.absent(),
                 Value<String?> displayName = const Value.absent(),
                 Value<String?> birthDate = const Value.absent(),
+                Value<bool> birthYearKnown = const Value.absent(),
                 Value<String?> gender = const Value.absent(),
                 Value<String?> phone = const Value.absent(),
                 Value<String?> email = const Value.absent(),
@@ -7505,6 +9325,7 @@ class $$PersonsTableTableManager
                 fullName: fullName,
                 displayName: displayName,
                 birthDate: birthDate,
+                birthYearKnown: birthYearKnown,
                 gender: gender,
                 phone: phone,
                 email: email,
@@ -7525,6 +9346,7 @@ class $$PersonsTableTableManager
                 required String fullName,
                 Value<String?> displayName = const Value.absent(),
                 Value<String?> birthDate = const Value.absent(),
+                Value<bool> birthYearKnown = const Value.absent(),
                 Value<String?> gender = const Value.absent(),
                 Value<String?> phone = const Value.absent(),
                 Value<String?> email = const Value.absent(),
@@ -7543,6 +9365,7 @@ class $$PersonsTableTableManager
                 fullName: fullName,
                 displayName: displayName,
                 birthDate: birthDate,
+                birthYearKnown: birthYearKnown,
                 gender: gender,
                 phone: phone,
                 email: email,
@@ -10554,6 +12377,1385 @@ typedef $$EventPersonRelationsTableProcessedTableManager =
       EventPersonRelationRow,
       PrefetchHooks Function({bool eventId, bool personId})
     >;
+typedef $$PersonRelationshipsTableCreateCompanionBuilder =
+    PersonRelationshipsCompanion Function({
+      required int createdAt,
+      required int updatedAt,
+      required String id,
+      required String personId,
+      Value<String?> relatedPersonId,
+      required String relationType,
+      Value<String?> customLabel,
+      Value<int> rowid,
+    });
+typedef $$PersonRelationshipsTableUpdateCompanionBuilder =
+    PersonRelationshipsCompanion Function({
+      Value<int> createdAt,
+      Value<int> updatedAt,
+      Value<String> id,
+      Value<String> personId,
+      Value<String?> relatedPersonId,
+      Value<String> relationType,
+      Value<String?> customLabel,
+      Value<int> rowid,
+    });
+
+final class $$PersonRelationshipsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $PersonRelationshipsTable,
+          PersonRelationshipRow
+        > {
+  $$PersonRelationshipsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $PersonsTable _personIdTable(_$AppDatabase db) =>
+      db.persons.createAlias('person_relationships__person_id__persons__id');
+
+  $$PersonsTableProcessedTableManager get personId {
+    final $_column = $_itemColumn<String>('person_id')!;
+
+    final manager = $$PersonsTableTableManager(
+      $_db,
+      $_db.persons,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_personIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $PersonsTable _relatedPersonIdTable(_$AppDatabase db) => db.persons
+      .createAlias('person_relationships__related_person_id__persons__id');
+
+  $$PersonsTableProcessedTableManager? get relatedPersonId {
+    final $_column = $_itemColumn<String>('related_person_id');
+    if ($_column == null) return null;
+    final manager = $$PersonsTableTableManager(
+      $_db,
+      $_db.persons,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_relatedPersonIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PersonRelationshipsTableFilterComposer
+    extends Composer<_$AppDatabase, $PersonRelationshipsTable> {
+  $$PersonRelationshipsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get relationType => $composableBuilder(
+    column: $table.relationType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get customLabel => $composableBuilder(
+    column: $table.customLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$PersonsTableFilterComposer get personId {
+    final $$PersonsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.personId,
+      referencedTable: $db.persons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PersonsTableFilterComposer(
+            $db: $db,
+            $table: $db.persons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PersonsTableFilterComposer get relatedPersonId {
+    final $$PersonsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.relatedPersonId,
+      referencedTable: $db.persons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PersonsTableFilterComposer(
+            $db: $db,
+            $table: $db.persons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PersonRelationshipsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PersonRelationshipsTable> {
+  $$PersonRelationshipsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get relationType => $composableBuilder(
+    column: $table.relationType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get customLabel => $composableBuilder(
+    column: $table.customLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$PersonsTableOrderingComposer get personId {
+    final $$PersonsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.personId,
+      referencedTable: $db.persons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PersonsTableOrderingComposer(
+            $db: $db,
+            $table: $db.persons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PersonsTableOrderingComposer get relatedPersonId {
+    final $$PersonsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.relatedPersonId,
+      referencedTable: $db.persons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PersonsTableOrderingComposer(
+            $db: $db,
+            $table: $db.persons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PersonRelationshipsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PersonRelationshipsTable> {
+  $$PersonRelationshipsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get relationType => $composableBuilder(
+    column: $table.relationType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get customLabel => $composableBuilder(
+    column: $table.customLabel,
+    builder: (column) => column,
+  );
+
+  $$PersonsTableAnnotationComposer get personId {
+    final $$PersonsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.personId,
+      referencedTable: $db.persons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PersonsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.persons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$PersonsTableAnnotationComposer get relatedPersonId {
+    final $$PersonsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.relatedPersonId,
+      referencedTable: $db.persons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PersonsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.persons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PersonRelationshipsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PersonRelationshipsTable,
+          PersonRelationshipRow,
+          $$PersonRelationshipsTableFilterComposer,
+          $$PersonRelationshipsTableOrderingComposer,
+          $$PersonRelationshipsTableAnnotationComposer,
+          $$PersonRelationshipsTableCreateCompanionBuilder,
+          $$PersonRelationshipsTableUpdateCompanionBuilder,
+          (PersonRelationshipRow, $$PersonRelationshipsTableReferences),
+          PersonRelationshipRow,
+          PrefetchHooks Function({bool personId, bool relatedPersonId})
+        > {
+  $$PersonRelationshipsTableTableManager(
+    _$AppDatabase db,
+    $PersonRelationshipsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PersonRelationshipsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PersonRelationshipsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$PersonRelationshipsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> createdAt = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> id = const Value.absent(),
+                Value<String> personId = const Value.absent(),
+                Value<String?> relatedPersonId = const Value.absent(),
+                Value<String> relationType = const Value.absent(),
+                Value<String?> customLabel = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PersonRelationshipsCompanion(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                personId: personId,
+                relatedPersonId: relatedPersonId,
+                relationType: relationType,
+                customLabel: customLabel,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int createdAt,
+                required int updatedAt,
+                required String id,
+                required String personId,
+                Value<String?> relatedPersonId = const Value.absent(),
+                required String relationType,
+                Value<String?> customLabel = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PersonRelationshipsCompanion.insert(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                personId: personId,
+                relatedPersonId: relatedPersonId,
+                relationType: relationType,
+                customLabel: customLabel,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PersonRelationshipsTable, PersonRelationshipRow>(
+                    table,
+                  ),
+                  $$PersonRelationshipsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({personId = false, relatedPersonId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (personId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.personId,
+                        referencedTable: $$PersonRelationshipsTableReferences
+                            ._personIdTable(db),
+                        referencedColumn: $$PersonRelationshipsTableReferences
+                            ._personIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+                    if (relatedPersonId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.relatedPersonId,
+                        referencedTable: $$PersonRelationshipsTableReferences
+                            ._relatedPersonIdTable(db),
+                        referencedColumn: $$PersonRelationshipsTableReferences
+                            ._relatedPersonIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PersonRelationshipsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PersonRelationshipsTable,
+      PersonRelationshipRow,
+      $$PersonRelationshipsTableFilterComposer,
+      $$PersonRelationshipsTableOrderingComposer,
+      $$PersonRelationshipsTableAnnotationComposer,
+      $$PersonRelationshipsTableCreateCompanionBuilder,
+      $$PersonRelationshipsTableUpdateCompanionBuilder,
+      (PersonRelationshipRow, $$PersonRelationshipsTableReferences),
+      PersonRelationshipRow,
+      PrefetchHooks Function({bool personId, bool relatedPersonId})
+    >;
+typedef $$CustomFieldDefinitionsTableCreateCompanionBuilder =
+    CustomFieldDefinitionsCompanion Function({
+      required int createdAt,
+      required int updatedAt,
+      required String id,
+      Value<String> entityType,
+      required String label,
+      Value<String> fieldType,
+      Value<int> sortOrder,
+      Value<int> rowid,
+    });
+typedef $$CustomFieldDefinitionsTableUpdateCompanionBuilder =
+    CustomFieldDefinitionsCompanion Function({
+      Value<int> createdAt,
+      Value<int> updatedAt,
+      Value<String> id,
+      Value<String> entityType,
+      Value<String> label,
+      Value<String> fieldType,
+      Value<int> sortOrder,
+      Value<int> rowid,
+    });
+
+final class $$CustomFieldDefinitionsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CustomFieldDefinitionsTable,
+          CustomFieldDefinitionRow
+        > {
+  $$CustomFieldDefinitionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$CustomFieldValuesTable, List<CustomFieldValueRow>>
+  _customFieldValuesRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.customFieldValues,
+        aliasName:
+            'custom_field_definitions__id__custom_field_values__definition_id',
+      );
+
+  $$CustomFieldValuesTableProcessedTableManager get customFieldValuesRefs {
+    final manager = $$CustomFieldValuesTableTableManager(
+      $_db,
+      $_db.customFieldValues,
+    ).filter((f) => f.definitionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _customFieldValuesRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$CustomFieldDefinitionsTableFilterComposer
+    extends Composer<_$AppDatabase, $CustomFieldDefinitionsTable> {
+  $$CustomFieldDefinitionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get label => $composableBuilder(
+    column: $table.label,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fieldType => $composableBuilder(
+    column: $table.fieldType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> customFieldValuesRefs(
+    Expression<bool> Function($$CustomFieldValuesTableFilterComposer f) f,
+  ) {
+    final $$CustomFieldValuesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.customFieldValues,
+      getReferencedColumn: (t) => t.definitionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CustomFieldValuesTableFilterComposer(
+            $db: $db,
+            $table: $db.customFieldValues,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$CustomFieldDefinitionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CustomFieldDefinitionsTable> {
+  $$CustomFieldDefinitionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get label => $composableBuilder(
+    column: $table.label,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fieldType => $composableBuilder(
+    column: $table.fieldType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$CustomFieldDefinitionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CustomFieldDefinitionsTable> {
+  $$CustomFieldDefinitionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get entityType => $composableBuilder(
+    column: $table.entityType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get label =>
+      $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumn<String> get fieldType =>
+      $composableBuilder(column: $table.fieldType, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+
+  Expression<T> customFieldValuesRefs<T extends Object>(
+    Expression<T> Function($$CustomFieldValuesTableAnnotationComposer a) f,
+  ) {
+    final $$CustomFieldValuesTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.customFieldValues,
+          getReferencedColumn: (t) => t.definitionId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CustomFieldValuesTableAnnotationComposer(
+                $db: $db,
+                $table: $db.customFieldValues,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$CustomFieldDefinitionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CustomFieldDefinitionsTable,
+          CustomFieldDefinitionRow,
+          $$CustomFieldDefinitionsTableFilterComposer,
+          $$CustomFieldDefinitionsTableOrderingComposer,
+          $$CustomFieldDefinitionsTableAnnotationComposer,
+          $$CustomFieldDefinitionsTableCreateCompanionBuilder,
+          $$CustomFieldDefinitionsTableUpdateCompanionBuilder,
+          (CustomFieldDefinitionRow, $$CustomFieldDefinitionsTableReferences),
+          CustomFieldDefinitionRow,
+          PrefetchHooks Function({bool customFieldValuesRefs})
+        > {
+  $$CustomFieldDefinitionsTableTableManager(
+    _$AppDatabase db,
+    $CustomFieldDefinitionsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CustomFieldDefinitionsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$CustomFieldDefinitionsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$CustomFieldDefinitionsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> createdAt = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> id = const Value.absent(),
+                Value<String> entityType = const Value.absent(),
+                Value<String> label = const Value.absent(),
+                Value<String> fieldType = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFieldDefinitionsCompanion(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                entityType: entityType,
+                label: label,
+                fieldType: fieldType,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int createdAt,
+                required int updatedAt,
+                required String id,
+                Value<String> entityType = const Value.absent(),
+                required String label,
+                Value<String> fieldType = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFieldDefinitionsCompanion.insert(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                entityType: entityType,
+                label: label,
+                fieldType: fieldType,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $CustomFieldDefinitionsTable,
+                    CustomFieldDefinitionRow
+                  >(table),
+                  $$CustomFieldDefinitionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({customFieldValuesRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (customFieldValuesRefs) db.customFieldValues,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (customFieldValuesRefs)
+                    await $_getPrefetchedDataByColumns<
+                      CustomFieldDefinitionRow,
+                      $CustomFieldDefinitionsTable,
+                      CustomFieldValueRow,
+                      $CustomFieldValuesTable
+                    >(
+                      currentTable: table,
+                      referencedTable: $$CustomFieldDefinitionsTableReferences
+                          ._customFieldValuesRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$CustomFieldDefinitionsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).customFieldValuesRefs,
+                      currentColumn: 'id',
+                      referencedColumn: 'definition_id',
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$CustomFieldDefinitionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CustomFieldDefinitionsTable,
+      CustomFieldDefinitionRow,
+      $$CustomFieldDefinitionsTableFilterComposer,
+      $$CustomFieldDefinitionsTableOrderingComposer,
+      $$CustomFieldDefinitionsTableAnnotationComposer,
+      $$CustomFieldDefinitionsTableCreateCompanionBuilder,
+      $$CustomFieldDefinitionsTableUpdateCompanionBuilder,
+      (CustomFieldDefinitionRow, $$CustomFieldDefinitionsTableReferences),
+      CustomFieldDefinitionRow,
+      PrefetchHooks Function({bool customFieldValuesRefs})
+    >;
+typedef $$CustomFieldValuesTableCreateCompanionBuilder =
+    CustomFieldValuesCompanion Function({
+      required String definitionId,
+      required String entityId,
+      required String value,
+      Value<int> rowid,
+    });
+typedef $$CustomFieldValuesTableUpdateCompanionBuilder =
+    CustomFieldValuesCompanion Function({
+      Value<String> definitionId,
+      Value<String> entityId,
+      Value<String> value,
+      Value<int> rowid,
+    });
+
+final class $$CustomFieldValuesTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $CustomFieldValuesTable,
+          CustomFieldValueRow
+        > {
+  $$CustomFieldValuesTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CustomFieldDefinitionsTable _definitionIdTable(_$AppDatabase db) =>
+      db.customFieldDefinitions.createAlias(
+        'custom_field_values__definition_id__custom_field_definitions__id',
+      );
+
+  $$CustomFieldDefinitionsTableProcessedTableManager get definitionId {
+    final $_column = $_itemColumn<String>('definition_id')!;
+
+    final manager = $$CustomFieldDefinitionsTableTableManager(
+      $_db,
+      $_db.customFieldDefinitions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_definitionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$CustomFieldValuesTableFilterComposer
+    extends Composer<_$AppDatabase, $CustomFieldValuesTable> {
+  $$CustomFieldValuesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get entityId => $composableBuilder(
+    column: $table.entityId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CustomFieldDefinitionsTableFilterComposer get definitionId {
+    final $$CustomFieldDefinitionsTableFilterComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.definitionId,
+          referencedTable: $db.customFieldDefinitions,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CustomFieldDefinitionsTableFilterComposer(
+                $db: $db,
+                $table: $db.customFieldDefinitions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$CustomFieldValuesTableOrderingComposer
+    extends Composer<_$AppDatabase, $CustomFieldValuesTable> {
+  $$CustomFieldValuesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get entityId => $composableBuilder(
+    column: $table.entityId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CustomFieldDefinitionsTableOrderingComposer get definitionId {
+    final $$CustomFieldDefinitionsTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.definitionId,
+          referencedTable: $db.customFieldDefinitions,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CustomFieldDefinitionsTableOrderingComposer(
+                $db: $db,
+                $table: $db.customFieldDefinitions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$CustomFieldValuesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CustomFieldValuesTable> {
+  $$CustomFieldValuesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get entityId =>
+      $composableBuilder(column: $table.entityId, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  $$CustomFieldDefinitionsTableAnnotationComposer get definitionId {
+    final $$CustomFieldDefinitionsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.definitionId,
+          referencedTable: $db.customFieldDefinitions,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$CustomFieldDefinitionsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.customFieldDefinitions,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+}
+
+class $$CustomFieldValuesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $CustomFieldValuesTable,
+          CustomFieldValueRow,
+          $$CustomFieldValuesTableFilterComposer,
+          $$CustomFieldValuesTableOrderingComposer,
+          $$CustomFieldValuesTableAnnotationComposer,
+          $$CustomFieldValuesTableCreateCompanionBuilder,
+          $$CustomFieldValuesTableUpdateCompanionBuilder,
+          (CustomFieldValueRow, $$CustomFieldValuesTableReferences),
+          CustomFieldValueRow,
+          PrefetchHooks Function({bool definitionId})
+        > {
+  $$CustomFieldValuesTableTableManager(
+    _$AppDatabase db,
+    $CustomFieldValuesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CustomFieldValuesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CustomFieldValuesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CustomFieldValuesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> definitionId = const Value.absent(),
+                Value<String> entityId = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFieldValuesCompanion(
+                definitionId: definitionId,
+                entityId: entityId,
+                value: value,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String definitionId,
+                required String entityId,
+                required String value,
+                Value<int> rowid = const Value.absent(),
+              }) => CustomFieldValuesCompanion.insert(
+                definitionId: definitionId,
+                entityId: entityId,
+                value: value,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$CustomFieldValuesTable, CustomFieldValueRow>(
+                    table,
+                  ),
+                  $$CustomFieldValuesTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({definitionId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (definitionId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.definitionId,
+                        referencedTable: $$CustomFieldValuesTableReferences
+                            ._definitionIdTable(db),
+                        referencedColumn: $$CustomFieldValuesTableReferences
+                            ._definitionIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$CustomFieldValuesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $CustomFieldValuesTable,
+      CustomFieldValueRow,
+      $$CustomFieldValuesTableFilterComposer,
+      $$CustomFieldValuesTableOrderingComposer,
+      $$CustomFieldValuesTableAnnotationComposer,
+      $$CustomFieldValuesTableCreateCompanionBuilder,
+      $$CustomFieldValuesTableUpdateCompanionBuilder,
+      (CustomFieldValueRow, $$CustomFieldValuesTableReferences),
+      CustomFieldValueRow,
+      PrefetchHooks Function({bool definitionId})
+    >;
+typedef $$SavedFiltersTableCreateCompanionBuilder =
+    SavedFiltersCompanion Function({
+      required int createdAt,
+      required int updatedAt,
+      required String id,
+      required String scope,
+      required String name,
+      required String definition,
+      Value<int> sortOrder,
+      Value<int> rowid,
+    });
+typedef $$SavedFiltersTableUpdateCompanionBuilder =
+    SavedFiltersCompanion Function({
+      Value<int> createdAt,
+      Value<int> updatedAt,
+      Value<String> id,
+      Value<String> scope,
+      Value<String> name,
+      Value<String> definition,
+      Value<int> sortOrder,
+      Value<int> rowid,
+    });
+
+class $$SavedFiltersTableFilterComposer
+    extends Composer<_$AppDatabase, $SavedFiltersTable> {
+  $$SavedFiltersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get scope => $composableBuilder(
+    column: $table.scope,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SavedFiltersTableOrderingComposer
+    extends Composer<_$AppDatabase, $SavedFiltersTable> {
+  $$SavedFiltersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get scope => $composableBuilder(
+    column: $table.scope,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SavedFiltersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SavedFiltersTable> {
+  $$SavedFiltersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get scope =>
+      $composableBuilder(column: $table.scope, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+}
+
+class $$SavedFiltersTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SavedFiltersTable,
+          SavedFilterRow,
+          $$SavedFiltersTableFilterComposer,
+          $$SavedFiltersTableOrderingComposer,
+          $$SavedFiltersTableAnnotationComposer,
+          $$SavedFiltersTableCreateCompanionBuilder,
+          $$SavedFiltersTableUpdateCompanionBuilder,
+          (
+            SavedFilterRow,
+            BaseReferences<_$AppDatabase, $SavedFiltersTable, SavedFilterRow>,
+          ),
+          SavedFilterRow,
+          PrefetchHooks Function()
+        > {
+  $$SavedFiltersTableTableManager(_$AppDatabase db, $SavedFiltersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SavedFiltersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SavedFiltersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SavedFiltersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> createdAt = const Value.absent(),
+                Value<int> updatedAt = const Value.absent(),
+                Value<String> id = const Value.absent(),
+                Value<String> scope = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> definition = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SavedFiltersCompanion(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                scope: scope,
+                name: name,
+                definition: definition,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int createdAt,
+                required int updatedAt,
+                required String id,
+                required String scope,
+                required String name,
+                required String definition,
+                Value<int> sortOrder = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SavedFiltersCompanion.insert(
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                id: id,
+                scope: scope,
+                name: name,
+                definition: definition,
+                sortOrder: sortOrder,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$SavedFiltersTable, SavedFilterRow>(table),
+                  BaseReferences<
+                    _$AppDatabase,
+                    $SavedFiltersTable,
+                    SavedFilterRow
+                  >(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SavedFiltersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SavedFiltersTable,
+      SavedFilterRow,
+      $$SavedFiltersTableFilterComposer,
+      $$SavedFiltersTableOrderingComposer,
+      $$SavedFiltersTableAnnotationComposer,
+      $$SavedFiltersTableCreateCompanionBuilder,
+      $$SavedFiltersTableUpdateCompanionBuilder,
+      (
+        SavedFilterRow,
+        BaseReferences<_$AppDatabase, $SavedFiltersTable, SavedFilterRow>,
+      ),
+      SavedFilterRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -10581,4 +13783,15 @@ class $AppDatabaseManager {
       $$EventsTableTableManager(_db, _db.events);
   $$EventPersonRelationsTableTableManager get eventPersonRelations =>
       $$EventPersonRelationsTableTableManager(_db, _db.eventPersonRelations);
+  $$PersonRelationshipsTableTableManager get personRelationships =>
+      $$PersonRelationshipsTableTableManager(_db, _db.personRelationships);
+  $$CustomFieldDefinitionsTableTableManager get customFieldDefinitions =>
+      $$CustomFieldDefinitionsTableTableManager(
+        _db,
+        _db.customFieldDefinitions,
+      );
+  $$CustomFieldValuesTableTableManager get customFieldValues =>
+      $$CustomFieldValuesTableTableManager(_db, _db.customFieldValues);
+  $$SavedFiltersTableTableManager get savedFilters =>
+      $$SavedFiltersTableTableManager(_db, _db.savedFilters);
 }

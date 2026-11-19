@@ -8,8 +8,8 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | P | Prototype v0.1 (owner request) | ✅ 2026-11-19 | Installable APK to try the UX: language picker, welcome, guest, home, people, events, month calendar, settings |
 | 1 | Foundation | ✅ 2026-11-19 | Flutter project, folder structure, Riverpod, GoRouter shell (5 tabs + quick add), Drift DB v1 (settings/profile/account tables + seeds), ARB AR/EN, RTL/LTR, M3 theme light/dark, fonts; analyze clean; smoke tests |
 | 2 | Branding & onboarding | ✅ 2026-11-19 | 3 icon directions presented → owner picks; adaptive icon, wordmark, splash; language picker (first-run only), welcome, auth choice screen, Guest mode |
-| 3 | Authentication | ⏳ | AuthService + Firebase impl, Google, Facebook, linking, account page, sign-out, delete (re-auth), guest→registered; mocked tests; **real-config device test before marking ready** |
-| 4 | People | ⏳ | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
+| 3 | Authentication | ⏳ (deferred until Firebase/Facebook setup by owner) | AuthService + Firebase impl, Google, Facebook, linking, account page, sign-out, delete (re-auth), guest→registered; mocked tests; **real-config device test before marking ready** |
+| 4 | People | ✅ 2026-11-20 | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
 | 5 | Events & calendar | ⏳ | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
 | 6 | Commitments & reminders | ⏳ | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
 | 7 | Memories, milestones, timeline, projects | ⏳ | CRUD + global & per-person timeline with filters |
@@ -50,3 +50,14 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Android: legacy + adaptive launcher icons (all densities), Android 13 themed (monochrome) icon, Android 12+ splash (light/dark) and pre-12 launch screen in brand colours. Web icons/favicon updated.
 - In-app `DateiLogo` redrawn with the final geometry. Onboarding (language picker, welcome, guest) already in place since v0.1/v0.2.
 - `flutter analyze` clean; 34 tests passing.
+
+## Phase 4 outcome (2026-11-20)
+- Schema v2 (+ migration & tests): `persons.birth_year_known`, `person_relationships`, `custom_field_definitions`, `custom_field_values`, `saved_filters`.
+- Categories: built-in + user-created (name, colour), manage screen (More → Categories), quick-add from the person form.
+- Relationships: directed, to me or to another person, custom labels, shown both ways on profiles, removed with the person.
+- Person data: gender (optional), workplace, address, custom fields (text/number/date/url) with validation; birth date with optional year.
+- Age: breakdown, days lived, age on any chosen date, months/days until next birthday.
+- People list: text search + advanced filter sheet (categories, age range, birth month/day/year, has birth date, birthday within 7/30/90 days, occupation, workplace, relationship type), saved filters (long-press to delete), result count.
+- Fixed during testing: a disposed-controller crash in the filter-name dialog; RTL ordering of user values like "O+".
+- `flutter analyze` clean; 59 tests (unit, database, migration, widget AR/EN).
+- Phase 3 (authentication) is deferred until the owner creates the Firebase project and Facebook app.

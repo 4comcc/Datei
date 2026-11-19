@@ -6,7 +6,9 @@ import 'package:datei/app/app.dart';
 import 'package:datei/app/router/app_router.dart';
 import 'package:datei/features/events/domain/event.dart';
 import 'package:datei/features/events/presentation/events_providers.dart';
+import 'package:datei/features/people/domain/custom_field.dart';
 import 'package:datei/features/people/domain/person.dart';
+import 'package:datei/features/people/domain/relationship.dart';
 import 'package:datei/features/people/presentation/people_providers.dart';
 import 'package:datei/features/settings/settings_controller.dart';
 import '../test/helpers.dart';
@@ -40,7 +42,7 @@ final events = [
 ];
 
 Future<void> shoot(WidgetTester tester, String lang, String route, String name, {bool dark = false}) async {
-  tester.view.physicalSize = const Size(1080, 2280);
+  tester.view.physicalSize = const Size(1080, 3400);
   tester.view.devicePixelRatio = 2.75;
   addTearDown(tester.view.reset);
   final onboarded = route != '/welcome' && route != '/language';
@@ -56,6 +58,18 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name, 
     for (final e in events) {
       await container.read(eventsRepositoryProvider).save(DateiEvent.fromJson(e));
     }
+    await container.read(customFieldsRepositoryProvider)
+        .saveDefinition(const CustomFieldDefinition(id: 'blood', label: 'فصيلة الدم'));
+    final sara = Person.fromJson(people.first);
+    await container.read(peopleRepositoryProvider).save(Person.fromJson({
+      ...sara.toJson(),
+      'organization': 'شركة النيل',
+      'customFields': {'blood': 'O+'},
+    }));
+    await container.read(relationshipsRepositoryProvider)
+        .add(const Relationship(id: 'r1', personId: 'p1', type: RelationshipType.sister));
+    await container.read(relationshipsRepositoryProvider)
+        .add(const Relationship(id: 'r2', personId: 'p3', relatedPersonId: 'p1', type: RelationshipType.colleague));
   });
   addTearDown(() async {
     await tester.pumpWidget(const SizedBox());
@@ -79,6 +93,8 @@ void main() {
     testWidgets('$lang home', (t) => shoot(t, lang, '/home', '${lang}_2_home'));
     testWidgets('$lang people', (t) => shoot(t, lang, '/people', '${lang}_3_people'));
     testWidgets('$lang person', (t) => shoot(t, lang, '/people/p1', '${lang}_4_person'));
+    testWidgets('$lang more', (t) => shoot(t, lang, '/more', '${lang}_7_more'));
+    testWidgets('$lang categories', (t) => shoot(t, lang, '/settings/categories', '${lang}_8_categories'));
     testWidgets('$lang calendar', (t) => shoot(t, lang, '/calendar', '${lang}_5_calendar'));
   }
   testWidgets('ar home dark', (t) => shoot(t, 'ar', '/home', 'ar_6_home_dark', dark: true));

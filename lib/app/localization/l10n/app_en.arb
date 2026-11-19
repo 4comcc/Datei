@@ -214,5 +214,161 @@
   "startupTimeout": "Opening the database took too long.",
   "retry": "Try again",
   "copyDetails": "Copy details",
-  "copied": "Copied"
+  "copied": "Copied",
+  "fieldGender": "Gender (optional)",
+  "genderUnspecified": "Not specified",
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "fieldAddress": "Address",
+  "fieldOrganization": "Workplace",
+  "birthYearUnknown": "I don't know the year",
+  "birthYearUnknownHint": "Only the day and month will be used. Age won't be shown.",
+  "manageCategories": "Categories",
+  "addCategory": "New category",
+  "categoryName": "Category name",
+  "editCategory": "Edit category",
+  "deleteCategoryConfirm": "Delete the category “{name}”? People in it are kept; only the category is removed.",
+  "@deleteCategoryConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "systemCategoriesNote": "Built-in categories can't be renamed or deleted.",
+  "yourCategories": "Your categories",
+  "builtInCategories": "Built-in",
+  "noCustomCategories": "You haven't created any categories yet.",
+  "sectionRelationships": "Relationships",
+  "addRelationship": "Add relationship",
+  "relationshipIs": "{name} is…",
+  "@relationshipIs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "relationshipOf": "…of",
+  "relatedToMe": "Me",
+  "customRelationshipLabel": "Relationship name",
+  "noRelationships": "No relationships yet.",
+  "relationOfPerson": "{relation} of {name}",
+  "@relationOfPerson": {
+    "placeholders": {
+      "relation": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "relationOfMe": "{relation} (to you)",
+  "@relationOfMe": {
+    "placeholders": {
+      "relation": {
+        "type": "String"
+      }
+    }
+  },
+  "relationFather": "Father",
+  "relationMother": "Mother",
+  "relationSon": "Son",
+  "relationDaughter": "Daughter",
+  "relationBrother": "Brother",
+  "relationSister": "Sister",
+  "relationSpouse": "Spouse",
+  "relationRelative": "Relative",
+  "relationFriend": "Friend",
+  "relationColleague": "Colleague",
+  "relationCustom": "Other…",
+  "removeRelationship": "Remove relationship",
+  "errorChoosePerson": "Choose a person",
+  "customFieldsTitle": "Custom fields",
+  "customFieldsHint": "Add your own fields to every person, such as blood type or ID number.",
+  "addCustomField": "New field",
+  "editCustomField": "Edit field",
+  "customFieldLabel": "Field name",
+  "customFieldType": "Field type",
+  "fieldTypeText": "Text",
+  "fieldTypeNumber": "Number",
+  "fieldTypeDate": "Date",
+  "fieldTypeUrl": "Link",
+  "noCustomFields": "No custom fields yet.",
+  "deleteCustomFieldConfirm": "Delete the field “{label}”? Its values will be removed from everyone.",
+  "@deleteCustomFieldConfirm": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "ageOnDate": "Age on a date",
+  "notBornYet": "Not born yet on this date.",
+  "untilBirthday": "{months} months and {days} days to go",
+  "@untilBirthday": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "filters": "Filters",
+  "filtersActive": "{count, plural, =0{Filters} =1{1 filter} other{{count} filters}}",
+  "@filtersActive": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clearFilters": "Clear all",
+  "showResults": "Show results",
+  "ageRange": "Age range",
+  "minAge": "From",
+  "maxAge": "To",
+  "birthMonth": "Birth month",
+  "birthDayOfMonth": "Birth day",
+  "birthYear": "Birth year",
+  "anyValue": "Any",
+  "birthDateFilter": "Birth date",
+  "withBirthDate": "Has a birth date",
+  "withoutBirthDate": "No birth date",
+  "birthdayWithin": "Birthday within",
+  "withinDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@withinDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "relationshipFilter": "Has relationship",
+  "saveFilter": "Save filter",
+  "filterName": "Filter name",
+  "filterSaved": "Filter saved",
+  "deleteSavedFilterConfirm": "Delete the saved filter “{name}”?",
+  "@deleteSavedFilterConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "errorInvalidNumber": "Enter a valid number",
+  "errorInvalidUrl": "Enter a valid link starting with http:// or https://",
+  "errorAgeRange": "“From” must not be greater than “To”",
+  "resultsCount": "{count, plural, =0{No people} =1{1 person} other{{count} people}}",
+  "@resultsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "add": "Add"
 }

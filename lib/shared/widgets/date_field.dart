@@ -14,6 +14,7 @@ class LocalDateFormField extends FormField<LocalDate> {
     LocalDate? firstDate,
     LocalDate? lastDate,
     bool clearable = true,
+    bool showYear = true,
   }) : super(
           builder: (state) {
             final context = state.context;
@@ -53,7 +54,9 @@ class LocalDateFormField extends FormField<LocalDate> {
                       : null,
                 ),
                 child: Text(
-                  state.value == null ? l.pickDate : context.formatLongDate(state.value!),
+                  state.value == null
+                      ? l.pickDate
+                      : context.formatBirthDate(state.value!, yearKnown: showYear),
                   style: state.value == null
                       ? TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)
                       : null,

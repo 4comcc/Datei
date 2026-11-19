@@ -883,6 +883,486 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copied'**
   String get copied;
+
+  /// No description provided for @fieldGender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender (optional)'**
+  String get fieldGender;
+
+  /// No description provided for @genderUnspecified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not specified'**
+  String get genderUnspecified;
+
+  /// No description provided for @genderMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get genderMale;
+
+  /// No description provided for @genderFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get genderFemale;
+
+  /// No description provided for @fieldAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get fieldAddress;
+
+  /// No description provided for @fieldOrganization.
+  ///
+  /// In en, this message translates to:
+  /// **'Workplace'**
+  String get fieldOrganization;
+
+  /// No description provided for @birthYearUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'I don\'t know the year'**
+  String get birthYearUnknown;
+
+  /// No description provided for @birthYearUnknownHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the day and month will be used. Age won\'t be shown.'**
+  String get birthYearUnknownHint;
+
+  /// No description provided for @manageCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get manageCategories;
+
+  /// No description provided for @addCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'New category'**
+  String get addCategory;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category name'**
+  String get categoryName;
+
+  /// No description provided for @editCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit category'**
+  String get editCategory;
+
+  /// No description provided for @deleteCategoryConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the category “{name}”? People in it are kept; only the category is removed.'**
+  String deleteCategoryConfirm(String name);
+
+  /// No description provided for @systemCategoriesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in categories can\'t be renamed or deleted.'**
+  String get systemCategoriesNote;
+
+  /// No description provided for @yourCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Your categories'**
+  String get yourCategories;
+
+  /// No description provided for @builtInCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Built-in'**
+  String get builtInCategories;
+
+  /// No description provided for @noCustomCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t created any categories yet.'**
+  String get noCustomCategories;
+
+  /// No description provided for @sectionRelationships.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationships'**
+  String get sectionRelationships;
+
+  /// No description provided for @addRelationship.
+  ///
+  /// In en, this message translates to:
+  /// **'Add relationship'**
+  String get addRelationship;
+
+  /// No description provided for @relationshipIs.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is…'**
+  String relationshipIs(String name);
+
+  /// No description provided for @relationshipOf.
+  ///
+  /// In en, this message translates to:
+  /// **'…of'**
+  String get relationshipOf;
+
+  /// No description provided for @relatedToMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Me'**
+  String get relatedToMe;
+
+  /// No description provided for @customRelationshipLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Relationship name'**
+  String get customRelationshipLabel;
+
+  /// No description provided for @noRelationships.
+  ///
+  /// In en, this message translates to:
+  /// **'No relationships yet.'**
+  String get noRelationships;
+
+  /// No description provided for @relationOfPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'{relation} of {name}'**
+  String relationOfPerson(String relation, String name);
+
+  /// No description provided for @relationOfMe.
+  ///
+  /// In en, this message translates to:
+  /// **'{relation} (to you)'**
+  String relationOfMe(String relation);
+
+  /// No description provided for @relationFather.
+  ///
+  /// In en, this message translates to:
+  /// **'Father'**
+  String get relationFather;
+
+  /// No description provided for @relationMother.
+  ///
+  /// In en, this message translates to:
+  /// **'Mother'**
+  String get relationMother;
+
+  /// No description provided for @relationSon.
+  ///
+  /// In en, this message translates to:
+  /// **'Son'**
+  String get relationSon;
+
+  /// No description provided for @relationDaughter.
+  ///
+  /// In en, this message translates to:
+  /// **'Daughter'**
+  String get relationDaughter;
+
+  /// No description provided for @relationBrother.
+  ///
+  /// In en, this message translates to:
+  /// **'Brother'**
+  String get relationBrother;
+
+  /// No description provided for @relationSister.
+  ///
+  /// In en, this message translates to:
+  /// **'Sister'**
+  String get relationSister;
+
+  /// No description provided for @relationSpouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Spouse'**
+  String get relationSpouse;
+
+  /// No description provided for @relationRelative.
+  ///
+  /// In en, this message translates to:
+  /// **'Relative'**
+  String get relationRelative;
+
+  /// No description provided for @relationFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend'**
+  String get relationFriend;
+
+  /// No description provided for @relationColleague.
+  ///
+  /// In en, this message translates to:
+  /// **'Colleague'**
+  String get relationColleague;
+
+  /// No description provided for @relationCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Other…'**
+  String get relationCustom;
+
+  /// No description provided for @removeRelationship.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove relationship'**
+  String get removeRelationship;
+
+  /// No description provided for @errorChoosePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a person'**
+  String get errorChoosePerson;
+
+  /// No description provided for @customFieldsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom fields'**
+  String get customFieldsTitle;
+
+  /// No description provided for @customFieldsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your own fields to every person, such as blood type or ID number.'**
+  String get customFieldsHint;
+
+  /// No description provided for @addCustomField.
+  ///
+  /// In en, this message translates to:
+  /// **'New field'**
+  String get addCustomField;
+
+  /// No description provided for @editCustomField.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit field'**
+  String get editCustomField;
+
+  /// No description provided for @customFieldLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Field name'**
+  String get customFieldLabel;
+
+  /// No description provided for @customFieldType.
+  ///
+  /// In en, this message translates to:
+  /// **'Field type'**
+  String get customFieldType;
+
+  /// No description provided for @fieldTypeText.
+  ///
+  /// In en, this message translates to:
+  /// **'Text'**
+  String get fieldTypeText;
+
+  /// No description provided for @fieldTypeNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Number'**
+  String get fieldTypeNumber;
+
+  /// No description provided for @fieldTypeDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get fieldTypeDate;
+
+  /// No description provided for @fieldTypeUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get fieldTypeUrl;
+
+  /// No description provided for @noCustomFields.
+  ///
+  /// In en, this message translates to:
+  /// **'No custom fields yet.'**
+  String get noCustomFields;
+
+  /// No description provided for @deleteCustomFieldConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the field “{label}”? Its values will be removed from everyone.'**
+  String deleteCustomFieldConfirm(String label);
+
+  /// No description provided for @ageOnDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Age on a date'**
+  String get ageOnDate;
+
+  /// No description provided for @notBornYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not born yet on this date.'**
+  String get notBornYet;
+
+  /// No description provided for @untilBirthday.
+  ///
+  /// In en, this message translates to:
+  /// **'{months} months and {days} days to go'**
+  String untilBirthday(int months, int days);
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @filtersActive.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Filters} =1{1 filter} other{{count} filters}}'**
+  String filtersActive(int count);
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get clearFilters;
+
+  /// No description provided for @showResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get showResults;
+
+  /// No description provided for @ageRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Age range'**
+  String get ageRange;
+
+  /// No description provided for @minAge.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get minAge;
+
+  /// No description provided for @maxAge.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get maxAge;
+
+  /// No description provided for @birthMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth month'**
+  String get birthMonth;
+
+  /// No description provided for @birthDayOfMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth day'**
+  String get birthDayOfMonth;
+
+  /// No description provided for @birthYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth year'**
+  String get birthYear;
+
+  /// No description provided for @anyValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get anyValue;
+
+  /// No description provided for @birthDateFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Birth date'**
+  String get birthDateFilter;
+
+  /// No description provided for @withBirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Has a birth date'**
+  String get withBirthDate;
+
+  /// No description provided for @withoutBirthDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No birth date'**
+  String get withoutBirthDate;
+
+  /// No description provided for @birthdayWithin.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday within'**
+  String get birthdayWithin;
+
+  /// No description provided for @withinDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 day} other{{count} days}}'**
+  String withinDays(int count);
+
+  /// No description provided for @relationshipFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Has relationship'**
+  String get relationshipFilter;
+
+  /// No description provided for @saveFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Save filter'**
+  String get saveFilter;
+
+  /// No description provided for @filterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter name'**
+  String get filterName;
+
+  /// No description provided for @filterSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter saved'**
+  String get filterSaved;
+
+  /// No description provided for @deleteSavedFilterConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the saved filter “{name}”?'**
+  String deleteSavedFilterConfirm(String name);
+
+  /// No description provided for @errorInvalidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get errorInvalidNumber;
+
+  /// No description provided for @errorInvalidUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid link starting with http:// or https://'**
+  String get errorInvalidUrl;
+
+  /// No description provided for @errorAgeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'“From” must not be greater than “To”'**
+  String get errorAgeRange;
+
+  /// No description provided for @resultsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No people} =1{1 person} other{{count} people}}'**
+  String resultsCount(int count);
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
 }
 
 class _AppLocalizationsDelegate

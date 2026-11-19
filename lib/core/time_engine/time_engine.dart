@@ -74,6 +74,16 @@ class TimeEngine {
     return AgeBreakdown(years, months, days);
   }
 
+  /// Calendar difference from [from] to [to] in full years, months and days
+  /// (month ends clamp: Jan 31 → Feb 28 counts as one month). Null if [to] < [from].
+  AgeBreakdown? difference(LocalDate from, LocalDate to) {
+    if (to.isBefore(from)) return null;
+    var months = (to.year - from.year) * 12 + (to.month - from.month);
+    if (from.addMonths(months).isAfter(to)) months--;
+    final days = from.addMonths(months).daysUntil(to);
+    return AgeBreakdown(months ~/ 12, months % 12, days);
+  }
+
   /// Days elapsed from [from] to [to] (negative when [to] is earlier).
   int daysBetween(LocalDate from, LocalDate to) => from.daysUntil(to);
 

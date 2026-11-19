@@ -17,10 +17,10 @@ void main() {
   late DriftEventsRepository events;
   final created = DateTime(2026, 1, 1);
 
-  Person person(String id, String name, {List<PersonCategory> cats = const [], String? birth}) => Person(
+  Person person(String id, String name, {List<String> cats = const [], String? birth}) => Person(
         id: id,
         fullName: name,
-        categories: cats,
+        categoryIds: cats.map((k) => 'sys:category:$k').toList(),
         birthDate: birth == null ? null : LocalDate.parse(birth),
         createdAt: created,
       );
@@ -52,24 +52,24 @@ void main() {
 
   group('people', () {
     test('save → watch roundtrip with categories, sorted by shown name', () async {
-      await people.save(person('b', 'Zed', cats: [PersonCategory.friends, PersonCategory.family], birth: '1990-02-28'));
+      await people.save(person('b', 'Zed', cats: ['friends', 'family'], birth: '1990-02-28'));
       await people.save(person('a', 'amal'));
       final list = await people.watchAll().first;
       expect(list.map((p) => p.fullName), ['amal', 'Zed']);
-      expect(list[1].categories, [PersonCategory.family, PersonCategory.friends]);
+      expect(list[1].categoryIds, ['sys:category:family', 'sys:category:friends']);
       expect(list[1].birthDate, LocalDate.parse('1990-02-28'));
     });
 
     test('update replaces categories and bumps row_version, keeps created_at', () async {
-      await people.save(person('a', 'A', cats: [PersonCategory.friends]));
+      await people.save(person('a', 'A', cats: ['friends']));
       final before = await (db.select(db.persons)..where((t) => t.id.equals('a'))).getSingle();
-      await people.save(person('a', 'A2', cats: [PersonCategory.clients]));
+      await people.save(person('a', 'A2', cats: ['clients']));
       final after = await (db.select(db.persons)..where((t) => t.id.equals('a'))).getSingle();
       expect(after.rowVersion, before.rowVersion + 1);
       expect(after.createdAt, before.createdAt);
       final p = (await people.watchAll().first).single;
       expect(p.fullName, 'A2');
-      expect(p.categories, [PersonCategory.clients]);
+      expect(p.categoryIds, ['sys:category:clients']);
     });
 
     test('soft delete hides the person and unlinks events', () async {
@@ -146,7 +146,7 @@ void main() {
   test('erase all user data keeps settings, profile and system rows', () async {
     final settings = DriftSettingsRepository(db);
     await settings.set('general.language', 'ar');
-    await people.save(person('a', 'A', cats: [PersonCategory.family]));
+    await people.save(person('a', 'A', cats: ['family']));
     await events.save(event('e', yearly: true, personIds: ['a']));
 
     await DriftDataMaintenanceRepository(db).eraseAllUserData();

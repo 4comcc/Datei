@@ -64,6 +64,12 @@ class Persons extends Table with Timestamps, Syncable {
   TextColumn get fullName => text().withLength(min: 1, max: 200)();
   TextColumn get displayName => text().nullable()();
   TextColumn get birthDate => text().nullable()();
+
+  /// v2: false when only day and month are known (the stored year is then a
+  /// leap-year placeholder, 2000, and must never be shown or used for age).
+  BoolColumn get birthYearKnown => boolean().withDefault(const Constant(true))();
+
+  /// male | female | null (not specified).
   TextColumn get gender => text().nullable()();
   TextColumn get phone => text().nullable()();
   TextColumn get email => text().nullable()();
@@ -187,4 +193,70 @@ class EventPersonRelations extends Table {
 
   @override
   Set<Column> get primaryKey => {eventId, personId};
+}
+
+/// v2. Directed: (person_id IS relation_type OF related_person_id).
+/// related_person_id NULL means the relation is to the device owner ("my father").
+@DataClassName('PersonRelationshipRow')
+@TableIndex(name: 'idx_rel_person', columns: {#personId})
+@TableIndex(name: 'idx_rel_related', columns: {#relatedPersonId})
+class PersonRelationships extends Table with Timestamps {
+  TextColumn get id => text()();
+  TextColumn get personId => text().references(Persons, #id, onDelete: KeyAction.cascade)();
+  TextColumn get relatedPersonId => text().nullable().references(Persons, #id, onDelete: KeyAction.cascade)();
+
+  /// father | mother | son | daughter | brother | sister | spouse | relative | friend | colleague | custom
+  TextColumn get relationType => text()();
+  TextColumn get customLabel => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => [
+        'CHECK (related_person_id IS NULL OR related_person_id <> person_id)',
+        "CHECK (relation_type <> 'custom' OR (custom_label IS NOT NULL AND length(trim(custom_label)) > 0))",
+      ];
+}
+
+/// v2. User-defined extra fields for people.
+@DataClassName('CustomFieldDefinitionRow')
+class CustomFieldDefinitions extends Table with Timestamps {
+  TextColumn get id => text()();
+
+  /// 'person' (more entity types later).
+  TextColumn get entityType => text().withDefault(const Constant('person'))();
+  TextColumn get label => text().withLength(min: 1, max: 80)();
+
+  /// text | number | date | url
+  TextColumn get fieldType => text().withDefault(const Constant('text'))();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('CustomFieldValueRow')
+class CustomFieldValues extends Table {
+  TextColumn get definitionId => text().references(CustomFieldDefinitions, #id, onDelete: KeyAction.cascade)();
+  TextColumn get entityId => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {definitionId, entityId};
+}
+
+/// v2. Named filters; `definition` is a versioned JSON document.
+@DataClassName('SavedFilterRow')
+class SavedFilters extends Table with Timestamps {
+  TextColumn get id => text()();
+
+  /// people | events | commitments | global
+  TextColumn get scope => text()();
+  TextColumn get name => text().withLength(min: 1, max: 80)();
+  TextColumn get definition => text()();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+
+  @override
+  Set<Column> get primaryKey => {id};
 }

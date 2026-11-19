@@ -110,7 +110,7 @@ class AgendaTile extends StatelessWidget {
     final title = isBirthday ? l.birthdayOf(item.person!.shownName) : item.event!.title;
     final subtitleParts = <String>[
       context.formatDate(item.date),
-      if (isBirthday) l.turnsAge(item.turningAge!),
+      if (isBirthday && item.turningAge != null) l.turnsAge(item.turningAge!),
       if (!isBirthday && item.event!.time != null) context.formatTime(item.event!.time!),
     ];
     return Card(

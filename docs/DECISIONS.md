@@ -77,3 +77,15 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-036 · Accepted (owner, 2026-11-19) · App icon direction A "Geometric D".** Three directions were explored (A geometric D, B D + calendar page, C arc of time; `assets/branding/concepts/`). A was chosen: strongest legibility at 48 px, no heart or stock calendar imagery. The adaptive/monochrome/splash layers scale the mark to 86 % to stay inside the 66 dp safe circle.
 
 **ADR-037 · Accepted · Splash and launcher assets configured by hand, rendered from SVG with `tool/render_branding.js` (Playwright).** No `flutter_launcher_icons`/`flutter_native_splash` dependency: Android 12+ uses `windowSplashScreen*` (light/dark), older versions a layer-list with the rounded icon; Android 13 themed icons via the `monochrome` layer. SVG sources in `assets/branding/` are the single source of truth.
+
+**ADR-038 · Accepted · Birth year optional via `persons.birth_year_known`.** When false, `birth_date` stores the leap-year placeholder 2000 (keeps Feb 29 valid); domain exposes `birthDateWithYear` (null) so age, "turns N", age filters and birth-year filters never use the placeholder.
+
+**ADR-039 · Accepted · Relationships are directed rows `(person IS type OF related)`; `related_person_id` NULL = "of me".** Never mirrored automatically (PRD). Profiles show outgoing ("Sister of Sara", "Father (to you)") and incoming ("Ahmad — Father") rows. Self-relations and unlabeled custom relations are rejected by both repository validation and CHECK constraints.
+
+**ADR-040 · Accepted · People categories referenced by id.** Built-in ids `sys:category:<key>` (localized), user categories UUID with name/colour. Deleting a user category cascades its links only.
+
+**ADR-041 · Accepted · Custom fields: definitions + per-person values (text/number/date/url), validated in the form, saved with the person in one transaction.** Values for deleted definitions cascade away. Erase-all keeps definitions (configuration).
+
+**ADR-042 · Accepted · People filter is a pure domain object (`PeopleFilter.matches`) combining criteria with AND (categories: any-of).** Saved filters store versioned JSON (`v: 1`) without the free-text query. Filter state lives in a Riverpod notifier, not in widgets.
+
+**ADR-043 · Accepted · Schema v2 migration via drift `stepByStep`, verified by the generated schema test plus a data-preservation test.** The verifier caught missing index creation during development.

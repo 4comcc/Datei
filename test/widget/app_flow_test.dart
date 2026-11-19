@@ -1,35 +1,12 @@
-import 'package:datei/app/app.dart';
 import 'package:datei/core/time_engine/local_date.dart';
 import 'package:datei/features/people/domain/person.dart';
 import 'package:datei/features/people/presentation/people_providers.dart';
 import 'package:datei/features/settings/settings_controller.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../helpers.dart';
-
-Future<ProviderContainer> pumpApp(WidgetTester tester, {Map<String, String> settings = const {}}) async {
-  tester.view.physicalSize = const Size(1080, 2340);
-  tester.view.devicePixelRatio = 2.75;
-  addTearDown(tester.view.reset);
-  final (container, db) = await tester.runAsync(() => createTestContainer(settings: settings)) ??
-      (throw StateError('setup failed'));
-  addTearDown(() async {
-    await tester.pumpWidget(const SizedBox());
-    container.dispose();
-    await tester.runAsync(db.close);
-  });
-  await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const DateiApp()));
-  await tester.pumpAndSettle();
-  return container;
-}
-
-Future<void> settle(WidgetTester tester) async {
-  // Let Drift's stream queries deliver, then settle animations.
-  await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 20)));
-  await tester.pumpAndSettle();
-}
+import 'widget_helpers.dart';
 
 void main() {
   testWidgets('first run: choose Arabic → RTL welcome → guest → home', (tester) async {
@@ -70,14 +47,12 @@ void main() {
     await tester.tap(find.descendant(of: find.byType(BottomSheet), matching: find.text('Add person')));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.byKey(const Key('person-save')));
-    await tester.tap(find.byKey(const Key('person-save')));
+    await tester.tap(find.byKey(const Key('person-save-top')));
     await tester.pumpAndSettle();
     expect(find.text('This field is required'), findsOneWidget);
 
     await tester.enterText(find.byKey(const Key('person-fullName')), 'Sara Ahmed');
-    await tester.ensureVisible(find.byKey(const Key('person-save')));
-    await tester.tap(find.byKey(const Key('person-save')));
+    await tester.tap(find.byKey(const Key('person-save-top')));
     await settle(tester);
     expect(find.text('Sara Ahmed'), findsWidgets);
     expect(find.text('No birth date'), findsOneWidget);
