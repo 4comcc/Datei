@@ -4,15 +4,16 @@ import 'dart:io';
 
 import 'package:datei/app/app.dart';
 import 'package:datei/app/router/app_router.dart';
-import 'package:datei/core/storage/local_store.dart';
-import 'package:datei/core/time_engine/local_date.dart';
-import 'package:datei/features/agenda/agenda.dart';
+import 'package:datei/features/events/domain/event.dart';
+import 'package:datei/features/events/presentation/events_providers.dart';
+import 'package:datei/features/people/domain/person.dart';
+import 'package:datei/features/people/presentation/people_providers.dart';
+import 'package:datei/features/settings/settings_controller.dart';
+import '../test/helpers.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 Future<void> loadFonts() async {
   final plex = FontLoader('IBMPlexSansArabic');
@@ -42,25 +43,30 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name, 
   tester.view.physicalSize = const Size(1080, 2280);
   tester.view.devicePixelRatio = 2.75;
   addTearDown(tester.view.reset);
-  SharedPreferences.setMockInitialValues({
-    'settings.language': lang,
-    'settings.onboardingDone': route != '/welcome' && route != '/language',
-    'settings.themeMode': dark ? 'dark' : 'light',
-    'data.people': jsonEncode(people),
-    'data.events': jsonEncode(events),
+  final onboarded = route != '/welcome' && route != '/language';
+  final (container, db) = (await tester.runAsync(() => createTestContainer(settings: {
+        if (route != '/language') SettingKeys.language: lang,
+        SettingKeys.onboardingDone: '$onboarded',
+        SettingKeys.themeMode: dark ? 'dark' : 'light',
+      })))!;
+  await tester.runAsync(() async {
+    for (final p in people) {
+      await container.read(peopleRepositoryProvider).save(Person.fromJson(p));
+    }
+    for (final e in events) {
+      await container.read(eventsRepositoryProvider).save(DateiEvent.fromJson(e));
+    }
   });
-  final sp = await SharedPreferences.getInstance();
-  if (route == '/language') await sp.remove('settings.language');
-  final container = ProviderContainer(overrides: [
-    sharedPreferencesProvider.overrideWithValue(sp),
-    todayProvider.overrideWithValue(const LocalDate(2026, 11, 19)),
-  ]);
-  addTearDown(container.dispose);
+  addTearDown(() async {
+    await tester.pumpWidget(const SizedBox());
+    container.dispose();
+    await tester.runAsync(db.close);
+  });
   await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const DateiApp()));
+  await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 30)));
   await tester.pumpAndSettle();
-  if (route != '/home' && route != '/welcome' && route != '/language') {
-    container.read(routerProvider).go(route);
-  }
+  if (onboarded && route != '/home') container.read(routerProvider).go(route);
+  await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 30)));
   await tester.pumpAndSettle();
   await expectLater(find.byType(DateiApp), matchesGoldenFile('out/$name.png'));
 }

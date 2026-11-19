@@ -7,7 +7,7 @@ import '../../../core/time_engine/local_date.dart';
 import '../../../shared/l10n_labels.dart';
 import '../../../shared/widgets/date_field.dart';
 import '../../agenda/agenda.dart';
-import '../data/people_repository.dart';
+import 'people_providers.dart';
 import '../domain/person.dart';
 
 class PersonFormScreen extends ConsumerStatefulWidget {
@@ -73,7 +73,7 @@ class _PersonFormScreenState extends ConsumerState<PersonFormScreen> {
       categories: PersonCategory.values.where(_categories.contains).toList(),
       createdAt: _existing?.createdAt ?? DateTime.now(),
     );
-    await ref.read(peopleProvider.notifier).upsert(person);
+    await ref.read(peopleRepositoryProvider).save(person);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.savedSuccessfully)));
     if (_existing == null) {

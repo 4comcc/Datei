@@ -1,4 +1,4 @@
-package app.datei.datei
+package com.fourcom.datei
 
 import io.flutter.embedding.android.FlutterActivity
 

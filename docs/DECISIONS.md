@@ -42,7 +42,7 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 
 **ADR-020 · Accepted · Money stored as integer minor units + ISO currency.** Avoids floating-point errors.
 
-**ADR-021 · Proposed · Android applicationId.** Recommendation: `app.datei.android` if the owner controls the `datei.app` domain, otherwise `com.<owner>.datei`. **Cannot be changed after first Play upload — owner must confirm before Phase 1.**
+**ADR-021 · Accepted (2026-11-19, owner) · Android applicationId and namespace `com.fourcom.datei`.** Permanent once uploaded to Google Play.
 
 **ADR-022 · Proposed · Calendar UI: custom-built month/week/day views** (instead of `table_calendar`, which lacks week/day timelines and Hijri sub-labels). Final call in Phase 5.
 
@@ -57,3 +57,15 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-027 · Accepted · Fonts converted from IBM's official npm package `@ibm/plex-sans-arabic` 1.1.0 (WOFF2 → TTF via fontTools)** because Flutter cannot load WOFF; licence file shipped in `assets/fonts/`.
 
 **ADR-028 · Accepted (revisit) · Latin digits in both languages for v0.1.** intl renders Arabic dates with Arabic-Indic digits but numbers with Latin, producing mixed text. Unified to Latin; add a Settings option "Arabic-Indic digits" that switches both dates and numbers consistently.
+
+**ADR-029 · Accepted · Settings live in the `app_settings` table, loaded before `runApp`.** The router needs language/onboarding synchronously; bootstrap reads all settings once and `SettingsController` writes through the repository. SharedPreferences is now used only to read prototype data during the one-time import.
+
+**ADR-030 · Accepted · One-time prototype import (`LegacyPrototypeImporter`).** Imports v0.1 JSON (people, events, settings) inside a single transaction; old keys are removed only after commit, so a failure never loses data. Corrupt JSON is skipped rather than blocking startup. Note: the prototype APK used applicationId `app.datei.prototype`; the Phase 1 build is a different Android app (`com.fourcom.datei`), so data from the installed prototype is not reachable by it. The importer covers upgrades of builds that share the final id.
+
+**ADR-031 · Accepted · Soft delete semantics (v1).** Deleting a person sets `deleted_at` and removes their event links in the same transaction; deleting an event sets `deleted_at`. Queries exclude soft-deleted rows. "Erase all data" hard-deletes user rows and keeps settings, profile and system types. A trash/restore UI may come later.
+
+**ADR-032 · Accepted · Riverpod without code generation and no Freezed for now.** Manual providers keep the build simple while models are few; revisit when models grow (Phase 4+). Drift code generation is used (`build_runner`); generated `*.g.dart` files are committed so the project builds without running the generator first.
+
+**ADR-033 · Accepted · Built-in categories/event types have stable ids `sys:<kind>:<key>`** and are seeded idempotently on every open (insert-or-ignore). Labels come from ARB by `system_key`.
+
+**ADR-034 · Deferred to Phase 5 · `tz_id` on timed events.** Phase 1 stores local wall time (`start_time`) with `tz_id` null; capturing the device IANA zone needs `flutter_timezone`, added with notifications/recurrence work.

@@ -5,8 +5,8 @@ import 'package:material_ui/material_ui.dart';
 import '../../../shared/l10n_labels.dart';
 import '../../../shared/widgets/common.dart';
 import '../../agenda/agenda.dart';
-import '../../events/data/events_repository.dart';
-import '../data/people_repository.dart';
+import '../../events/presentation/events_providers.dart';
+import 'people_providers.dart';
 
 class PersonDetailScreen extends ConsumerWidget {
   const PersonDetailScreen({super.key, required this.personId});
@@ -26,7 +26,7 @@ class PersonDetailScreen extends ConsumerWidget {
       ),
     );
     if (ok != true || !context.mounted) return;
-    await ref.read(peopleProvider.notifier).delete(personId);
+    await ref.read(peopleRepositoryProvider).delete(personId);
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.deletedSuccessfully)));
     context.pop();

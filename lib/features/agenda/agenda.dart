@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/time_engine/time_engine.dart';
-import '../events/data/events_repository.dart';
+import '../events/presentation/events_providers.dart';
 import '../events/domain/event.dart';
-import '../people/data/people_repository.dart';
+import '../people/presentation/people_providers.dart';
 import '../people/domain/person.dart';
 
 final timeEngineProvider = Provider<TimeEngine>((ref) => const TimeEngine());

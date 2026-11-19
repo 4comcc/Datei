@@ -1,6 +1,6 @@
 # Datei — Database Schema (Drift / SQLite)
 
-Status: **design** (Phase 0). Implemented incrementally: core tables in Phase 1, feature tables in their phase.
+Status: **schema v1 implemented** (Phase 1, `lib/core/database/tables.dart`): local_user_profiles, account_metadata, app_settings, persons, person_categories, person_category_relations, event_types, recurrence_rules, events, event_person_relations. Remaining tables are added in their phase with a schema bump and migration test.
 Every schema change bumps `schemaVersion`, adds a step migration, and stores a schema dump
 (`drift_schemas/drift_schema_vN.json`) for migration tests.
 

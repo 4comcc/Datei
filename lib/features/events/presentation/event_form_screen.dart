@@ -6,8 +6,8 @@ import 'package:uuid/uuid.dart';
 import '../../../core/time_engine/local_date.dart';
 import '../../../shared/l10n_labels.dart';
 import '../../../shared/widgets/date_field.dart';
-import '../../people/data/people_repository.dart';
-import '../data/events_repository.dart';
+import '../../people/presentation/people_providers.dart';
+import 'events_providers.dart';
 import '../domain/event.dart';
 
 class EventFormScreen extends ConsumerStatefulWidget {
@@ -80,7 +80,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
       notes: trimOrNull(_notes),
       createdAt: _existing?.createdAt ?? DateTime.now(),
     );
-    await ref.read(eventsProvider.notifier).upsert(event);
+    await ref.read(eventsRepositoryProvider).save(event);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.savedSuccessfully)));
     context.pop();
@@ -100,7 +100,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
       ),
     );
     if (ok != true || !mounted) return;
-    await ref.read(eventsProvider.notifier).delete(_existing!.id);
+    await ref.read(eventsRepositoryProvider).delete(_existing!.id);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.deletedSuccessfully)));
     context.pop();

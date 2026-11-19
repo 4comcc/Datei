@@ -6,7 +6,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 |---|---|---|---|
 | 0 | Inspection & planning | ✅ 2026-11-19 | Environment report, planning docs, open decisions listed |
 | P | Prototype v0.1 (owner request) | ✅ 2026-11-19 | Installable APK to try the UX: language picker, welcome, guest, home, people, events, month calendar, settings |
-| 1 | Foundation | ⏳ | Flutter project, folder structure, Riverpod, GoRouter shell (5 tabs + quick add), Drift DB v1 (settings/profile/account tables + seeds), ARB AR/EN, RTL/LTR, M3 theme light/dark, fonts; analyze clean; smoke tests |
+| 1 | Foundation | ✅ 2026-11-19 | Flutter project, folder structure, Riverpod, GoRouter shell (5 tabs + quick add), Drift DB v1 (settings/profile/account tables + seeds), ARB AR/EN, RTL/LTR, M3 theme light/dark, fonts; analyze clean; smoke tests |
 | 2 | Branding & onboarding | ⏳ | 3 icon directions presented → owner picks; adaptive icon, wordmark, splash; language picker (first-run only), welcome, auth choice screen, Guest mode |
 | 3 | Authentication | ⏳ | AuthService + Firebase impl, Google, Facebook, linking, account page, sign-out, delete (re-auth), guest→registered; mocked tests; **real-config device test before marking ready** |
 | 4 | People | ⏳ | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
@@ -23,9 +23,9 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 - Docs created: CLAUDE.md, PRD, ARCHITECTURE, DATABASE_SCHEMA, DECISIONS, ROADMAP, AUTHENTICATION_SETUP.
 
 ## Blockers / prerequisites before Phase 1
-1. Owner confirms Android applicationId (ADR-021).
+1. ~~Owner confirms Android applicationId~~ — `com.fourcom.datei` (ADR-021).
 2. ~~Android SDK access~~ — resolved 2026-11-19 (hosts allowed; SDK 36 installed in container).
-3. A Git remote (GitHub repo) to persist work — the container is ephemeral.
+3. ~~Git remote~~ — https://github.com/4comcc/Datei (`main`).
 4. Phase 3 only: Firebase project + Google/Facebook console configuration (see AUTHENTICATION_SETUP.md).
 5. Phase 10 only: real Android device or emulator for integration and real-auth tests (cannot run in this container; needs KVM/device).
 
@@ -35,3 +35,11 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Not in prototype (by design): Google/Facebook sign-in (buttons explain it's coming), Drift DB, notifications, commitments, memories, milestones, timeline, reports, backup, Hijri, app lock.
 - Quality: `flutter analyze` clean; 17 tests (time engine, agenda, widget flow AR/EN) passing.
 - Android SDK installed after `dl.google.com` + `downloads.gradle.org` were allowed in the environment.
+
+## Phase 1 outcome (2026-11-19)
+- applicationId/namespace `com.fourcom.datei`.
+- Drift database schema v1 (`lib/core/database`): local_user_profiles, account_metadata, app_settings, persons, person_categories, person_category_relations, event_types, recurrence_rules, events, event_person_relations; FKs on, CHECK constraints, indexes, idempotent system seeds; schema snapshot `drift_schemas/datei/drift_schema_v1.json`.
+- Clean layering: domain repository interfaces (people, events, settings, data maintenance) → Drift implementations → Riverpod providers → screens. Prototype `LocalStore` removed.
+- Bootstrap before first frame: local profile, one-time prototype import, settings load.
+- Tests: 31 passing (time engine, agenda, repositories CRUD/soft-delete/recurrence/links, constraints, erase-all, legacy import, widget flows AR/EN). `flutter analyze`: no issues.
+- Not in Phase 1 (planned): custom categories/types UI (Phase 4/5), full recurrence engine (Phase 5), tz capture (ADR-034), account linking (Phase 3).

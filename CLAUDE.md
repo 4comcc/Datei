@@ -30,13 +30,15 @@ English (LTR) are first-class from v1.
 11. Storage of dates: civil dates as `YYYY-MM-DD` text; instants as UTC epoch millis + IANA tz id. Gregorian is
     the storage reference; Hijri is display/input only.
 
-## Commands (once the Flutter project exists — Phase 1)
+## Commands
 ```
 flutter pub get
-dart run build_runner build --delete-conflicting-outputs
+dart run build_runner build          # Drift code generation
+dart run drift_dev make-migrations   # after bumping schemaVersion
 flutter gen-l10n
 flutter analyze
 flutter test
+flutter test test_screens --update-goldens   # optional: render screenshots to test_screens/out
 flutter build apk --release   # requires Android SDK + signing config
 flutter build appbundle --release
 ```
@@ -44,3 +46,8 @@ flutter build appbundle --release
 ## Definition of Done (per feature)
 Designed · logic complete · persisted where needed · inputs validated · errors handled · integrated with other
 modules · tests pass · works in Arabic and English · correct RTL/LTR.
+
+## Project facts
+- Flutter 3.50: import `package:material_ui/material_ui.dart` (not `flutter/material.dart`) — ADR-025.
+- applicationId `com.fourcom.datei`. Repo: https://github.com/4comcc/Datei
+- Database: `lib/core/database` (Drift). Never write SQL outside `data/` repositories.

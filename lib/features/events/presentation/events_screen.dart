@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../shared/l10n_labels.dart';
 import '../../../shared/widgets/common.dart';
 import '../../agenda/agenda.dart';
-import '../data/events_repository.dart';
+import 'events_providers.dart';
 
 class EventsScreen extends ConsumerStatefulWidget {
   const EventsScreen({super.key});
@@ -21,6 +21,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final events = ref.watch(eventsProvider);
+    final loaded = ref.watch(eventsStreamProvider).hasValue;
     final engine = ref.watch(timeEngineProvider);
     final today = ref.watch(todayProvider);
 
@@ -39,7 +40,9 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l.navEvents)),
-      body: events.isEmpty
+      body: !loaded
+          ? const Center(child: CircularProgressIndicator())
+          : events.isEmpty
           ? EmptyState(
               icon: Icons.event_note_outlined,
               title: l.eventsEmptyTitle,
@@ -56,7 +59,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: SegmentedButton<bool>(
                     segments: [
-                      ButtonSegment(value: false, label: Text(l.tabUpcoming), icon: const Icon(Icons.upcoming_outlined)),
+                      ButtonSegment(
+                        value: false,
+                        label: Text(l.tabUpcoming),
+                        icon: const Icon(Icons.upcoming_outlined),
+                      ),
                       ButtonSegment(value: true, label: Text(l.tabPast), icon: const Icon(Icons.history)),
                     ],
                     selected: {_showPast},

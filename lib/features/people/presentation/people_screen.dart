@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../shared/l10n_labels.dart';
 import '../../../shared/widgets/common.dart';
 import '../../agenda/agenda.dart';
-import '../data/people_repository.dart';
+import 'people_providers.dart';
 import '../domain/person.dart';
 
 class PeopleScreen extends ConsumerStatefulWidget {
@@ -23,6 +23,7 @@ class _PeopleScreenState extends ConsumerState<PeopleScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final people = ref.watch(peopleProvider);
+    final loaded = ref.watch(peopleStreamProvider).hasValue;
     final engine = ref.watch(timeEngineProvider);
     final today = ref.watch(todayProvider);
     final q = _query.trim().toLowerCase();
@@ -36,7 +37,9 @@ class _PeopleScreenState extends ConsumerState<PeopleScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l.navPeople)),
-      body: people.isEmpty
+      body: !loaded
+          ? const Center(child: CircularProgressIndicator())
+          : people.isEmpty
           ? EmptyState(
               icon: Icons.people_outline,
               title: l.peopleEmptyTitle,

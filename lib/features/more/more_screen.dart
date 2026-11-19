@@ -3,11 +3,9 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
-import '../events/data/events_repository.dart';
-import '../people/data/people_repository.dart';
 import '../settings/settings_controller.dart';
 
-const appVersion = '0.1.0';
+const appVersion = '0.2.0';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -33,8 +31,7 @@ class MoreScreen extends ConsumerWidget {
       ),
     );
     if (ok != true) return;
-    await ref.read(eventsProvider.notifier).clearAll();
-    await ref.read(peopleProvider.notifier).clearAll();
+    await ref.read(dataMaintenanceRepositoryProvider).eraseAllUserData();
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.deletedSuccessfully)));
     }
