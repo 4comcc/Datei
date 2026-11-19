@@ -5,7 +5,7 @@ import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../settings/settings_controller.dart';
 
-const appVersion = '0.2.0';
+const appVersion = '0.2.1';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});

@@ -208,5 +208,11 @@
   "eventTypeFamily": "Family event",
   "eventTypeReligious": "Religious occasion",
   "eventTypePersonal": "Personal",
-  "eventTypeOther": "Other"
+  "eventTypeOther": "Other",
+  "startupErrorTitle": "Datei couldn't start",
+  "startupErrorBody": "Something went wrong while opening your data on this device. Your data has not been deleted. Try again, and if it keeps happening, send the details below to the developer.",
+  "startupTimeout": "Opening the database took too long.",
+  "retry": "Try again",
+  "copyDetails": "Copy details",
+  "copied": "Copied"
 }

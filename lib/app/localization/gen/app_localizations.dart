@@ -847,6 +847,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get eventTypeOther;
+
+  /// No description provided for @startupErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Datei couldn\'t start'**
+  String get startupErrorTitle;
+
+  /// No description provided for @startupErrorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while opening your data on this device. Your data has not been deleted. Try again, and if it keeps happening, send the details below to the developer.'**
+  String get startupErrorBody;
+
+  /// No description provided for @startupTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening the database took too long.'**
+  String get startupTimeout;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
+
+  /// No description provided for @copyDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy details'**
+  String get copyDetails;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
 }
 
 class _AppLocalizationsDelegate

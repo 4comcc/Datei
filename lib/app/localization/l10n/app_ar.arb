@@ -124,5 +124,11 @@
   "eventTypeFamily": "مناسبة عائلية",
   "eventTypeReligious": "مناسبة دينية",
   "eventTypePersonal": "شخصي",
-  "eventTypeOther": "أخرى"
+  "eventTypeOther": "أخرى",
+  "startupErrorTitle": "تعذّر تشغيل Datei",
+  "startupErrorBody": "حدث خطأ أثناء فتح بياناتك على هذا الجهاز، ولم تُحذف أي بيانات. أعد المحاولة، وإذا تكرر الخطأ أرسل التفاصيل أدناه إلى المطوّر.",
+  "startupTimeout": "استغرق فتح قاعدة البيانات وقتًا أطول من اللازم.",
+  "retry": "إعادة المحاولة",
+  "copyDetails": "نسخ التفاصيل",
+  "copied": "تم النسخ"
 }

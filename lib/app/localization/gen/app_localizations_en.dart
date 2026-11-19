@@ -442,4 +442,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeOther => 'Other';
+
+  @override
+  String get startupErrorTitle => 'Datei couldn\'t start';
+
+  @override
+  String get startupErrorBody =>
+      'Something went wrong while opening your data on this device. Your data has not been deleted. Try again, and if it keeps happening, send the details below to the developer.';
+
+  @override
+  String get startupTimeout => 'Opening the database took too long.';
+
+  @override
+  String get retry => 'Try again';
+
+  @override
+  String get copyDetails => 'Copy details';
+
+  @override
+  String get copied => 'Copied';
 }

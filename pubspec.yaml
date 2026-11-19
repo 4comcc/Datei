@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 0.2.0+2
+version: 0.2.1+3
 
 environment:
   sdk: ^3.14.0
@@ -112,3 +112,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Temporary pins (ADR-035): v0.2 hung at the splash screen on a real device.
+# - path_provider_android: stay on the Pigeon-based 2.2.x line (no jni/jni_flutter).
+# - jni: 1.2.0 was retracted by its publisher; use the latest non-retracted release.
+dependency_overrides:
+  path_provider_android: 2.2.23
+  jni: 1.1.2

@@ -454,4 +454,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get eventTypeOther => 'أخرى';
+
+  @override
+  String get startupErrorTitle => 'تعذّر تشغيل Datei';
+
+  @override
+  String get startupErrorBody =>
+      'حدث خطأ أثناء فتح بياناتك على هذا الجهاز، ولم تُحذف أي بيانات. أعد المحاولة، وإذا تكرر الخطأ أرسل التفاصيل أدناه إلى المطوّر.';
+
+  @override
+  String get startupTimeout =>
+      'استغرق فتح قاعدة البيانات وقتًا أطول من اللازم.';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get copyDetails => 'نسخ التفاصيل';
+
+  @override
+  String get copied => 'تم النسخ';
 }
