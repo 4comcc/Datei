@@ -22,3 +22,4 @@ android/key.properties
 *.env
 local.properties
 test_screens/out/
+*.apk
