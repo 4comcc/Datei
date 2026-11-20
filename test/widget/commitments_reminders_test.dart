@@ -63,7 +63,7 @@ void main() {
     );
     router(tester, c).go('/more');
     await settle(tester);
-    await tester.tap(find.byKey(const Key('reminders-enabled')));
+    await tapVisible(tester, find.byKey(const Key('reminders-enabled')));
     await settle(tester);
     expect(c.read(settingsProvider).remindersEnabled, isTrue);
 
@@ -87,7 +87,7 @@ void main() {
     final c = await pumpApp(tester, settings: englishOnboarded, notifications: fake);
     router(tester, c).go('/more');
     await settle(tester);
-    await tester.tap(find.byKey(const Key('reminders-enabled')));
+    await tapVisible(tester, find.byKey(const Key('reminders-enabled')));
     await settle(tester);
     expect(c.read(settingsProvider).remindersEnabled, isFalse);
     expect(find.textContaining('Notifications are blocked'), findsOneWidget);

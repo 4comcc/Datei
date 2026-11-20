@@ -1629,4 +1629,218 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sectionMemories => 'Memories';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get searchHint => 'Search people, events, renewals, memories…';
+
+  @override
+  String get searchStart =>
+      'Type to search everything in Datei, or add filters.';
+
+  @override
+  String get typePerson => 'People';
+
+  @override
+  String get typeEvent => 'Events';
+
+  @override
+  String get typeCommitment => 'Commitments';
+
+  @override
+  String get typeMemory => 'Memories';
+
+  @override
+  String get typeMilestone => 'Milestones';
+
+  @override
+  String get typeProject => 'Projects';
+
+  @override
+  String get advancedFilters => 'Filters';
+
+  @override
+  String get matchAll => 'Match all';
+
+  @override
+  String get matchAny => 'Match any';
+
+  @override
+  String get matchHint =>
+      'Conditions that don\'t apply to an item count as not met.';
+
+  @override
+  String get addCondition => 'Add condition';
+
+  @override
+  String get condDateRange => 'Date range';
+
+  @override
+  String get condPerson => 'Person';
+
+  @override
+  String get condEventType => 'Event type';
+
+  @override
+  String get condCategory => 'Category';
+
+  @override
+  String get condAge => 'Age';
+
+  @override
+  String get condPriority => 'Priority';
+
+  @override
+  String get condTimeState => 'Time';
+
+  @override
+  String get condRecurring => 'Repeating only';
+
+  @override
+  String get condTag => 'Tag';
+
+  @override
+  String get timeUpcoming => 'Upcoming';
+
+  @override
+  String get timePast => 'Past';
+
+  @override
+  String get timeOverdue => 'Overdue';
+
+  @override
+  String get dateFrom => 'From';
+
+  @override
+  String get dateTo => 'To';
+
+  @override
+  String get anyDate => 'Any';
+
+  @override
+  String ageBetween(String min, String max) {
+    return 'Age $min–$max';
+  }
+
+  @override
+  String get saveSearch => 'Save search';
+
+  @override
+  String get searchSaved => 'Search saved';
+
+  @override
+  String deleteSavedSearchConfirm(String name) {
+    return 'Delete the saved search “$name”?';
+  }
+
+  @override
+  String resultsFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count results',
+      one: '1 result',
+      zero: 'No results',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reports => 'Reports';
+
+  @override
+  String get reportPeople => 'People';
+
+  @override
+  String get reportByCategory => 'By category';
+
+  @override
+  String get reportUncategorized => 'No category';
+
+  @override
+  String get reportAges => 'Age distribution';
+
+  @override
+  String get reportUnknownAge => 'Unknown age';
+
+  @override
+  String get reportBirthdaysByMonth => 'Birthdays by month';
+
+  @override
+  String get reportEventsByType => 'Events by type';
+
+  @override
+  String get reportUpcoming => 'Coming up';
+
+  @override
+  String reportNextDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Next $count days',
+      one: 'Next day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportCommitments => 'Commitments';
+
+  @override
+  String get reportMemoriesMilestones => 'Memories & milestones';
+
+  @override
+  String get reportNoData => 'No data yet.';
+
+  @override
+  String ageBucket(int from, int to) {
+    return '$from–$to';
+  }
+
+  @override
+  String ageBucketPlus(int from) {
+    return '$from+';
+  }
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get exportHint =>
+      'CSV files open in Excel, Google Sheets and Numbers, with Arabic shown correctly.';
+
+  @override
+  String get exportPeople => 'Export people';
+
+  @override
+  String get exportEvents => 'Export events';
+
+  @override
+  String get exportCommitments => 'Export commitments';
+
+  @override
+  String get exportMemories => 'Export memories';
+
+  @override
+  String get exportFailed => 'Couldn\'t export the file. Try again.';
+
+  @override
+  String get csvAge => 'Age';
+
+  @override
+  String get csvRecurrence => 'Repeats';
+
+  @override
+  String get csvPhotos => 'Photos';
+
+  @override
+  String get csvStart => 'Start';
+
+  @override
+  String get csvEnd => 'End';
+
+  @override
+  String get csvPeriodMonths => 'Renewal period (months)';
 }

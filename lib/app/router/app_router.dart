@@ -16,6 +16,8 @@ import '../../features/memories/presentation/memory_detail_screen.dart';
 import '../../features/memories/presentation/memory_form_screen.dart';
 import '../../features/milestones/presentation/milestones_screens.dart';
 import '../../features/projects/presentation/projects_screens.dart';
+import '../../features/reports/presentation/reports_screen.dart';
+import '../../features/search/presentation/search_screen.dart';
 import '../../features/timeline/presentation/timeline_screen.dart';
 import '../../features/more/more_screen.dart';
 import '../../features/onboarding/language_screen.dart';
@@ -159,6 +161,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, state) => ProjectFormScreen(projectId: state.pathParameters['id']),
       ),
       GoRoute(path: '/timeline', parentNavigatorKey: _rootKey, builder: (_, _) => const TimelineScreen()),
+      GoRoute(path: '/search', parentNavigatorKey: _rootKey, builder: (_, _) => const SearchScreen()),
+      GoRoute(path: '/reports', parentNavigatorKey: _rootKey, builder: (_, _) => const ReportsScreen()),
       GoRoute(
         path: '/people/:id/timeline',
         parentNavigatorKey: _rootKey,

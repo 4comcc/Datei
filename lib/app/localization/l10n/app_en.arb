@@ -881,5 +881,115 @@
   },
   "todayMarker": "Today",
   "viewTimeline": "View timeline",
-  "sectionMemories": "Memories"
+  "sectionMemories": "Memories",
+  "search": "Search",
+  "searchHint": "Search people, events, renewals, memories…",
+  "searchStart": "Type to search everything in Datei, or add filters.",
+  "typePerson": "People",
+  "typeEvent": "Events",
+  "typeCommitment": "Commitments",
+  "typeMemory": "Memories",
+  "typeMilestone": "Milestones",
+  "typeProject": "Projects",
+  "advancedFilters": "Filters",
+  "matchAll": "Match all",
+  "matchAny": "Match any",
+  "matchHint": "Conditions that don't apply to an item count as not met.",
+  "addCondition": "Add condition",
+  "condDateRange": "Date range",
+  "condPerson": "Person",
+  "condEventType": "Event type",
+  "condCategory": "Category",
+  "condAge": "Age",
+  "condPriority": "Priority",
+  "condTimeState": "Time",
+  "condRecurring": "Repeating only",
+  "condTag": "Tag",
+  "timeUpcoming": "Upcoming",
+  "timePast": "Past",
+  "timeOverdue": "Overdue",
+  "dateFrom": "From",
+  "dateTo": "To",
+  "anyDate": "Any",
+  "ageBetween": "Age {min}–{max}",
+  "@ageBetween": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "saveSearch": "Save search",
+  "searchSaved": "Search saved",
+  "deleteSavedSearchConfirm": "Delete the saved search “{name}”?",
+  "@deleteSavedSearchConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsFound": "{count, plural, =0{No results} =1{1 result} other{{count} results}}",
+  "@resultsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reports": "Reports",
+  "reportPeople": "People",
+  "reportByCategory": "By category",
+  "reportUncategorized": "No category",
+  "reportAges": "Age distribution",
+  "reportUnknownAge": "Unknown age",
+  "reportBirthdaysByMonth": "Birthdays by month",
+  "reportEventsByType": "Events by type",
+  "reportUpcoming": "Coming up",
+  "reportNextDays": "{count, plural, =1{Next day} other{Next {count} days}}",
+  "@reportNextDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reportCommitments": "Commitments",
+  "reportMemoriesMilestones": "Memories & milestones",
+  "reportNoData": "No data yet.",
+  "ageBucket": "{from}–{to}",
+  "@ageBucket": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  },
+  "ageBucketPlus": "{from}+",
+  "@ageBucketPlus": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      }
+    }
+  },
+  "export": "Export",
+  "exportHint": "CSV files open in Excel, Google Sheets and Numbers, with Arabic shown correctly.",
+  "exportPeople": "Export people",
+  "exportEvents": "Export events",
+  "exportCommitments": "Export commitments",
+  "exportMemories": "Export memories",
+  "exportFailed": "Couldn't export the file. Try again.",
+  "csvAge": "Age",
+  "csvRecurrence": "Repeats",
+  "csvPhotos": "Photos",
+  "csvStart": "Start",
+  "csvEnd": "End",
+  "csvPeriodMonths": "Renewal period (months)"
 }

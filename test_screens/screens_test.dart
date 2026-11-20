@@ -178,5 +178,18 @@ void main() {
   testWidgets('ar memory', (t) => shoot(t, 'ar', '/memories/m1', 'ar_19_memory'));
   testWidgets('ar projects', (t) => shoot(t, 'ar', '/projects/pr1', 'ar_20_project'));
   testWidgets('ar person timeline', (t) => shoot(t, 'ar', '/people/p1/timeline', 'ar_21_person_timeline'));
+  testWidgets('ar reports', (t) => shoot(t, 'ar', '/reports', 'ar_22_reports'));
+  testWidgets('ar search', (t) => shoot(t, 'ar', '/search', 'ar_23_search', then: (t) async {
+        await t.enterText(find.byKey(const Key('search-field')), 'ساره');
+      }));
+  testWidgets('ar search filters', (t) => shoot(t, 'ar', '/search', 'ar_24_search_filters', then: (t) async {
+        await t.tap(find.byKey(const Key('add-condition')));
+        await t.pumpAndSettle();
+        await t.tap(find.byKey(const Key('cond-time-upcoming')));
+        await t.pumpAndSettle();
+        await t.tap(find.byKey(const Key('add-condition')));
+        await t.pumpAndSettle();
+        await t.tap(find.byKey(const Key('cond-recurring')));
+      }));
   testWidgets('ar home dark', (t) => shoot(t, 'ar', '/home', 'ar_6_home_dark', dark: true));
 }

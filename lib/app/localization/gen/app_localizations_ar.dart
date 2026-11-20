@@ -1683,4 +1683,223 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sectionMemories => 'الذكريات';
+
+  @override
+  String get search => 'البحث';
+
+  @override
+  String get searchHint => 'ابحث في الأشخاص والأحداث والالتزامات والذكريات…';
+
+  @override
+  String get searchStart =>
+      'اكتب للبحث في كل محتوى Datei، أو أضف شروطًا للتصفية.';
+
+  @override
+  String get typePerson => 'الأشخاص';
+
+  @override
+  String get typeEvent => 'الأحداث';
+
+  @override
+  String get typeCommitment => 'الالتزامات';
+
+  @override
+  String get typeMemory => 'الذكريات';
+
+  @override
+  String get typeMilestone => 'المحطات';
+
+  @override
+  String get typeProject => 'المشروعات';
+
+  @override
+  String get advancedFilters => 'الشروط';
+
+  @override
+  String get matchAll => 'كل الشروط';
+
+  @override
+  String get matchAny => 'أي شرط';
+
+  @override
+  String get matchHint => 'الشرط الذي لا ينطبق على عنصر يُعدّ غير متحقق.';
+
+  @override
+  String get addCondition => 'إضافة شرط';
+
+  @override
+  String get condDateRange => 'الفترة الزمنية';
+
+  @override
+  String get condPerson => 'الشخص';
+
+  @override
+  String get condEventType => 'نوع الحدث';
+
+  @override
+  String get condCategory => 'التصنيف';
+
+  @override
+  String get condAge => 'العمر';
+
+  @override
+  String get condPriority => 'الأولوية';
+
+  @override
+  String get condTimeState => 'الوقت';
+
+  @override
+  String get condRecurring => 'المتكرر فقط';
+
+  @override
+  String get condTag => 'الوسم';
+
+  @override
+  String get timeUpcoming => 'قادم';
+
+  @override
+  String get timePast => 'سابق';
+
+  @override
+  String get timeOverdue => 'متأخر';
+
+  @override
+  String get dateFrom => 'من';
+
+  @override
+  String get dateTo => 'إلى';
+
+  @override
+  String get anyDate => 'أي تاريخ';
+
+  @override
+  String ageBetween(String min, String max) {
+    return 'العمر $min–$max';
+  }
+
+  @override
+  String get saveSearch => 'حفظ البحث';
+
+  @override
+  String get searchSaved => 'تم حفظ البحث';
+
+  @override
+  String deleteSavedSearchConfirm(String name) {
+    return 'هل تريد حذف البحث المحفوظ «$name»؟';
+  }
+
+  @override
+  String resultsFound(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count نتيجة',
+      many: '$count نتيجة',
+      few: '$count نتائج',
+      two: 'نتيجتان',
+      one: 'نتيجة واحدة',
+      zero: 'لا نتائج',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reports => 'التقارير';
+
+  @override
+  String get reportPeople => 'الأشخاص';
+
+  @override
+  String get reportByCategory => 'حسب التصنيف';
+
+  @override
+  String get reportUncategorized => 'بلا تصنيف';
+
+  @override
+  String get reportAges => 'توزيع الأعمار';
+
+  @override
+  String get reportUnknownAge => 'عمر غير معروف';
+
+  @override
+  String get reportBirthdaysByMonth => 'أعياد الميلاد حسب الشهر';
+
+  @override
+  String get reportEventsByType => 'الأحداث حسب النوع';
+
+  @override
+  String get reportUpcoming => 'القادم';
+
+  @override
+  String reportNextDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'الـ$count يوم القادمة',
+      many: 'الـ$count يومًا القادمة',
+      few: 'الأيام الـ$count القادمة',
+      two: 'اليومان التاليان',
+      one: 'اليوم التالي',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reportCommitments => 'الالتزامات';
+
+  @override
+  String get reportMemoriesMilestones => 'الذكريات والمحطات';
+
+  @override
+  String get reportNoData => 'لا توجد بيانات بعد.';
+
+  @override
+  String ageBucket(int from, int to) {
+    return '$from–$to';
+  }
+
+  @override
+  String ageBucketPlus(int from) {
+    return '$from+';
+  }
+
+  @override
+  String get export => 'التصدير';
+
+  @override
+  String get exportHint =>
+      'ملفات CSV تُفتح في Excel وجداول Google وNumbers مع ظهور العربية بشكل صحيح.';
+
+  @override
+  String get exportPeople => 'تصدير الأشخاص';
+
+  @override
+  String get exportEvents => 'تصدير الأحداث';
+
+  @override
+  String get exportCommitments => 'تصدير الالتزامات';
+
+  @override
+  String get exportMemories => 'تصدير الذكريات';
+
+  @override
+  String get exportFailed => 'تعذّر تصدير الملف. أعد المحاولة.';
+
+  @override
+  String get csvAge => 'العمر';
+
+  @override
+  String get csvRecurrence => 'التكرار';
+
+  @override
+  String get csvPhotos => 'الصور';
+
+  @override
+  String get csvStart => 'البداية';
+
+  @override
+  String get csvEnd => 'النهاية';
+
+  @override
+  String get csvPeriodMonths => 'مدة التجديد (بالأشهر)';
 }

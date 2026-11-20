@@ -48,9 +48,21 @@ class HomeScreen extends ConsumerWidget {
     ];
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Datei', style: TextStyle(color: theme.colorScheme.primary, fontWeight: FontWeight.w700)),
+        actions: [
+          IconButton(
+            key: const Key('home-search'),
+            tooltip: l.search,
+            icon: const Icon(Icons.search),
+            onPressed: () => context.push('/search'),
+          ),
+        ],
+      ),
       body: SafeArea(
+        top: false,
         child: ListView(
-          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 96),
+          padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 96),
           children: [
             Card(
               color: theme.colorScheme.primary,
@@ -59,10 +71,6 @@ class HomeScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Datei',
-                        style: theme.textTheme.titleMedium
-                            ?.copyWith(color: theme.colorScheme.onPrimary.withValues(alpha: 0.8))),
-                    const SizedBox(height: 6),
                     Text(context.formatLongDate(today),
                         style: theme.textTheme.headlineSmall
                             ?.copyWith(color: theme.colorScheme.onPrimary, fontWeight: FontWeight.w600)),

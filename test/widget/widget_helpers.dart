@@ -40,3 +40,12 @@ Future<void> settle(WidgetTester tester) async {
 }
 
 GoRouter router(WidgetTester tester, ProviderContainer c) => c.read(routerProvider);
+
+/// Scrolls [finder] into view in the first scrollable, then taps it.
+Future<void> tapVisible(WidgetTester tester, Finder finder) async {
+  await tester.scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+  await tester.pumpAndSettle();
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
+  await tester.tap(finder);
+}

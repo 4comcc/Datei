@@ -13,7 +13,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | 5 | Events & calendar | ✅ 2026-11-20 | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
 | 6 | Commitments & reminders | ✅ 2026-11-20 (device-tested by owner) | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
 | 7 | Memories, milestones, timeline, projects | ✅ 2026-11-20 | CRUD + global & per-person timeline with filters |
-| 8 | Search & reports | ⏳ | FTS unified search, AND/OR filter builder, saved filters, charts, CSV (UTF-8 BOM) |
+| 8 | Search & reports | ✅ 2026-11-20 | FTS unified search, AND/OR filter builder, saved filters, charts, CSV (UTF-8 BOM) |
 | 9 | Backup & security | ⏳ | .datei backup/restore with attachments, encryption, integrity, app lock PIN/biometric, privacy policy |
 | 10 | QA & release | ⏳ | Full test suite, perf pass, translation & RTL review, real auth tests, signed APK + AAB, Play listing & Data safety |
 
@@ -87,3 +87,11 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Timeline: global (More → Timeline) and per person; periods all / past year / this year / upcoming; type filters; today marker.
 - `flutter analyze` clean; 151 tests.
 - Device check needed: picking photos from the gallery on the owner's phone.
+
+## Phase 8 outcome (2026-11-20)
+- Unified search (Home → search icon, More → Search) across people, events, commitments, memories, milestones and projects, Arabic-aware.
+- Advanced conditions with match all / match any; saved searches (long-press to delete).
+- Reports: totals, upcoming 7/30/90 days, people by category, age distribution, birthdays by month, events by type, commitments by status.
+- CSV export of people, events, commitments and memories via the share sheet.
+- Fixed during the phase: reversed number ranges in Arabic (bidi isolates), invisible characters in source replaced with escapes.
+- `flutter analyze` clean; 164 tests. One unidentified test failed once during a full run and did not recur in 7 consecutive runs — to investigate in Phase 10 (likely timing-dependent).

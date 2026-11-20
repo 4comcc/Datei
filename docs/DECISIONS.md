@@ -123,3 +123,11 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-058 · Accepted · Timeline is a pure service, newest first with a "Today" marker.** One-off items are never cut; birthdays and yearly anniversaries are expanded within ±1 year; frequent series (daily/weekly/monthly) show only where they started and their next occurrence — the timeline is for life events, not schedules. Per-person timelines include birth (when the year is known), linked events, memories, milestones and projects.
 
 **ADR-059 · Accepted · Projects reuse `EventPriority`; status planned/active/onHold/done/cancelled; "past due" = open and due date before today.** Kept deliberately light (no tasks/subtasks), per PRD.
+
+**ADR-060 · Accepted · Unified search is in-memory over the already-loaded live lists (`SearchEngine`, pure), not SQLite FTS5.** Personal data volumes are small, everything is already streamed for the UI, and Arabic needs custom normalization (`normalizeForSearch`: hamza/alef forms, ta marbuta, alef maqsura, diacritics, tatweel, Arabic-Indic digits) that FTS5's default tokenizer lacks. Revisit FTS5 if data grows to tens of thousands of rows.
+
+**ADR-061 · Accepted · Advanced filters = typed conditions (date range, person, event type, category, age, priority, time state, repeating, tag) combined with "Match all" (AND) or "Match any" (OR).** A condition that does not apply to an item counts as not met (stated in the UI). Saved in `saved_filters` with scope `global`, versioned JSON without the free text. Results rank by title-prefix > title > other fields, then by closeness to today.
+
+**ADR-062 · Accepted · Reports computed by a pure `ReportService`; charts drawn with simple Flutter bars (no chart library).** Clear in both directions, consistent with the theme, no dependency risk.
+
+**ADR-063 · Accepted · CSV exports (people, events, commitments, memories) with UTF-8 BOM, CRLF, RFC-4180 quoting, ISO dates, localized headers, and formula-injection neutralization (`'` prefix for text starting with = + - @).** Files are written to the temp directory and handed to the system share sheet via `share_plus` 13.3.1 (FileProvider; no permissions).

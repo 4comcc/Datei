@@ -2833,6 +2833,378 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Memories'**
   String get sectionMemories;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search people, events, renewals, memories…'**
+  String get searchHint;
+
+  /// No description provided for @searchStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Type to search everything in Datei, or add filters.'**
+  String get searchStart;
+
+  /// No description provided for @typePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get typePerson;
+
+  /// No description provided for @typeEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get typeEvent;
+
+  /// No description provided for @typeCommitment.
+  ///
+  /// In en, this message translates to:
+  /// **'Commitments'**
+  String get typeCommitment;
+
+  /// No description provided for @typeMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories'**
+  String get typeMemory;
+
+  /// No description provided for @typeMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get typeMilestone;
+
+  /// No description provided for @typeProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects'**
+  String get typeProject;
+
+  /// No description provided for @advancedFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get advancedFilters;
+
+  /// No description provided for @matchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Match all'**
+  String get matchAll;
+
+  /// No description provided for @matchAny.
+  ///
+  /// In en, this message translates to:
+  /// **'Match any'**
+  String get matchAny;
+
+  /// No description provided for @matchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Conditions that don\'t apply to an item count as not met.'**
+  String get matchHint;
+
+  /// No description provided for @addCondition.
+  ///
+  /// In en, this message translates to:
+  /// **'Add condition'**
+  String get addCondition;
+
+  /// No description provided for @condDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date range'**
+  String get condDateRange;
+
+  /// No description provided for @condPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get condPerson;
+
+  /// No description provided for @condEventType.
+  ///
+  /// In en, this message translates to:
+  /// **'Event type'**
+  String get condEventType;
+
+  /// No description provided for @condCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get condCategory;
+
+  /// No description provided for @condAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get condAge;
+
+  /// No description provided for @condPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get condPriority;
+
+  /// No description provided for @condTimeState.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get condTimeState;
+
+  /// No description provided for @condRecurring.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeating only'**
+  String get condRecurring;
+
+  /// No description provided for @condTag.
+  ///
+  /// In en, this message translates to:
+  /// **'Tag'**
+  String get condTag;
+
+  /// No description provided for @timeUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get timeUpcoming;
+
+  /// No description provided for @timePast.
+  ///
+  /// In en, this message translates to:
+  /// **'Past'**
+  String get timePast;
+
+  /// No description provided for @timeOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get timeOverdue;
+
+  /// No description provided for @dateFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get dateFrom;
+
+  /// No description provided for @dateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get dateTo;
+
+  /// No description provided for @anyDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Any'**
+  String get anyDate;
+
+  /// No description provided for @ageBetween.
+  ///
+  /// In en, this message translates to:
+  /// **'Age {min}–{max}'**
+  String ageBetween(String min, String max);
+
+  /// No description provided for @saveSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Save search'**
+  String get saveSearch;
+
+  /// No description provided for @searchSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Search saved'**
+  String get searchSaved;
+
+  /// No description provided for @deleteSavedSearchConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the saved search “{name}”?'**
+  String deleteSavedSearchConfirm(String name);
+
+  /// No description provided for @resultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No results} =1{1 result} other{{count} results}}'**
+  String resultsFound(int count);
+
+  /// No description provided for @reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get reports;
+
+  /// No description provided for @reportPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get reportPeople;
+
+  /// No description provided for @reportByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
+  String get reportByCategory;
+
+  /// No description provided for @reportUncategorized.
+  ///
+  /// In en, this message translates to:
+  /// **'No category'**
+  String get reportUncategorized;
+
+  /// No description provided for @reportAges.
+  ///
+  /// In en, this message translates to:
+  /// **'Age distribution'**
+  String get reportAges;
+
+  /// No description provided for @reportUnknownAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown age'**
+  String get reportUnknownAge;
+
+  /// No description provided for @reportBirthdaysByMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthdays by month'**
+  String get reportBirthdaysByMonth;
+
+  /// No description provided for @reportEventsByType.
+  ///
+  /// In en, this message translates to:
+  /// **'Events by type'**
+  String get reportEventsByType;
+
+  /// No description provided for @reportUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Coming up'**
+  String get reportUpcoming;
+
+  /// No description provided for @reportNextDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Next day} other{Next {count} days}}'**
+  String reportNextDays(int count);
+
+  /// No description provided for @reportCommitments.
+  ///
+  /// In en, this message translates to:
+  /// **'Commitments'**
+  String get reportCommitments;
+
+  /// No description provided for @reportMemoriesMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories & milestones'**
+  String get reportMemoriesMilestones;
+
+  /// No description provided for @reportNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No data yet.'**
+  String get reportNoData;
+
+  /// No description provided for @ageBucket.
+  ///
+  /// In en, this message translates to:
+  /// **'{from}–{to}'**
+  String ageBucket(int from, int to);
+
+  /// No description provided for @ageBucketPlus.
+  ///
+  /// In en, this message translates to:
+  /// **'{from}+'**
+  String ageBucketPlus(int from);
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @exportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV files open in Excel, Google Sheets and Numbers, with Arabic shown correctly.'**
+  String get exportHint;
+
+  /// No description provided for @exportPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'Export people'**
+  String get exportPeople;
+
+  /// No description provided for @exportEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Export events'**
+  String get exportEvents;
+
+  /// No description provided for @exportCommitments.
+  ///
+  /// In en, this message translates to:
+  /// **'Export commitments'**
+  String get exportCommitments;
+
+  /// No description provided for @exportMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'Export memories'**
+  String get exportMemories;
+
+  /// No description provided for @exportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t export the file. Try again.'**
+  String get exportFailed;
+
+  /// No description provided for @csvAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get csvAge;
+
+  /// No description provided for @csvRecurrence.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats'**
+  String get csvRecurrence;
+
+  /// No description provided for @csvPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get csvPhotos;
+
+  /// No description provided for @csvStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get csvStart;
+
+  /// No description provided for @csvEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get csvEnd;
+
+  /// No description provided for @csvPeriodMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal period (months)'**
+  String get csvPeriodMonths;
 }
 
 class _AppLocalizationsDelegate
