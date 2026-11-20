@@ -755,7 +755,7 @@ abstract class AppLocalizations {
   /// No description provided for @prototypeNotice.
   ///
   /// In en, this message translates to:
-  /// **'Early prototype (v{version}) for trying the experience. Data is stored locally on this device.'**
+  /// **'Pre-release version (v{version}). Data is stored locally on this device.'**
   String prototypeNotice(String version);
 
   /// No description provided for @categoryFamily.
@@ -3205,6 +3205,462 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Renewal period (months)'**
   String get csvPeriodMonths;
+
+  /// No description provided for @securityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Security & privacy'**
+  String get securityTitle;
+
+  /// No description provided for @appLock.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock'**
+  String get appLock;
+
+  /// No description provided for @appLockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for a PIN when opening Datei'**
+  String get appLockHint;
+
+  /// No description provided for @changePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get changePin;
+
+  /// No description provided for @useBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with fingerprint'**
+  String get useBiometrics;
+
+  /// No description provided for @useBiometricsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses the fingerprint or face unlock set up on this phone'**
+  String get useBiometricsHint;
+
+  /// No description provided for @lockAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock again after leaving the app'**
+  String get lockAfter;
+
+  /// No description provided for @lockImmediately.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediately'**
+  String get lockImmediately;
+
+  /// No description provided for @pinNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New PIN'**
+  String get pinNew;
+
+  /// No description provided for @pinConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm PIN'**
+  String get pinConfirm;
+
+  /// No description provided for @pinCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'Current PIN'**
+  String get pinCurrent;
+
+  /// No description provided for @pinFormatError.
+  ///
+  /// In en, this message translates to:
+  /// **'Use 4 to 8 digits'**
+  String get pinFormatError;
+
+  /// No description provided for @pinMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'PINs don\'t match'**
+  String get pinMismatch;
+
+  /// No description provided for @pinWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN'**
+  String get pinWrong;
+
+  /// No description provided for @pinSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN'**
+  String get pinSetupTitle;
+
+  /// No description provided for @pinForgotWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'A forgotten PIN can\'t be recovered: you would have to clear the app\'s data. Keep a backup.'**
+  String get pinForgotWarning;
+
+  /// No description provided for @disableLockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off app lock'**
+  String get disableLockTitle;
+
+  /// No description provided for @lockEnabledDone.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock is on'**
+  String get lockEnabledDone;
+
+  /// No description provided for @lockDisabledDone.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock is off'**
+  String get lockDisabledDone;
+
+  /// No description provided for @pinChangedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN changed'**
+  String get pinChangedDone;
+
+  /// No description provided for @biometricFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Fingerprint not confirmed'**
+  String get biometricFailed;
+
+  /// No description provided for @lockedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Datei is locked'**
+  String get lockedTitle;
+
+  /// No description provided for @enterPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN'**
+  String get enterPin;
+
+  /// No description provided for @unlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get unlock;
+
+  /// No description provided for @biometricReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Datei'**
+  String get biometricReason;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @privacyIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Datei is built to keep your information on your phone. This policy explains what the app stores, where, and what you control.'**
+  String get privacyIntro;
+
+  /// No description provided for @privacyStoredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What is stored'**
+  String get privacyStoredTitle;
+
+  /// No description provided for @privacyStoredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The people, events, commitments, memories, milestones, projects, photos and settings you enter are saved only in the app\'s private storage on this device. Datei has no servers of its own and does not send this data anywhere.'**
+  String get privacyStoredBody;
+
+  /// No description provided for @privacyPhotosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get privacyPhotosTitle;
+
+  /// No description provided for @privacyPhotosBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos are added only when you pick them with the system photo picker. The app copies the photos you choose into its own storage and does not read the rest of your gallery.'**
+  String get privacyPhotosBody;
+
+  /// No description provided for @privacyNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get privacyNotificationsTitle;
+
+  /// No description provided for @privacyNotificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are scheduled on the device by Android. Their text is generated on your phone and is not sent to any server.'**
+  String get privacyNotificationsBody;
+
+  /// No description provided for @privacyBackupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backups and exports'**
+  String get privacyBackupTitle;
+
+  /// No description provided for @privacyBackupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A backup or CSV file is created only when you ask for it, and saved or shared wherever you choose. Protect backups with a password if you store them in the cloud. Android\'s automatic cloud backup is turned off for Datei.'**
+  String get privacyBackupBody;
+
+  /// No description provided for @privacySecurityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock'**
+  String get privacySecurityTitle;
+
+  /// No description provided for @privacySecurityBody.
+  ///
+  /// In en, this message translates to:
+  /// **'If you turn on the app lock, only a salted hash of your PIN is kept, in the phone\'s secure storage. Fingerprint or face checks are done by Android; the app never receives your biometric data.'**
+  String get privacySecurityBody;
+
+  /// No description provided for @privacyAccountsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in'**
+  String get privacyAccountsTitle;
+
+  /// No description provided for @privacyAccountsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Datei currently works in guest mode without an account. If Google or Facebook sign-in is added later, this policy will be updated first to explain exactly what is shared with those services.'**
+  String get privacyAccountsBody;
+
+  /// No description provided for @privacyShareTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharing, ads and tracking'**
+  String get privacyShareTitle;
+
+  /// No description provided for @privacyShareBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Datei contains no ads, no analytics and no tracking, and your data is never sold or shared.'**
+  String get privacyShareBody;
+
+  /// No description provided for @privacyDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting your data'**
+  String get privacyDeleteTitle;
+
+  /// No description provided for @privacyDeleteBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You can erase all data from Settings → Erase all data, or by uninstalling the app. Backup files you saved elsewhere stay where you put them until you delete them.'**
+  String get privacyDeleteBody;
+
+  /// No description provided for @privacyChangesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes and contact'**
+  String get privacyChangesTitle;
+
+  /// No description provided for @privacyChangesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to this policy will appear in the app with a new date. For questions, use the contact details on the app\'s store page.'**
+  String get privacyChangesBody;
+
+  /// No description provided for @backupHint.
+  ///
+  /// In en, this message translates to:
+  /// **'A backup file holds all your data and photos. Save it somewhere safe, such as Google Drive or a computer, to move to a new phone or recover after a loss.'**
+  String get backupHint;
+
+  /// No description provided for @backupCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create backup'**
+  String get backupCreate;
+
+  /// No description provided for @backupCreateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Save a .datei file'**
+  String get backupCreateHint;
+
+  /// No description provided for @backupRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore from backup'**
+  String get backupRestore;
+
+  /// No description provided for @backupRestoreHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Replaces the data on this device'**
+  String get backupRestoreHint;
+
+  /// No description provided for @backupEncrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Protect with a password'**
+  String get backupEncrypt;
+
+  /// No description provided for @backupPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get backupPassword;
+
+  /// No description provided for @backupPasswordConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get backupPasswordConfirm;
+
+  /// No description provided for @backupPasswordShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 6 characters'**
+  String get backupPasswordShort;
+
+  /// No description provided for @backupPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords don\'t match'**
+  String get backupPasswordMismatch;
+
+  /// No description provided for @backupPasswordWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'If you forget this password, the backup can\'t be opened.'**
+  String get backupPasswordWarning;
+
+  /// No description provided for @backupSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved'**
+  String get backupSaved;
+
+  /// No description provided for @backupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t create the backup. Try again.'**
+  String get backupFailed;
+
+  /// No description provided for @backupEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup is protected. Enter its password.'**
+  String get backupEnterPassword;
+
+  /// No description provided for @backupWrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password'**
+  String get backupWrongPassword;
+
+  /// No description provided for @backupDamaged.
+  ///
+  /// In en, this message translates to:
+  /// **'This file isn\'t a Datei backup, or it is damaged.'**
+  String get backupDamaged;
+
+  /// No description provided for @backupNewer.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup was made by a newer version of Datei. Update the app first.'**
+  String get backupNewer;
+
+  /// No description provided for @backupReadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t read the file.'**
+  String get backupReadFailed;
+
+  /// No description provided for @backupRestoreConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore this backup?'**
+  String get backupRestoreConfirmTitle;
+
+  /// No description provided for @backupPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get backupPhotos;
+
+  /// No description provided for @backupRestoreWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'All current data on this device will be replaced. A safety copy of it is kept first, so you can undo.'**
+  String get backupRestoreWarning;
+
+  /// No description provided for @backupRestoreAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get backupRestoreAction;
+
+  /// No description provided for @backupRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored'**
+  String get backupRestored;
+
+  /// No description provided for @backupRestoreFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore failed. Your data was not changed.'**
+  String get backupRestoreFailed;
+
+  /// No description provided for @backupUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo the last restore'**
+  String get backupUndo;
+
+  /// No description provided for @backupWorking.
+  ///
+  /// In en, this message translates to:
+  /// **'Working…'**
+  String get backupWorking;
+
+  /// No description provided for @lockAfterMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, =1{1 minute} other{{minutes} minutes}}'**
+  String lockAfterMinutes(int minutes);
+
+  /// No description provided for @pinLockedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Try again in {seconds} s.'**
+  String pinLockedOut(int seconds);
+
+  /// No description provided for @privacyUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String privacyUpdated(String date);
+
+  /// No description provided for @backupCreatedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Created {date} · version {version}'**
+  String backupCreatedOn(String date, String version);
+
+  /// No description provided for @backupUndoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety copy from {date}'**
+  String backupUndoHint(String date);
 }
 
 class _AppLocalizationsDelegate

@@ -28,6 +28,8 @@ import '../../features/people/presentation/people_screen.dart';
 import '../../features/people/presentation/person_detail_screen.dart';
 import '../../features/people/presentation/person_form_screen.dart';
 import '../../features/settings/settings_controller.dart';
+import '../../features/backup/backup_screen.dart';
+import '../../features/security/privacy_policy_screen.dart';
 import 'app_shell.dart';
 
 final _rootKey = GlobalKey<NavigatorState>();
@@ -168,6 +170,8 @@ final routerProvider = Provider<GoRouter>((ref) {
         parentNavigatorKey: _rootKey,
         builder: (_, state) => TimelineScreen(personId: state.pathParameters['id']),
       ),
+      GoRoute(path: '/settings/backup', parentNavigatorKey: _rootKey, builder: (_, _) => const BackupScreen()),
+      GoRoute(path: '/settings/privacy', parentNavigatorKey: _rootKey, builder: (_, _) => const PrivacyPolicyScreen()),
       GoRoute(
         path: '/settings/event-types',
         parentNavigatorKey: _rootKey,

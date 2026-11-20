@@ -19,6 +19,7 @@ import 'package:datei/features/people/domain/person.dart';
 import 'package:datei/features/people/domain/relationship.dart';
 import 'package:datei/features/people/presentation/people_providers.dart';
 import 'package:datei/features/settings/settings_controller.dart';
+import 'package:datei/core/security/pin_hasher.dart';
 import '../test/helpers.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,7 +51,7 @@ final events = [
 ];
 
 Future<void> shoot(WidgetTester tester, String lang, String route, String name,
-    {bool dark = false, bool hijri = false, Future<void> Function(WidgetTester t)? then}) async {
+    {bool dark = false, bool hijri = false, FakeSecureStore? store, FakeBiometrics? bio, Future<void> Function(WidgetTester t)? then}) async {
   tester.view.physicalSize = const Size(1080, 3400);
   tester.view.devicePixelRatio = 2.75;
   addTearDown(tester.view.reset);
@@ -60,7 +61,7 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name,
         SettingKeys.onboardingDone: '$onboarded',
         SettingKeys.themeMode: dark ? 'dark' : 'light',
         if (hijri) SettingKeys.showHijri: 'true',
-      })))!;
+      }, secureStore: store, biometrics: bio)))!;
   await tester.runAsync(() async {
     for (final p in people) {
       await container.read(peopleRepositoryProvider).save(Person.fromJson(p));
@@ -192,4 +193,48 @@ void main() {
         await t.tap(find.byKey(const Key('cond-recurring')));
       }));
   testWidgets('ar home dark', (t) => shoot(t, 'ar', '/home', 'ar_6_home_dark', dark: true));
+
+  Future<FakeSecureStore> lockedStore(WidgetTester t, {bool bio = false}) async {
+    final store = FakeSecureStore();
+    await t.runAsync(() async {
+      store.values['lock.pin_hash'] = await const PinHasher(iterations: 1000).hash('1234');
+      if (bio) store.values['lock.biometric'] = 'true';
+    });
+    return store;
+  }
+
+  for (final lang in ['ar', 'en']) {
+    testWidgets('$lang lock', (t) async => shoot(t, lang, '/home', '${lang}_25_lock',
+        store: await lockedStore(t, bio: true), bio: FakeBiometrics()..available = true..succeed = false,
+        then: (t) async {
+          await t.tap(find.byKey(const Key('pin-key-1')));
+          await t.tap(find.byKey(const Key('pin-key-2')));
+        }));
+    testWidgets('$lang backup', (t) => shoot(t, lang, '/settings/backup', '${lang}_27_backup'));
+    testWidgets('$lang privacy', (t) => shoot(t, lang, '/settings/privacy', '${lang}_28_privacy'));
+  }
+  testWidgets('ar lock dark', (t) async =>
+      shoot(t, 'ar', '/home', 'ar_25_lock_dark', dark: true, store: await lockedStore(t)));
+  testWidgets('ar security settings', (t) async {
+    final store = FakeSecureStore();
+    await t.runAsync(() async => store.values['lock.pin_hash'] = await const PinHasher(iterations: 1000).hash('1234'));
+    await shoot(t, 'ar', '/more', 'ar_26_security', store: store, bio: FakeBiometrics()..available = true, then: (t) async {
+      // Unlock, then scroll to the security section.
+      for (final d in '1234'.split('')) {
+        await t.tap(find.byKey(Key('pin-key-$d')));
+        await t.pump();
+      }
+      await t.tap(find.byKey(const Key('pin-ok')));
+      for (var i = 0; i < 10; i++) {
+        await t.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 30)));
+        await t.pump(const Duration(milliseconds: 50));
+      }
+      await t.scrollUntilVisible(find.byKey(const Key('open-privacy')), 300, scrollable: find.byType(Scrollable).first);
+    });
+  });
+  testWidgets('ar create backup dialog', (t) => shoot(t, 'ar', '/settings/backup', 'ar_29_backup_dialog', then: (t) async {
+        await t.tap(find.byKey(const Key('backup-create')));
+        await t.pumpAndSettle();
+        await t.tap(find.byKey(const Key('backup-encrypt')));
+      }));
 }

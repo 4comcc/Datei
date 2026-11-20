@@ -186,7 +186,7 @@
   "resetData": "Erase all data",
   "resetDataConfirm": "This permanently deletes all people and events on this device. Continue?",
   "aboutTitle": "About",
-  "prototypeNotice": "Early prototype (v{version}) for trying the experience. Data is stored locally on this device.",
+  "prototypeNotice": "Pre-release version (v{version}). Data is stored locally on this device.",
   "@prototypeNotice": {
     "placeholders": {
       "version": {
@@ -991,5 +991,119 @@
   "csvPhotos": "Photos",
   "csvStart": "Start",
   "csvEnd": "End",
-  "csvPeriodMonths": "Renewal period (months)"
+  "csvPeriodMonths": "Renewal period (months)",
+  "securityTitle": "Security & privacy",
+  "appLock": "App lock",
+  "appLockHint": "Ask for a PIN when opening Datei",
+  "changePin": "Change PIN",
+  "useBiometrics": "Unlock with fingerprint",
+  "useBiometricsHint": "Uses the fingerprint or face unlock set up on this phone",
+  "lockAfter": "Lock again after leaving the app",
+  "lockImmediately": "Immediately",
+  "pinNew": "New PIN",
+  "pinConfirm": "Confirm PIN",
+  "pinCurrent": "Current PIN",
+  "pinFormatError": "Use 4 to 8 digits",
+  "pinMismatch": "PINs don't match",
+  "pinWrong": "Wrong PIN",
+  "pinSetupTitle": "Set a PIN",
+  "pinForgotWarning": "A forgotten PIN can't be recovered: you would have to clear the app's data. Keep a backup.",
+  "disableLockTitle": "Turn off app lock",
+  "lockEnabledDone": "App lock is on",
+  "lockDisabledDone": "App lock is off",
+  "pinChangedDone": "PIN changed",
+  "biometricFailed": "Fingerprint not confirmed",
+  "lockedTitle": "Datei is locked",
+  "enterPin": "Enter your PIN",
+  "unlock": "Unlock",
+  "biometricReason": "Unlock Datei",
+  "privacyPolicy": "Privacy policy",
+  "privacyIntro": "Datei is built to keep your information on your phone. This policy explains what the app stores, where, and what you control.",
+  "privacyStoredTitle": "What is stored",
+  "privacyStoredBody": "The people, events, commitments, memories, milestones, projects, photos and settings you enter are saved only in the app's private storage on this device. Datei has no servers of its own and does not send this data anywhere.",
+  "privacyPhotosTitle": "Photos",
+  "privacyPhotosBody": "Photos are added only when you pick them with the system photo picker. The app copies the photos you choose into its own storage and does not read the rest of your gallery.",
+  "privacyNotificationsTitle": "Notifications",
+  "privacyNotificationsBody": "Reminders are scheduled on the device by Android. Their text is generated on your phone and is not sent to any server.",
+  "privacyBackupTitle": "Backups and exports",
+  "privacyBackupBody": "A backup or CSV file is created only when you ask for it, and saved or shared wherever you choose. Protect backups with a password if you store them in the cloud. Android's automatic cloud backup is turned off for Datei.",
+  "privacySecurityTitle": "App lock",
+  "privacySecurityBody": "If you turn on the app lock, only a salted hash of your PIN is kept, in the phone's secure storage. Fingerprint or face checks are done by Android; the app never receives your biometric data.",
+  "privacyAccountsTitle": "Sign-in",
+  "privacyAccountsBody": "Datei currently works in guest mode without an account. If Google or Facebook sign-in is added later, this policy will be updated first to explain exactly what is shared with those services.",
+  "privacyShareTitle": "Sharing, ads and tracking",
+  "privacyShareBody": "Datei contains no ads, no analytics and no tracking, and your data is never sold or shared.",
+  "privacyDeleteTitle": "Deleting your data",
+  "privacyDeleteBody": "You can erase all data from Settings → Erase all data, or by uninstalling the app. Backup files you saved elsewhere stay where you put them until you delete them.",
+  "privacyChangesTitle": "Changes and contact",
+  "privacyChangesBody": "Changes to this policy will appear in the app with a new date. For questions, use the contact details on the app's store page.",
+  "backupHint": "A backup file holds all your data and photos. Save it somewhere safe, such as Google Drive or a computer, to move to a new phone or recover after a loss.",
+  "backupCreate": "Create backup",
+  "backupCreateHint": "Save a .datei file",
+  "backupRestore": "Restore from backup",
+  "backupRestoreHint": "Replaces the data on this device",
+  "backupEncrypt": "Protect with a password",
+  "backupPassword": "Password",
+  "backupPasswordConfirm": "Confirm password",
+  "backupPasswordShort": "Use at least 6 characters",
+  "backupPasswordMismatch": "Passwords don't match",
+  "backupPasswordWarning": "If you forget this password, the backup can't be opened.",
+  "backupSaved": "Backup saved",
+  "backupFailed": "Couldn't create the backup. Try again.",
+  "backupEnterPassword": "This backup is protected. Enter its password.",
+  "backupWrongPassword": "Wrong password",
+  "backupDamaged": "This file isn't a Datei backup, or it is damaged.",
+  "backupNewer": "This backup was made by a newer version of Datei. Update the app first.",
+  "backupReadFailed": "Couldn't read the file.",
+  "backupRestoreConfirmTitle": "Restore this backup?",
+  "backupPhotos": "Photos",
+  "backupRestoreWarning": "All current data on this device will be replaced. A safety copy of it is kept first, so you can undo.",
+  "backupRestoreAction": "Restore",
+  "backupRestored": "Backup restored",
+  "backupRestoreFailed": "Restore failed. Your data was not changed.",
+  "backupUndo": "Undo the last restore",
+  "backupWorking": "Working…",
+  "lockAfterMinutes": "{minutes, plural, =1{1 minute} other{{minutes} minutes}}",
+  "@lockAfterMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "pinLockedOut": "Too many attempts. Try again in {seconds} s.",
+  "@pinLockedOut": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "privacyUpdated": "Last updated: {date}",
+  "@privacyUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "backupCreatedOn": "Created {date} · version {version}",
+  "@backupCreatedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "backupUndoHint": "Safety copy from {date}",
+  "@backupUndoHint": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

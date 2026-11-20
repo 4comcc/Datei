@@ -14,7 +14,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | 6 | Commitments & reminders | ✅ 2026-11-20 (device-tested by owner) | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
 | 7 | Memories, milestones, timeline, projects | ✅ 2026-11-20 | CRUD + global & per-person timeline with filters |
 | 8 | Search & reports | ✅ 2026-11-20 | FTS unified search, AND/OR filter builder, saved filters, charts, CSV (UTF-8 BOM) |
-| 9 | Backup & security | ⏳ | .datei backup/restore with attachments, encryption, integrity, app lock PIN/biometric, privacy policy |
+| 9 | Backup & security | ✅ 2026-11-20 | .datei backup/restore with attachments, encryption, integrity, app lock PIN/biometric, privacy policy |
 | 10 | QA & release | ⏳ | Full test suite, perf pass, translation & RTL review, real auth tests, signed APK + AAB, Play listing & Data safety |
 
 ## Phase 0 outcome (2026-11-19)
@@ -95,3 +95,11 @@ Built at the owner's request before Phase 1 to validate the experience.
 - CSV export of people, events, commitments and memories via the share sheet.
 - Fixed during the phase: reversed number ranges in Arabic (bidi isolates), invisible characters in source replaced with escapes.
 - `flutter analyze` clean; 164 tests. One unidentified test failed once during a full run and did not recur in 7 consecutive runs — to investigate in Phase 10 (likely timing-dependent).
+
+## Phase 9 outcome (2026-11-20)
+- Backup & restore (Settings → Data → Backup & restore): `.datei` file with all data and photos, optional password (Argon2id + AES-256-GCM), SHA-256 checks, saved/opened with the system file dialogs; restore shows a summary, asks for confirmation, keeps an automatic safety copy (with "Undo the last restore") and replaces data in one transaction. Damaged, foreign and newer files are rejected; wrong passwords can be retried.
+- App lock (Settings → Security & privacy): 4–8 digit PIN (salted PBKDF2 in the Keystore-backed secure storage), optional fingerprint/face unlock, lock again immediately / after 1 / 5 minutes, increasing lockout after 5 wrong PINs; change/turn off needs the PIN.
+- In-app privacy policy (Arabic/English) + `docs/PRIVACY_POLICY.md`. Android auto cloud backup turned off.
+- Fixed during testing: restore did not refresh open screens (Drift streams not notified); restore wiped this device's settings; decompression errors not reported as "damaged"; a crafted backup could name files outside the attachments folder.
+- `flutter analyze` clean; 190 tests.
+- Device check needed: fingerprint prompt, PIN lock after leaving the app, backup to Drive/Files and restore with photos and password.

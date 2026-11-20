@@ -6,6 +6,7 @@ import 'package:cupertino_ui/cupertino_ui.dart' show GlobalCupertinoLocalization
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart' show GlobalWidgetsLocalizations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:material_ui/material_ui.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,9 +38,17 @@ Future<(AppDatabase, BootstrapResult)> _defaultLoader() async {
 }
 
 class StartupApp extends StatefulWidget {
-  const StartupApp({super.key, this.timeout = const Duration(seconds: 20), this.loader = _defaultLoader});
+  const StartupApp({
+    super.key,
+    this.timeout = const Duration(seconds: 20),
+    this.loader = _defaultLoader,
+    this.overrides = const [],
+  });
   final Duration timeout;
   final StartupLoader loader;
+
+  /// Extra provider overrides (tests swap device plugins for fakes).
+  final List<Override> overrides;
 
   @override
   State<StartupApp> createState() => _StartupAppState();
@@ -91,6 +100,7 @@ class _StartupAppState extends State<StartupApp> {
           currentProfileIdProvider.overrideWithValue(boot.profileId),
           initialSettingsProvider.overrideWithValue(boot.settings),
           attachmentStoreProvider.overrideWithValue(LocalAttachmentStore(boot.attachmentsRoot ?? Directory.systemTemp.path)),
+          ...widget.overrides,
         ],
         child: const DateiApp(),
       );

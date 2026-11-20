@@ -407,7 +407,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String prototypeNotice(String version) {
-    return 'نموذج أولي مبكر (الإصدار $version) لتجربة التطبيق. البيانات محفوظة محليًا على هذا الجهاز.';
+    return 'إصدار تجريبي (الإصدار $version). البيانات محفوظة محليًا على هذا الجهاز.';
   }
 
   @override
@@ -1902,4 +1902,267 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get csvPeriodMonths => 'مدة التجديد (بالأشهر)';
+
+  @override
+  String get securityTitle => 'الأمان والخصوصية';
+
+  @override
+  String get appLock => 'قفل التطبيق';
+
+  @override
+  String get appLockHint => 'طلب رمز PIN عند فتح التطبيق';
+
+  @override
+  String get changePin => 'تغيير الرمز';
+
+  @override
+  String get useBiometrics => 'الفتح بالبصمة';
+
+  @override
+  String get useBiometricsHint =>
+      'يستخدم البصمة أو الوجه المسجّل على هذا الهاتف';
+
+  @override
+  String get lockAfter => 'إعادة القفل بعد مغادرة التطبيق';
+
+  @override
+  String get lockImmediately => 'فورًا';
+
+  @override
+  String get pinNew => 'الرمز الجديد';
+
+  @override
+  String get pinConfirm => 'تأكيد الرمز';
+
+  @override
+  String get pinCurrent => 'الرمز الحالي';
+
+  @override
+  String get pinFormatError => 'استخدم من 4 إلى 8 أرقام';
+
+  @override
+  String get pinMismatch => 'الرمزان غير متطابقين';
+
+  @override
+  String get pinWrong => 'رمز غير صحيح';
+
+  @override
+  String get pinSetupTitle => 'تعيين رمز PIN';
+
+  @override
+  String get pinForgotWarning =>
+      'لا يمكن استرجاع الرمز إذا نسيته، وستضطر حينها إلى مسح بيانات التطبيق. احتفظ بنسخة احتياطية.';
+
+  @override
+  String get disableLockTitle => 'إيقاف قفل التطبيق';
+
+  @override
+  String get lockEnabledDone => 'تم تفعيل قفل التطبيق';
+
+  @override
+  String get lockDisabledDone => 'تم إيقاف قفل التطبيق';
+
+  @override
+  String get pinChangedDone => 'تم تغيير الرمز';
+
+  @override
+  String get biometricFailed => 'لم يتم التحقق من البصمة';
+
+  @override
+  String get lockedTitle => 'التطبيق مقفل';
+
+  @override
+  String get enterPin => 'أدخل الرمز';
+
+  @override
+  String get unlock => 'فتح';
+
+  @override
+  String get biometricReason => 'افتح تطبيق Datei';
+
+  @override
+  String get privacyPolicy => 'سياسة الخصوصية';
+
+  @override
+  String get privacyIntro =>
+      'صُمّم تطبيق Datei ليُبقي معلوماتك على هاتفك. توضح هذه السياسة ما يحفظه التطبيق وأين يحفظه وما الذي تتحكم فيه.';
+
+  @override
+  String get privacyStoredTitle => 'ما الذي يُحفظ';
+
+  @override
+  String get privacyStoredBody =>
+      'الأشخاص والمناسبات والالتزامات والذكريات والإنجازات والمشاريع والصور والإعدادات التي تُدخلها تُحفظ فقط في المساحة الخاصة بالتطبيق على هذا الجهاز. لا يملك Datei خوادم خاصة به ولا يرسل هذه البيانات إلى أي جهة.';
+
+  @override
+  String get privacyPhotosTitle => 'الصور';
+
+  @override
+  String get privacyPhotosBody =>
+      'تُضاف الصور فقط عندما تختارها بنفسك من منتقي الصور في النظام. ينسخ التطبيق الصور التي تختارها إلى مساحته الخاصة ولا يطّلع على بقية معرض الصور.';
+
+  @override
+  String get privacyNotificationsTitle => 'الإشعارات';
+
+  @override
+  String get privacyNotificationsBody =>
+      'يجدول نظام أندرويد التذكيرات على الجهاز نفسه. يُنشأ نصّها على هاتفك ولا يُرسل إلى أي خادم.';
+
+  @override
+  String get privacyBackupTitle => 'النسخ الاحتياطي والتصدير';
+
+  @override
+  String get privacyBackupBody =>
+      'لا يُنشأ ملف النسخة الاحتياطية أو ملف CSV إلا عندما تطلبه، ويُحفظ أو يُشارك حيث تختار أنت. احمِ النسخ الاحتياطية بكلمة مرور إذا حفظتها في خدمة سحابية. النسخ الاحتياطي التلقائي في أندرويد معطّل لهذا التطبيق.';
+
+  @override
+  String get privacySecurityTitle => 'قفل التطبيق';
+
+  @override
+  String get privacySecurityBody =>
+      'عند تفعيل قفل التطبيق لا يُحفظ إلا ناتج تجزئة مُملّح للرمز داخل التخزين الآمن في الهاتف. يتولى أندرويد التحقق من البصمة أو الوجه، ولا يتلقى التطبيق بياناتك الحيوية مطلقًا.';
+
+  @override
+  String get privacyAccountsTitle => 'تسجيل الدخول';
+
+  @override
+  String get privacyAccountsBody =>
+      'يعمل Datei حاليًا في وضع الضيف دون حساب. إذا أُضيف تسجيل الدخول عبر Google أو Facebook لاحقًا فستُحدَّث هذه السياسة أولًا لتوضيح ما يُشارك مع هذه الخدمات بالتحديد.';
+
+  @override
+  String get privacyShareTitle => 'المشاركة والإعلانات والتتبّع';
+
+  @override
+  String get privacyShareBody =>
+      'لا يحتوي Datei على إعلانات أو أدوات تحليل أو تتبّع، ولا تُباع بياناتك أو تُشارك مع أحد.';
+
+  @override
+  String get privacyDeleteTitle => 'حذف بياناتك';
+
+  @override
+  String get privacyDeleteBody =>
+      'يمكنك حذف كل البيانات من الإعدادات ← مسح جميع البيانات، أو بإلغاء تثبيت التطبيق. تبقى ملفات النسخ الاحتياطية التي حفظتها في مكان آخر حيث وضعتها إلى أن تحذفها بنفسك.';
+
+  @override
+  String get privacyChangesTitle => 'التغييرات والتواصل';
+
+  @override
+  String get privacyChangesBody =>
+      'ستظهر أي تغييرات على هذه السياسة داخل التطبيق مع تاريخ جديد. للاستفسارات استخدم بيانات التواصل الموجودة في صفحة التطبيق على المتجر.';
+
+  @override
+  String get backupHint =>
+      'يضم ملف النسخة الاحتياطية جميع بياناتك وصورك. احفظه في مكان آمن مثل Google Drive أو جهاز كمبيوتر لنقل بياناتك إلى هاتف جديد أو استعادتها عند فقدانها.';
+
+  @override
+  String get backupCreate => 'إنشاء نسخة احتياطية';
+
+  @override
+  String get backupCreateHint => 'حفظ ملف بامتداد datei';
+
+  @override
+  String get backupRestore => 'الاستعادة من نسخة احتياطية';
+
+  @override
+  String get backupRestoreHint => 'يستبدل البيانات الموجودة على هذا الجهاز';
+
+  @override
+  String get backupEncrypt => 'حماية بكلمة مرور';
+
+  @override
+  String get backupPassword => 'كلمة المرور';
+
+  @override
+  String get backupPasswordConfirm => 'تأكيد كلمة المرور';
+
+  @override
+  String get backupPasswordShort => 'استخدم 6 أحرف على الأقل';
+
+  @override
+  String get backupPasswordMismatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get backupPasswordWarning =>
+      'إذا نسيت كلمة المرور فلن يمكن فتح النسخة الاحتياطية.';
+
+  @override
+  String get backupSaved => 'تم حفظ النسخة الاحتياطية';
+
+  @override
+  String get backupFailed => 'تعذّر إنشاء النسخة الاحتياطية. حاول مرة أخرى.';
+
+  @override
+  String get backupEnterPassword => 'هذه النسخة محمية. أدخل كلمة المرور.';
+
+  @override
+  String get backupWrongPassword => 'كلمة مرور غير صحيحة';
+
+  @override
+  String get backupDamaged =>
+      'هذا الملف ليس نسخة احتياطية من Datei أو أنه تالف.';
+
+  @override
+  String get backupNewer =>
+      'أُنشئت هذه النسخة بإصدار أحدث من Datei. حدّث التطبيق أولًا.';
+
+  @override
+  String get backupReadFailed => 'تعذّرت قراءة الملف.';
+
+  @override
+  String get backupRestoreConfirmTitle => 'استعادة هذه النسخة؟';
+
+  @override
+  String get backupPhotos => 'الصور';
+
+  @override
+  String get backupRestoreWarning =>
+      'ستُستبدل جميع البيانات الحالية على هذا الجهاز. تُحفظ نسخة أمان منها أولًا لتتمكن من التراجع.';
+
+  @override
+  String get backupRestoreAction => 'استعادة';
+
+  @override
+  String get backupRestored => 'تمت استعادة النسخة الاحتياطية';
+
+  @override
+  String get backupRestoreFailed => 'فشلت الاستعادة، ولم تتغير بياناتك.';
+
+  @override
+  String get backupUndo => 'التراجع عن آخر استعادة';
+
+  @override
+  String get backupWorking => 'جارٍ التنفيذ…';
+
+  @override
+  String lockAfterMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes دقيقة',
+      few: '$minutes دقائق',
+      two: 'دقيقتان',
+      one: 'دقيقة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String pinLockedOut(int seconds) {
+    return 'محاولات كثيرة. أعد المحاولة بعد $seconds ث.';
+  }
+
+  @override
+  String privacyUpdated(String date) {
+    return 'آخر تحديث: $date';
+  }
+
+  @override
+  String backupCreatedOn(String date, String version) {
+    return 'أُنشئت في $date · الإصدار $version';
+  }
+
+  @override
+  String backupUndoHint(String date) {
+    return 'نسخة أمان من $date';
+  }
 }

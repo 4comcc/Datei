@@ -395,7 +395,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String prototypeNotice(String version) {
-    return 'Early prototype (v$version) for trying the experience. Data is stored locally on this device.';
+    return 'Pre-release version (v$version). Data is stored locally on this device.';
   }
 
   @override
@@ -1843,4 +1843,267 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get csvPeriodMonths => 'Renewal period (months)';
+
+  @override
+  String get securityTitle => 'Security & privacy';
+
+  @override
+  String get appLock => 'App lock';
+
+  @override
+  String get appLockHint => 'Ask for a PIN when opening Datei';
+
+  @override
+  String get changePin => 'Change PIN';
+
+  @override
+  String get useBiometrics => 'Unlock with fingerprint';
+
+  @override
+  String get useBiometricsHint =>
+      'Uses the fingerprint or face unlock set up on this phone';
+
+  @override
+  String get lockAfter => 'Lock again after leaving the app';
+
+  @override
+  String get lockImmediately => 'Immediately';
+
+  @override
+  String get pinNew => 'New PIN';
+
+  @override
+  String get pinConfirm => 'Confirm PIN';
+
+  @override
+  String get pinCurrent => 'Current PIN';
+
+  @override
+  String get pinFormatError => 'Use 4 to 8 digits';
+
+  @override
+  String get pinMismatch => 'PINs don\'t match';
+
+  @override
+  String get pinWrong => 'Wrong PIN';
+
+  @override
+  String get pinSetupTitle => 'Set a PIN';
+
+  @override
+  String get pinForgotWarning =>
+      'A forgotten PIN can\'t be recovered: you would have to clear the app\'s data. Keep a backup.';
+
+  @override
+  String get disableLockTitle => 'Turn off app lock';
+
+  @override
+  String get lockEnabledDone => 'App lock is on';
+
+  @override
+  String get lockDisabledDone => 'App lock is off';
+
+  @override
+  String get pinChangedDone => 'PIN changed';
+
+  @override
+  String get biometricFailed => 'Fingerprint not confirmed';
+
+  @override
+  String get lockedTitle => 'Datei is locked';
+
+  @override
+  String get enterPin => 'Enter your PIN';
+
+  @override
+  String get unlock => 'Unlock';
+
+  @override
+  String get biometricReason => 'Unlock Datei';
+
+  @override
+  String get privacyPolicy => 'Privacy policy';
+
+  @override
+  String get privacyIntro =>
+      'Datei is built to keep your information on your phone. This policy explains what the app stores, where, and what you control.';
+
+  @override
+  String get privacyStoredTitle => 'What is stored';
+
+  @override
+  String get privacyStoredBody =>
+      'The people, events, commitments, memories, milestones, projects, photos and settings you enter are saved only in the app\'s private storage on this device. Datei has no servers of its own and does not send this data anywhere.';
+
+  @override
+  String get privacyPhotosTitle => 'Photos';
+
+  @override
+  String get privacyPhotosBody =>
+      'Photos are added only when you pick them with the system photo picker. The app copies the photos you choose into its own storage and does not read the rest of your gallery.';
+
+  @override
+  String get privacyNotificationsTitle => 'Notifications';
+
+  @override
+  String get privacyNotificationsBody =>
+      'Reminders are scheduled on the device by Android. Their text is generated on your phone and is not sent to any server.';
+
+  @override
+  String get privacyBackupTitle => 'Backups and exports';
+
+  @override
+  String get privacyBackupBody =>
+      'A backup or CSV file is created only when you ask for it, and saved or shared wherever you choose. Protect backups with a password if you store them in the cloud. Android\'s automatic cloud backup is turned off for Datei.';
+
+  @override
+  String get privacySecurityTitle => 'App lock';
+
+  @override
+  String get privacySecurityBody =>
+      'If you turn on the app lock, only a salted hash of your PIN is kept, in the phone\'s secure storage. Fingerprint or face checks are done by Android; the app never receives your biometric data.';
+
+  @override
+  String get privacyAccountsTitle => 'Sign-in';
+
+  @override
+  String get privacyAccountsBody =>
+      'Datei currently works in guest mode without an account. If Google or Facebook sign-in is added later, this policy will be updated first to explain exactly what is shared with those services.';
+
+  @override
+  String get privacyShareTitle => 'Sharing, ads and tracking';
+
+  @override
+  String get privacyShareBody =>
+      'Datei contains no ads, no analytics and no tracking, and your data is never sold or shared.';
+
+  @override
+  String get privacyDeleteTitle => 'Deleting your data';
+
+  @override
+  String get privacyDeleteBody =>
+      'You can erase all data from Settings → Erase all data, or by uninstalling the app. Backup files you saved elsewhere stay where you put them until you delete them.';
+
+  @override
+  String get privacyChangesTitle => 'Changes and contact';
+
+  @override
+  String get privacyChangesBody =>
+      'Changes to this policy will appear in the app with a new date. For questions, use the contact details on the app\'s store page.';
+
+  @override
+  String get backupHint =>
+      'A backup file holds all your data and photos. Save it somewhere safe, such as Google Drive or a computer, to move to a new phone or recover after a loss.';
+
+  @override
+  String get backupCreate => 'Create backup';
+
+  @override
+  String get backupCreateHint => 'Save a .datei file';
+
+  @override
+  String get backupRestore => 'Restore from backup';
+
+  @override
+  String get backupRestoreHint => 'Replaces the data on this device';
+
+  @override
+  String get backupEncrypt => 'Protect with a password';
+
+  @override
+  String get backupPassword => 'Password';
+
+  @override
+  String get backupPasswordConfirm => 'Confirm password';
+
+  @override
+  String get backupPasswordShort => 'Use at least 6 characters';
+
+  @override
+  String get backupPasswordMismatch => 'Passwords don\'t match';
+
+  @override
+  String get backupPasswordWarning =>
+      'If you forget this password, the backup can\'t be opened.';
+
+  @override
+  String get backupSaved => 'Backup saved';
+
+  @override
+  String get backupFailed => 'Couldn\'t create the backup. Try again.';
+
+  @override
+  String get backupEnterPassword =>
+      'This backup is protected. Enter its password.';
+
+  @override
+  String get backupWrongPassword => 'Wrong password';
+
+  @override
+  String get backupDamaged =>
+      'This file isn\'t a Datei backup, or it is damaged.';
+
+  @override
+  String get backupNewer =>
+      'This backup was made by a newer version of Datei. Update the app first.';
+
+  @override
+  String get backupReadFailed => 'Couldn\'t read the file.';
+
+  @override
+  String get backupRestoreConfirmTitle => 'Restore this backup?';
+
+  @override
+  String get backupPhotos => 'Photos';
+
+  @override
+  String get backupRestoreWarning =>
+      'All current data on this device will be replaced. A safety copy of it is kept first, so you can undo.';
+
+  @override
+  String get backupRestoreAction => 'Restore';
+
+  @override
+  String get backupRestored => 'Backup restored';
+
+  @override
+  String get backupRestoreFailed =>
+      'Restore failed. Your data was not changed.';
+
+  @override
+  String get backupUndo => 'Undo the last restore';
+
+  @override
+  String get backupWorking => 'Working…';
+
+  @override
+  String lockAfterMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes minutes',
+      one: '1 minute',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String pinLockedOut(int seconds) {
+    return 'Too many attempts. Try again in $seconds s.';
+  }
+
+  @override
+  String privacyUpdated(String date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String backupCreatedOn(String date, String version) {
+    return 'Created $date · version $version';
+  }
+
+  @override
+  String backupUndoHint(String date) {
+    return 'Safety copy from $date';
+  }
 }

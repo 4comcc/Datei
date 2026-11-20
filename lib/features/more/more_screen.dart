@@ -2,12 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../app/app_info.dart';
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../reminders/notification_settings.dart';
+import '../security/security_settings.dart';
 import '../settings/settings_controller.dart';
-
-const appVersion = '0.8.0';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -168,28 +168,25 @@ class MoreScreen extends ConsumerWidget {
               subtitle: Text(l.guestAccountStatus),
             ),
           ),
-          SectionHeader(l.moreModulesTitle),
+          SectionHeader(l.securityTitle),
+          const SecuritySettingsCard(),
+          SectionHeader(l.settingsData),
           Card(
             child: Column(
               children: [
-                for (final (icon, title) in [
-                  (Icons.backup_outlined, l.moduleBackup),
-                ])
-                  ListTile(
-                    enabled: false,
-                    leading: Icon(icon),
-                    title: Text(title),
-                    subtitle: Text(l.comingInFullVersion),
-                  ),
+                ListTile(
+                  key: const Key('open-backup'),
+                  leading: const Icon(Icons.backup_outlined),
+                  title: Text(l.moduleBackup),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/settings/backup'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.delete_forever_outlined, color: scheme.error),
+                  title: Text(l.resetData, style: TextStyle(color: scheme.error)),
+                  onTap: () => _confirmReset(context, ref),
+                ),
               ],
-            ),
-          ),
-          SectionHeader(l.settingsData),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.delete_forever_outlined, color: scheme.error),
-              title: Text(l.resetData, style: TextStyle(color: scheme.error)),
-              onTap: () => _confirmReset(context, ref),
             ),
           ),
           SectionHeader(l.aboutTitle),

@@ -154,7 +154,25 @@ class SettingsController extends Notifier<AppSettings> {
   Future<void> setPreciseReminders(bool v) async {
     await _repo.set(SettingKeys.preciseReminders, '$v');
     state = state.copyWith(preciseReminders: v);
-  }}
+  }
+
+  /// Re-reads everything from the database (after restoring a backup).
+  /// Language and onboarding are kept if the restored data lacks them, so a
+  /// restore never sends the user back to the first-run screens.
+  Future<void> reload() async {
+    final m = await _repo.loadAll();
+    final language = state.languageCode;
+    if (m[SettingKeys.language] == null && language != null) {
+      await _repo.set(SettingKeys.language, language);
+      m[SettingKeys.language] = language;
+    }
+    if (m[SettingKeys.onboardingDone] != 'true' && state.onboardingDone) {
+      await _repo.set(SettingKeys.onboardingDone, 'true');
+      m[SettingKeys.onboardingDone] = 'true';
+    }
+    state = AppSettings.fromMap(m);
+  }
+}
 
 final hijriConverterProvider = Provider<HijriConverter>(
   (ref) => HijriConverter(offsetDays: ref.watch(settingsProvider.select((s) => s.hijriOffset))),

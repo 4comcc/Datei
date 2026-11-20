@@ -108,10 +108,10 @@ Redirect chain: `languageChosen?` → `onboardingDone?` → `appLocked?` → she
 UUID primary keys; `created_at`, `updated_at`, `deleted_at` (soft delete tombstones) on syncable tables; `row_version` counter; `owner_profile_id`. A future `sync_outbox` table + `SyncService` can be added without changing domain code. Conflict policy candidates documented in DECISIONS.
 
 ## 11. Backup
-`.datei` file = zip: `manifest.json` (app version, schema version, created at, counts, SHA-256 per entry), `data.json` (all tables), `attachments/…`. Optional encryption: whole archive AES-256-GCM, key from password via Argon2id (salt + params in a cleartext header). Restore = validate → confirm → transaction replace (with automatic pre-restore safety backup) → reschedule notifications. Older schema backups upgraded by mapping functions; newer rejected.
+`.datei` file = zip: `manifest.json` (app version, schema version, created at, counts, SHA-256 per entry), `data.json` (all tables), `attachments/…`. Optional encryption: whole archive AES-256-GCM, key from password via Argon2id (salt + params in a cleartext header). Restore = validate (checksums, version, safe paths) → confirm with a summary → automatic safety copy → transaction replace → swap attachments → notify streams → reload settings; reminders resync automatically. Code: `core/backup` (format, crypto), `features/backup` (use cases, screen, system file dialogs behind `BackupFiles`). See ADR-064.
 
 ## 12. Security
-App lock (PIN hashed with PBKDF2/Argon2id + salt in secure storage; biometrics via local_auth) gate on cold start and on resume after configurable timeout. `FLAG_SECURE` optional for recents screenshot hiding. No analytics SDKs in v1.
+App lock in `features/security` (`AppLockController`, `LockGate`, lock screen, settings) on top of `core/security` (`PinHasher`, `SecureStore`, `Biometrics` interfaces). State lives only in secure storage. See ADR-065/066. Privacy policy screen: ADR-067.
 
 ## 13. Error handling
 Repositories return `Result<T, Failure>`; Failure is localized at presentation. Unexpected errors caught in a root zone and logged locally (no remote crash reporting without consent).

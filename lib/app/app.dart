@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../features/reminders/reminder_sync.dart';
+import '../features/security/lock_screen.dart';
 import '../features/settings/settings_controller.dart';
 import 'localization/gen/app_localizations.dart';
 import 'router/app_router.dart';
@@ -38,7 +39,7 @@ class DateiApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       routerConfig: router,
-      builder: (context, child) => ReminderSyncHost(child: child ?? const SizedBox.shrink()),
+      builder: (context, child) => ReminderSyncHost(child: LockGate(child: child ?? const SizedBox.shrink())),
     );
   }
 }

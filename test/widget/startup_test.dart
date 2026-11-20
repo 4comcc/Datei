@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:datei/app/bootstrap.dart';
 import 'package:datei/app/startup.dart';
 import 'package:datei/core/database/app_database.dart';
+import 'package:datei/features/security/app_lock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -41,7 +42,13 @@ void main() {
       final id = await ensureLocalProfile(db);
       return BootstrapResult(profileId: id, settings: englishOnboarded);
     });
-    await tester.pumpWidget(StartupApp(loader: () async => (db, boot!)));
+    await tester.pumpWidget(StartupApp(
+      loader: () async => (db, boot!),
+      overrides: [
+        secureStoreProvider.overrideWithValue(FakeSecureStore()),
+        biometricsProvider.overrideWithValue(FakeBiometrics()),
+      ],
+    ));
     await tester.pump(const Duration(milliseconds: 100));
     await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 20)));
     await tester.pump(const Duration(milliseconds: 100));

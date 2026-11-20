@@ -5,7 +5,9 @@ import 'package:datei/core/database/app_database.dart';
 import 'package:datei/core/database/database_providers.dart';
 import 'package:datei/core/services/attachment_store.dart';
 import 'package:datei/core/time_engine/local_date.dart';
+import 'package:datei/core/security/pin_hasher.dart';
 import 'package:datei/features/agenda/agenda.dart';
+import 'package:datei/features/security/app_lock.dart';
 import 'package:datei/features/reminders/reminder_sync.dart';
 import 'package:datei/features/settings/settings_controller.dart';
 import 'package:drift/drift.dart';
@@ -30,6 +32,8 @@ Future<(ProviderContainer, AppDatabase)> createTestContainer({
   Map<String, Object> legacyPrefs = const {},
   Map<String, String> settings = const {},
   FakeNotificationGateway? notifications,
+  FakeSecureStore? secureStore,
+  FakeBiometrics? biometrics,
   List<Override> extraOverrides = const [],
 }) async {
   SharedPreferences.setMockInitialValues(legacyPrefs);
@@ -43,6 +47,9 @@ Future<(ProviderContainer, AppDatabase)> createTestContainer({
     initialSettingsProvider.overrideWithValue(merged),
     todayProvider.overrideWithValue(testToday),
     notificationGatewayProvider.overrideWithValue(notifications ?? FakeNotificationGateway()),
+    secureStoreProvider.overrideWithValue(secureStore ?? FakeSecureStore()),
+    biometricsProvider.overrideWithValue(biometrics ?? FakeBiometrics()),
+    pinHasherProvider.overrideWithValue(const PinHasher(iterations: 1000)),
     attachmentStoreProvider.overrideWithValue(LocalAttachmentStore(Directory.systemTemp.createTempSync('datei_test_').path)),
     ...extraOverrides,
   ]);

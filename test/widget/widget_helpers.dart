@@ -15,12 +15,20 @@ Future<ProviderContainer> pumpApp(
   Map<String, String> settings = const {},
   Future<void> Function(ProviderContainer c)? seed,
   FakeNotificationGateway? notifications,
+  FakeSecureStore? secureStore,
+  FakeBiometrics? biometrics,
   List<Override> extraOverrides = const [],
 }) async {
   tester.view.physicalSize = const Size(1080, 2340);
   tester.view.devicePixelRatio = 2.75;
   addTearDown(tester.view.reset);
-  final (container, db) = await tester.runAsync(() => createTestContainer(settings: settings, notifications: notifications, extraOverrides: extraOverrides)) ??
+  final (container, db) = await tester.runAsync(() => createTestContainer(
+          settings: settings,
+          notifications: notifications,
+          secureStore: secureStore,
+          biometrics: biometrics,
+          extraOverrides: extraOverrides,
+        )) ??
       (throw StateError('setup failed'));
   if (seed != null) await tester.runAsync(() => seed(container));
   addTearDown(() async {
