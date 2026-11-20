@@ -113,3 +113,5 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-054 · Deferred · Custom commitment types.** The table supports them; the UI offers the 15 built-in types (including "Other" with a free name). A management screen can reuse the event-types pattern later.
 
 **ADR-055 · Accepted · Notification permission is requested in context** (turning on Reminders in settings or the "Turn on" banner shown on commitment/event screens while reminders are off). Denial keeps reminders off with an explanation; a "Send a test notification" button lets the owner verify on device.
+
+**ADR-050 update (2026-11-20):** Owner confirmed on their Android phone that enabling reminders, the test notification and scheduled reminders all work with v0.6.0.
