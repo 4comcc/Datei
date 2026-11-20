@@ -25,6 +25,10 @@ part 'app_database.g.dart';
   CustomFieldValues,
   SavedFilters,
   EventExceptions,
+  CommitmentTypes,
+  Commitments,
+  CommitmentRenewals,
+  Reminders,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
@@ -33,7 +37,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'datei'));
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -52,10 +56,21 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(schema.eventExceptions);
             await m.createIndex(schema.idxEventExceptionsEvent);
           },
+          from3To4: (m, schema) async {
+            await m.createTable(schema.commitmentTypes);
+            await m.createTable(schema.commitments);
+            await m.createIndex(schema.idxCommitmentsExpiry);
+            await m.createIndex(schema.idxCommitmentsDeletedAt);
+            await m.createTable(schema.commitmentRenewals);
+            await m.createIndex(schema.idxRenewalsCommitment);
+            await m.createTable(schema.reminders);
+            await m.createIndex(schema.idxRemindersOwner);
+          },
         ),
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');
-          await seedSystemData(this);
+          // Seed only at the current schema (migration tests stop at older versions).
+          if (details.versionNow == schemaVersion) await seedSystemData(this);
         },
       );
 }

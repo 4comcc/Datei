@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/recurrence_engine/recurrence.dart';
 import '../../core/time_engine/time_engine.dart';
+import '../commitments/domain/commitment.dart';
+import '../commitments/presentation/commitments_providers.dart';
 import '../events/domain/event.dart';
 import '../events/presentation/events_providers.dart';
 import '../people/domain/person.dart';
@@ -13,13 +15,14 @@ final recurrenceEngineProvider = Provider<RecurrenceEngine>((ref) => RecurrenceE
 /// "Today" as seen by the app. Overridable in tests.
 final todayProvider = Provider<LocalDate>((ref) => LocalDate.today());
 
-enum AgendaKind { birthday, event }
+enum AgendaKind { birthday, event, commitment }
 
 /// One dated occurrence shown on Home / Calendar / Events.
 class AgendaItem {
   const AgendaItem.birthday({required this.date, required Person this.person, required this.turningAge})
       : kind = AgendaKind.birthday,
         event = null,
+        commitment = null,
         occurrenceDate = null,
         endDate = null,
         title = null,
@@ -34,6 +37,17 @@ class AgendaItem {
     this.time,
   })  : kind = AgendaKind.event,
         person = null,
+        commitment = null,
+        turningAge = null;
+
+  const AgendaItem.commitment({required this.date, required Commitment this.commitment})
+      : kind = AgendaKind.commitment,
+        person = null,
+        event = null,
+        occurrenceDate = null,
+        endDate = null,
+        title = null,
+        time = null,
         turningAge = null;
 
   final AgendaKind kind;
@@ -45,6 +59,7 @@ class AgendaItem {
   final LocalDate? endDate;
   final Person? person;
   final DateiEvent? event;
+  final Commitment? commitment;
 
   /// The occurrence's original date in its series (identifies it for edits).
   final LocalDate? occurrenceDate;
@@ -127,6 +142,7 @@ class AgendaService {
     required List<DateiEvent> events,
     required LocalDate from,
     required LocalDate to,
+    List<Commitment> commitments = const [],
     bool includeBirthdays = true,
     bool includeEvents = true,
   }) {
@@ -144,6 +160,10 @@ class AgendaService {
       for (final e in events) {
         items.addAll(eventOccurrences(e, from, to));
       }
+    }
+    for (final c in commitments) {
+      if (c.lifecycle != CommitmentLifecycle.active) continue;
+      if (!c.dueDate.isBefore(from) && !c.dueDate.isAfter(to)) items.add(AgendaItem.commitment(date: c.dueDate, commitment: c));
     }
     items.sort((a, b) {
       final c = a.date.compareTo(b.date);
@@ -163,6 +183,7 @@ final upcomingAgendaProvider = Provider.family<List<AgendaItem>, int>((ref, days
   return ref.watch(agendaServiceProvider).itemsInRange(
         people: ref.watch(peopleProvider),
         events: ref.watch(eventsProvider),
+        commitments: ref.watch(commitmentsProvider),
         from: today,
         to: today.addDays(days),
       );
@@ -173,6 +194,7 @@ final agendaRangeProvider = Provider.family<List<AgendaItem>, (LocalDate, LocalD
   return ref.watch(agendaServiceProvider).itemsInRange(
         people: ref.watch(peopleProvider),
         events: ref.watch(eventsProvider),
+        commitments: ref.watch(commitmentsProvider),
         from: range.$1,
         to: range.$2,
       );

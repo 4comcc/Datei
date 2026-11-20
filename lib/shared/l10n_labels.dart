@@ -5,6 +5,7 @@ import '../app/localization/gen/app_localizations.dart';
 import '../core/recurrence_engine/recurrence.dart';
 import '../core/time_engine/hijri.dart';
 import '../core/time_engine/local_date.dart';
+import '../features/commitments/domain/commitment.dart';
 import '../features/events/domain/event.dart';
 import '../features/people/domain/category.dart';
 import '../features/people/domain/custom_field.dart';
@@ -151,6 +152,74 @@ extension RecurrenceText on BuildContext {
         4 => l10n.posFourth,
         _ => l10n.posLast,
       };
+}
+
+extension CommitmentTypeLabel on CommitmentType {
+  String label(AppLocalizations l) => switch (this) {
+        CommitmentType.domain => l.commitmentTypeDomain,
+        CommitmentType.hosting => l.commitmentTypeHosting,
+        CommitmentType.ssl => l.commitmentTypeSsl,
+        CommitmentType.contract => l.commitmentTypeContract,
+        CommitmentType.license => l.commitmentTypeLicense,
+        CommitmentType.insurance => l.commitmentTypeInsurance,
+        CommitmentType.warranty => l.commitmentTypeWarranty,
+        CommitmentType.subscription => l.commitmentTypeSubscription,
+        CommitmentType.bill => l.commitmentTypeBill,
+        CommitmentType.payment => l.commitmentTypePayment,
+        CommitmentType.installment => l.commitmentTypeInstallment,
+        CommitmentType.passport => l.commitmentTypePassport,
+        CommitmentType.nationalId => l.commitmentTypeNationalId,
+        CommitmentType.vehicleLicense => l.commitmentTypeVehicleLicense,
+        CommitmentType.other => l.commitmentTypeOther,
+      };
+
+  IconData get icon => switch (this) {
+        CommitmentType.domain => Icons.language,
+        CommitmentType.hosting => Icons.dns_outlined,
+        CommitmentType.ssl => Icons.lock_outline,
+        CommitmentType.contract => Icons.description_outlined,
+        CommitmentType.license => Icons.verified_outlined,
+        CommitmentType.insurance => Icons.health_and_safety_outlined,
+        CommitmentType.warranty => Icons.build_circle_outlined,
+        CommitmentType.subscription => Icons.autorenew,
+        CommitmentType.bill => Icons.receipt_long_outlined,
+        CommitmentType.payment => Icons.payments_outlined,
+        CommitmentType.installment => Icons.calendar_view_month_outlined,
+        CommitmentType.passport => Icons.travel_explore,
+        CommitmentType.nationalId => Icons.badge_outlined,
+        CommitmentType.vehicleLicense => Icons.directions_car_outlined,
+        CommitmentType.other => Icons.push_pin_outlined,
+      };
+}
+
+extension CommitmentStatusLabel on CommitmentStatus {
+  String label(AppLocalizations l) => switch (this) {
+        CommitmentStatus.active => l.cstatusActive,
+        CommitmentStatus.upcoming => l.cstatusUpcoming,
+        CommitmentStatus.dueSoon => l.cstatusDueSoon,
+        CommitmentStatus.overdue => l.cstatusOverdue,
+        CommitmentStatus.completed => l.cstatusCompleted,
+        CommitmentStatus.cancelled => l.cstatusCancelled,
+      };
+
+  /// Semantic colours (separate from the brand accent).
+  (Color bg, Color fg) colors(ColorScheme s) => switch (this) {
+        CommitmentStatus.overdue => (s.errorContainer, s.onErrorContainer),
+        CommitmentStatus.dueSoon => (s.tertiaryContainer, s.onTertiaryContainer),
+        CommitmentStatus.upcoming => (s.secondaryContainer, s.onSecondaryContainer),
+        CommitmentStatus.active => (s.primaryContainer, s.onPrimaryContainer),
+        _ => (s.surfaceContainerHighest, s.onSurfaceVariant),
+      };
+}
+
+extension MoneyFormatting on BuildContext {
+  /// "EGP 1,250.50": the ISO code reads clearly in Arabic and English, unlike
+  /// short symbols (E£, ج.م) that render inconsistently across fonts.
+  String formatMoney(int minor, String? currency) {
+    final number = NumberFormat.decimalPatternDigits(locale: localeName, decimalDigits: minor % 100 == 0 ? 0 : 2)
+        .format(minor / 100);
+    return currency == null ? number : '\u2066$currency $number\u2069';
+  }
 }
 
 extension EventTypeLabel on EventType {

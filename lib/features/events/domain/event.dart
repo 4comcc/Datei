@@ -95,6 +95,7 @@ class DateiEvent {
     this.notes,
     this.priority = EventPriority.normal,
     this.status = EventStatus.planned,
+    this.reminderMinutes = const [],
   });
 
   /// Accepts the app's JSON and the prototype v0.1 shape (`type`, `repeatsYearly`).
@@ -135,6 +136,10 @@ class DateiEvent {
   final String? notes;
   final EventPriority priority;
   final EventStatus status;
+
+  /// Minutes before the start to remind (timed: before the time; all-day: before the
+  /// default reminder time on the day, so 1440 = the day before).
+  final List<int> reminderMinutes;
   final DateTime createdAt;
 
   bool get isRecurring => recurrence != null;
@@ -167,6 +172,7 @@ class DateiEvent {
         notes: notes,
         priority: priority,
         status: status,
+        reminderMinutes: reminderMinutes,
         createdAt: createdAt ?? this.createdAt,
       );
 

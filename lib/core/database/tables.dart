@@ -284,3 +284,99 @@ class EventExceptions extends Table with Timestamps {
         {eventId, originalDate},
       ];
 }
+
+/// v4. Built-in (system_key) and user commitment types.
+@DataClassName('CommitmentTypeRow')
+class CommitmentTypes extends Table with Timestamps {
+  TextColumn get id => text()();
+  TextColumn get systemKey => text().nullable().unique()();
+  TextColumn get name => text().nullable()();
+  IntColumn get color => integer().nullable()();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+  BoolColumn get isSystem => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// v4. Commitments and renewals (domains, subscriptions, IDs, insurance…).
+@DataClassName('CommitmentRow')
+@TableIndex(name: 'idx_commitments_expiry', columns: {#expiryDate})
+@TableIndex(name: 'idx_commitments_deleted_at', columns: {#deletedAt})
+class Commitments extends Table with Timestamps, Syncable {
+  TextColumn get id => text()();
+  TextColumn get ownerProfileId => text().references(LocalUserProfiles, #id)();
+  TextColumn get name => text().withLength(min: 1, max: 200)();
+  TextColumn get commitmentTypeId => text().references(CommitmentTypes, #id, onDelete: KeyAction.restrict)();
+  TextColumn get providerName => text().nullable()();
+  TextColumn get startDate => text().nullable()();
+
+  /// Expiry / due date ('YYYY-MM-DD').
+  TextColumn get expiryDate => text()();
+
+  /// Optional date by which to renew (reminders anchor here when set).
+  TextColumn get renewalDate => text().nullable()();
+
+  /// Money in minor units (e.g. piastres/cents) + ISO 4217 code (ADR-020).
+  IntColumn get amountMinor => integer().nullable()();
+  TextColumn get currency => text().nullable().withLength(min: 3, max: 3)();
+
+  /// Renewal period in months (null = no fixed period).
+  IntColumn get renewalMonths => integer().nullable()();
+  TextColumn get referenceNumber => text().nullable()();
+  TextColumn get serviceUrl => text().nullable()();
+  TextColumn get notes => text().nullable()();
+
+  /// active | completed | cancelled (time-based states are computed).
+  TextColumn get lifecycleStatus => text().withDefault(const Constant('active'))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => [
+        'CHECK (renewal_months IS NULL OR renewal_months >= 1)',
+        'CHECK (amount_minor IS NULL OR amount_minor >= 0)',
+      ];
+}
+
+/// v4. History of renewals.
+@DataClassName('CommitmentRenewalRow')
+@TableIndex(name: 'idx_renewals_commitment', columns: {#commitmentId})
+class CommitmentRenewals extends Table {
+  TextColumn get id => text()();
+  TextColumn get commitmentId => text().references(Commitments, #id, onDelete: KeyAction.cascade)();
+  IntColumn get renewedAt => integer()();
+  TextColumn get previousExpiryDate => text()();
+  TextColumn get newExpiryDate => text()();
+  IntColumn get amountMinor => integer().nullable()();
+  TextColumn get currency => text().nullable()();
+  TextColumn get notes => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// v4. Reminder offsets for events and commitments (minutes before the anchor;
+/// days are multiples of 1440). Owner integrity is kept by the repositories.
+@DataClassName('ReminderRow')
+@TableIndex(name: 'idx_reminders_owner', columns: {#ownerType, #ownerId})
+class Reminders extends Table with Timestamps {
+  TextColumn get id => text()();
+
+  /// event | commitment
+  TextColumn get ownerType => text()();
+  TextColumn get ownerId => text()();
+  IntColumn get offsetMinutes => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+        {ownerType, ownerId, offsetMinutes},
+      ];
+
+  @override
+  List<String> get customConstraints => ['CHECK (offset_minutes >= 0)'];
+}

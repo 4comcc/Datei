@@ -1135,4 +1135,316 @@ class AppLocalizationsAr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get commitmentTypeDomain => 'نطاق (دومين)';
+
+  @override
+  String get commitmentTypeHosting => 'استضافة';
+
+  @override
+  String get commitmentTypeSsl => 'شهادة SSL';
+
+  @override
+  String get commitmentTypeContract => 'عقد';
+
+  @override
+  String get commitmentTypeLicense => 'ترخيص';
+
+  @override
+  String get commitmentTypeInsurance => 'تأمين';
+
+  @override
+  String get commitmentTypeWarranty => 'ضمان';
+
+  @override
+  String get commitmentTypeSubscription => 'اشتراك';
+
+  @override
+  String get commitmentTypeBill => 'فاتورة';
+
+  @override
+  String get commitmentTypePayment => 'دفعة';
+
+  @override
+  String get commitmentTypeInstallment => 'قسط';
+
+  @override
+  String get commitmentTypePassport => 'جواز سفر';
+
+  @override
+  String get commitmentTypeNationalId => 'بطاقة الهوية';
+
+  @override
+  String get commitmentTypeVehicleLicense => 'رخصة مركبة';
+
+  @override
+  String get commitmentTypeOther => 'أخرى';
+
+  @override
+  String get cstatusActive => 'نشط';
+
+  @override
+  String get cstatusUpcoming => 'قادم';
+
+  @override
+  String get cstatusDueSoon => 'قريب الاستحقاق';
+
+  @override
+  String get cstatusOverdue => 'متأخر';
+
+  @override
+  String get cstatusCompleted => 'مكتمل';
+
+  @override
+  String get cstatusCancelled => 'ملغى';
+
+  @override
+  String get commitments => 'الالتزامات والتجديدات';
+
+  @override
+  String get commitmentsEmptyTitle => 'لا توجد التزامات بعد';
+
+  @override
+  String get commitmentsEmptyBody =>
+      'تابع التجديدات مثل النطاقات والاشتراكات والتأمين وجوازات السفر والهويات، وسيذكّرك Datei قبل موعدها.';
+
+  @override
+  String get editCommitment => 'تعديل الالتزام';
+
+  @override
+  String get fieldName => 'الاسم';
+
+  @override
+  String get fieldCommitmentType => 'النوع';
+
+  @override
+  String get fieldProvider => 'الجهة أو الشركة';
+
+  @override
+  String get fieldStartDate => 'تاريخ البداية (اختياري)';
+
+  @override
+  String get fieldExpiryDate => 'تاريخ الانتهاء أو الاستحقاق';
+
+  @override
+  String get fieldRenewalDate => 'التجديد قبل (اختياري)';
+
+  @override
+  String get fieldAmount => 'المبلغ (اختياري)';
+
+  @override
+  String get fieldCurrency => 'العملة';
+
+  @override
+  String get fieldRenewalPeriod => 'مدة التجديد';
+
+  @override
+  String get periodNone => 'بدون مدة ثابتة';
+
+  @override
+  String get fieldReference => 'الرقم المرجعي (اختياري)';
+
+  @override
+  String get fieldServiceUrl => 'رابط الخدمة (اختياري)';
+
+  @override
+  String get fieldLifecycle => 'الحالة';
+
+  @override
+  String get remindersLabel => 'التذكيرات';
+
+  @override
+  String reminderDaysBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'قبل $count يوم',
+      many: 'قبل $count يومًا',
+      few: 'قبل $count أيام',
+      two: 'قبل يومين',
+      one: 'قبل يوم',
+      zero: 'في اليوم نفسه',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get addCustomReminder => 'مدة أخرى…';
+
+  @override
+  String get customReminderDays => 'عدد الأيام قبل الموعد';
+
+  @override
+  String get renew => 'تجديد';
+
+  @override
+  String get renewTitle => 'تجديد الالتزام';
+
+  @override
+  String get newExpiryDate => 'تاريخ الانتهاء الجديد';
+
+  @override
+  String get renewalHistory => 'سجل التجديدات';
+
+  @override
+  String get noRenewals => 'لا توجد تجديدات مسجلة بعد.';
+
+  @override
+  String renewalFromTo(String from, String to) {
+    return '$from ← $to';
+  }
+
+  @override
+  String renewedOn(String date) {
+    return 'جُدد في $date';
+  }
+
+  @override
+  String get renewedSuccessfully => 'تم التجديد';
+
+  @override
+  String get errorRenewDate => 'اختر تاريخًا بعد تاريخ الانتهاء الحالي';
+
+  @override
+  String get errorExpiryBeforeStart => 'لا يمكن أن يكون الانتهاء قبل البداية';
+
+  @override
+  String get errorInvalidAmount => 'أدخل مبلغًا مثل 250 أو 99.50';
+
+  @override
+  String confirmDeleteCommitment(String name) {
+    return 'هل تريد حذف «$name» وسجل تجديداته؟';
+  }
+
+  @override
+  String overdueBy(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'متأخر $count يوم',
+      many: 'متأخر $count يومًا',
+      few: 'متأخر $count أيام',
+      two: 'متأخر يومين',
+      one: 'متأخر يومًا واحدًا',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get filterAllCommitments => 'الكل';
+
+  @override
+  String get sectionReminders => 'تذكيرات مهمة';
+
+  @override
+  String get emptyReminders => 'لا شيء مستحق خلال 30 يومًا.';
+
+  @override
+  String todaySummaryOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count التزام متأخر',
+      many: '$count التزامًا متأخرًا',
+      few: '$count التزامات متأخرة',
+      two: 'التزامان متأخران',
+      one: 'التزام متأخر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsNotifications => 'الإشعارات';
+
+  @override
+  String get enableReminders => 'التذكيرات';
+
+  @override
+  String get enableRemindersHint =>
+      'تلقَّ إشعارات قبل أعياد الميلاد والأحداث والتجديدات.';
+
+  @override
+  String get remindersPermissionDenied =>
+      'الإشعارات محظورة لتطبيق Datei. اسمح بها من إعدادات أندرويد لتصلك التذكيرات.';
+
+  @override
+  String get defaultReminderTime => 'وقت التذكير للمواعيد بلا وقت';
+
+  @override
+  String get birthdayReminders => 'تذكير أعياد الميلاد';
+
+  @override
+  String get reminderOff => 'إيقاف';
+
+  @override
+  String get preciseReminders => 'توقيت دقيق';
+
+  @override
+  String get preciseRemindersHint =>
+      'تصل التذكيرات في الدقيقة المحددة تمامًا. بدونها قد يؤخرها أندرويد قليلًا لتوفير البطارية.';
+
+  @override
+  String get testNotification => 'إرسال إشعار تجريبي';
+
+  @override
+  String get testNotificationBody => 'الإشعارات تعمل.';
+
+  @override
+  String get remindersOffBanner =>
+      'التذكيرات متوقفة، فلن تصلك إشعارات قبل المواعيد.';
+
+  @override
+  String get turnOn => 'تشغيل';
+
+  @override
+  String notifBirthdayTitle(String name) {
+    return 'عيد ميلاد $name';
+  }
+
+  @override
+  String notifBirthdayTurning(String name, int age) {
+    return '$name يبلغ $age';
+  }
+
+  @override
+  String notifCommitmentTitle(String name) {
+    return 'موعد استحقاق $name';
+  }
+
+  @override
+  String notifWhen(String relative, String date) {
+    return '$relative · $date';
+  }
+
+  @override
+  String get fieldReminders => 'التذكيرات';
+
+  @override
+  String get reminderAtTime => 'في الموعد';
+
+  @override
+  String reminderMinutesBefore(int count) {
+    return 'قبل $count دقيقة';
+  }
+
+  @override
+  String reminderHoursBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'قبل $count ساعة',
+      many: 'قبل $count ساعة',
+      few: 'قبل $count ساعات',
+      two: 'قبل ساعتين',
+      one: 'قبل ساعة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commitmentsLabel => 'الالتزامات والتجديدات';
+
+  @override
+  String get addReminder => 'إضافة';
 }

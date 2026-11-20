@@ -6,6 +6,8 @@ import 'package:datei/app/app.dart';
 import 'package:datei/app/router/app_router.dart';
 import 'package:datei/core/recurrence_engine/recurrence.dart';
 import 'package:datei/core/time_engine/local_date.dart';
+import 'package:datei/features/commitments/domain/commitment.dart';
+import 'package:datei/features/commitments/presentation/commitments_providers.dart';
 import 'package:datei/features/events/domain/event.dart';
 import 'package:datei/features/events/presentation/events_providers.dart';
 import 'package:datei/features/people/domain/custom_field.dart';
@@ -84,6 +86,21 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name,
           recurrence: const RecurrenceRule(frequency: RecurrenceFrequency.weekly, weekdays: {1, 4}),
           createdAt: DateTime(2026),
         ));
+    await container.read(commitmentsRepositoryProvider).save(Commitment(
+          id: 'c1', name: 'datei.app', typeId: CommitmentType.domain.id, providerName: 'Namecheap',
+          expiryDate: LocalDate.parse('2026-11-24'), renewalMonths: 12, amountMinor: 120000, currency: 'EGP',
+          reminderDays: const [30, 7, 1], createdAt: DateTime(2026),
+        ));
+    await container.read(commitmentsRepositoryProvider).save(Commitment(
+          id: 'c2', name: 'جواز السفر', typeId: CommitmentType.passport.id,
+          expiryDate: LocalDate.parse('2026-11-10'), reminderDays: const [30], createdAt: DateTime(2026),
+        ));
+    await container.read(commitmentsRepositoryProvider).save(Commitment(
+          id: 'c3', name: 'تأمين السيارة', typeId: CommitmentType.insurance.id, providerName: 'مصر للتأمين',
+          expiryDate: LocalDate.parse('2027-03-01'), renewalMonths: 12, amountMinor: 850000, currency: 'EGP',
+          reminderDays: const [30, 7], createdAt: DateTime(2026),
+        ));
+    await container.read(commitmentsRepositoryProvider).renew('c3', newExpiry: LocalDate.parse('2028-03-01'), amountMinor: 900000);
     await container.read(eventsRepositoryProvider).save(DateiEvent(
           id: 'trip',
           title: 'مؤتمر دبي',
@@ -133,5 +150,8 @@ void main() {
         await t.ensureVisible(find.byKey(const Key('recurrence-tile')));
         await t.tap(find.byKey(const Key('recurrence-tile')));
       }));
+  testWidgets('ar commitments', (t) => shoot(t, 'ar', '/commitments', 'ar_14_commitments'));
+  testWidgets('ar commitment', (t) => shoot(t, 'ar', '/commitments/c3', 'ar_15_commitment'));
+  testWidgets('ar commitment form', (t) => shoot(t, 'ar', '/commitments/c1/edit', 'ar_16_commitment_form'));
   testWidgets('ar home dark', (t) => shoot(t, 'ar', '/home', 'ar_6_home_dark', dark: true));
 }

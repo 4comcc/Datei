@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../features/reminders/reminder_sync.dart';
 import '../features/settings/settings_controller.dart';
 import 'localization/gen/app_localizations.dart';
 import 'router/app_router.dart';
@@ -37,6 +38,7 @@ class DateiApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       routerConfig: router,
+      builder: (context, child) => ReminderSyncHost(child: child ?? const SizedBox.shrink()),
     );
   }
 }

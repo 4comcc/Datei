@@ -24,7 +24,9 @@ SELECT e.*,
      JOIN persons p ON p.id = r.person_id AND p.deleted_at IS NULL
     WHERE r.event_id = e.id) AS person_ids,
   (SELECT json_group_array(json_object('d', x.original_date, 'k', x.kind, 'o', x.override_json))
-     FROM event_exceptions x WHERE x.event_id = e.id) AS exceptions
+     FROM event_exceptions x WHERE x.event_id = e.id) AS exceptions,
+  (SELECT group_concat(rm.offset_minutes) FROM reminders rm
+    WHERE rm.owner_type = 'event' AND rm.owner_id = e.id) AS reminder_minutes
 FROM events e
 LEFT JOIN recurrence_rules rr ON rr.id = e.recurrence_rule_id
 WHERE e.deleted_at IS NULL $where
@@ -44,6 +46,7 @@ ORDER BY e.start_date, e.start_time
         _db.eventPersonRelations,
         _db.persons,
         _db.eventExceptions,
+        _db.reminders,
       })
       .watch()
       .asyncMap((rows) async => [for (final row in rows) _toDomain(await _db.events.mapFromRow(row), row)]);
@@ -89,6 +92,9 @@ ORDER BY e.start_date, e.start_time
       notes: r.notes,
       priority: EventPriority.values.asNameMap()[r.priority] ?? EventPriority.normal,
       status: EventStatus.values.asNameMap()[r.status] ?? EventStatus.planned,
+      reminderMinutes: [
+        for (final m in (row.readNullable<String>('reminder_minutes') ?? '').split(',')) ?int.tryParse(m),
+      ]..sort(),
       createdAt: DateTime.fromMillisecondsSinceEpoch(r.createdAt, isUtc: true).toLocal(),
     );
   }
@@ -150,6 +156,19 @@ ORDER BY e.start_date, e.start_time
       await (_db.delete(_db.eventExceptions)..where((t) => t.eventId.equals(event.id))).go();
     }
 
+    await (_db.delete(_db.reminders)..where((t) => t.ownerType.equals('event') & t.ownerId.equals(event.id))).go();
+    for (final m in event.reminderMinutes.toSet()) {
+      if (m < 0) continue;
+      await _db.into(_db.reminders).insert(RemindersCompanion.insert(
+            id: const Uuid().v4(),
+            ownerType: 'event',
+            ownerId: event.id,
+            offsetMinutes: m,
+            createdAt: now,
+            updatedAt: now,
+          ));
+    }
+
     await (_db.delete(_db.eventPersonRelations)..where((t) => t.eventId.equals(event.id))).go();
     for (final personId in event.personIds.toSet()) {
       // Skip people that no longer exist (e.g. deleted while the form was open).
@@ -172,6 +191,7 @@ ORDER BY e.start_date, e.start_time
         rowVersion: _db.events.rowVersion + const Constant(1),
       ),
     );
+    await (_db.delete(_db.reminders)..where((t) => t.ownerType.equals('event') & t.ownerId.equals(id))).go();
   }
 
   Future<void> _putException(String eventId, LocalDate original, String kind, String? json) async {

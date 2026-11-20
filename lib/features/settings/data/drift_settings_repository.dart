@@ -26,6 +26,10 @@ class DriftDataMaintenanceRepository implements DataMaintenanceRepository {
         await _db.delete(_db.personRelationships).go();
         await _db.delete(_db.customFieldValues).go();
         await _db.delete(_db.personCategoryRelations).go();
+        await _db.delete(_db.reminders).go();
+        await _db.delete(_db.commitmentRenewals).go();
+        await _db.delete(_db.commitments).go();
+        await (_db.delete(_db.commitmentTypes)..where((t) => t.isSystem.equals(false))).go();
         await _db.delete(_db.events).go();
         await _db.delete(_db.recurrenceRules).go();
         await _db.delete(_db.persons).go();

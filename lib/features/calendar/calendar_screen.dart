@@ -7,6 +7,7 @@ import '../../core/time_engine/local_date.dart';
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../agenda/agenda.dart';
+import '../commitments/presentation/commitments_providers.dart';
 import '../events/domain/event.dart';
 import '../events/presentation/events_providers.dart';
 import '../home/home_screen.dart';
@@ -17,13 +18,24 @@ enum CalendarView { month, week, day }
 
 /// What the calendar shows (state kept outside widgets).
 class CalendarFilter {
-  const CalendarFilter({this.hiddenTypeIds = const {}, this.showBirthdays = true});
+  const CalendarFilter({this.hiddenTypeIds = const {}, this.showBirthdays = true, this.showCommitments = true});
   final Set<String> hiddenTypeIds;
   final bool showBirthdays;
+  final bool showCommitments;
 
-  bool get isActive => hiddenTypeIds.isNotEmpty || !showBirthdays;
+  bool get isActive => hiddenTypeIds.isNotEmpty || !showBirthdays || !showCommitments;
 
-  bool allows(AgendaItem i) => i.kind == AgendaKind.birthday ? showBirthdays : !hiddenTypeIds.contains(i.event!.typeId);
+  bool allows(AgendaItem i) => switch (i.kind) {
+        AgendaKind.birthday => showBirthdays,
+        AgendaKind.commitment => showCommitments,
+        AgendaKind.event => !hiddenTypeIds.contains(i.event!.typeId),
+      };
+
+  CalendarFilter copyWith({Set<String>? hiddenTypeIds, bool? showBirthdays, bool? showCommitments}) => CalendarFilter(
+        hiddenTypeIds: hiddenTypeIds ?? this.hiddenTypeIds,
+        showBirthdays: showBirthdays ?? this.showBirthdays,
+        showCommitments: showCommitments ?? this.showCommitments,
+      );
 }
 
 class CalendarFilterController extends Notifier<CalendarFilter> {
@@ -331,7 +343,7 @@ class _MonthView extends ConsumerWidget {
             final isToday = date == today;
             final dayItems = on(date);
             final hasBirthday = dayItems.any((i) => i.kind == AgendaKind.birthday);
-            final hasEvent = dayItems.any((i) => i.kind == AgendaKind.event);
+            final hasEvent = dayItems.any((i) => i.kind != AgendaKind.birthday);
             final h = showHijri ? hijri.fromGregorian(date) : null;
             final fg = isSelected ? scheme.onPrimary : (inMonth ? scheme.onSurface : scheme.onSurface.withValues(alpha: 0.35));
             return InkWell(
@@ -532,7 +544,14 @@ class _CalendarFilterSheet extends ConsumerWidget {
             secondary: const Icon(Icons.cake_outlined),
             title: Text(l.birthdaysLabel),
             value: filter.showBirthdays,
-            onChanged: (v) => c.set(CalendarFilter(hiddenTypeIds: filter.hiddenTypeIds, showBirthdays: v)),
+            onChanged: (v) => c.set(filter.copyWith(showBirthdays: v)),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.autorenew),
+            title: Text(l.commitmentsLabel),
+            value: filter.showCommitments,
+            onChanged: (v) => c.set(filter.copyWith(showCommitments: v)),
           ),
           for (final t in types)
             CheckboxListTile(
@@ -540,9 +559,8 @@ class _CalendarFilterSheet extends ConsumerWidget {
               secondary: Icon(t.icon),
               title: Text(t.label(l)),
               value: !filter.hiddenTypeIds.contains(t.id),
-              onChanged: (v) => c.set(CalendarFilter(
+              onChanged: (v) => c.set(filter.copyWith(
                 hiddenTypeIds: v == true ? ({...filter.hiddenTypeIds}..remove(t.id)) : {...filter.hiddenTypeIds, t.id},
-                showBirthdays: filter.showBirthdays,
               )),
             ),
           TextButton(onPressed: () => c.set(const CalendarFilter()), child: Text(l.clearFilters)),
@@ -568,12 +586,20 @@ class _SearchResults extends ConsumerWidget {
     final items = ref.watch(agendaServiceProvider).itemsInRange(
           people: ref.watch(peopleProvider),
           events: ref.watch(eventsProvider),
+          commitments: ref.watch(commitmentsProvider),
           from: today.addDays(-365),
           to: today.addDays(365),
         );
     final matches = [
       for (final i in items)
-        if ((i.kind == AgendaKind.birthday ? i.person!.shownName : i.title!).toLowerCase().contains(q) ||
+        if (switch (i.kind) {
+              AgendaKind.birthday => i.person!.shownName,
+              AgendaKind.event => i.title!,
+              AgendaKind.commitment => i.commitment!.name,
+            }
+                .toLowerCase()
+                .contains(q) ||
+            (i.commitment?.providerName?.toLowerCase().contains(q) ?? false) ||
             (i.event?.notes?.toLowerCase().contains(q) ?? false) ||
             (i.event?.location?.toLowerCase().contains(q) ?? false))
           i,

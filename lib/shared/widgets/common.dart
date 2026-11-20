@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/time_engine/local_date.dart';
 import '../../features/agenda/agenda.dart';
+import '../../features/commitments/domain/commitment.dart';
 import '../../features/events/domain/event.dart';
 import '../../features/events/presentation/events_providers.dart';
 import '../l10n_labels.dart';
@@ -110,9 +111,14 @@ class AgendaTile extends ConsumerWidget {
     final scheme = Theme.of(context).colorScheme;
     final days = today.daysUntil(item.date);
     final isBirthday = item.kind == AgendaKind.birthday;
+    final commitment = item.commitment;
     final event = item.event;
     final type = event == null ? null : ref.watch(eventTypeByIdProvider)[event.typeId];
-    final title = isBirthday ? l.birthdayOf(item.person!.shownName) : item.title!;
+    final title = switch (item.kind) {
+      AgendaKind.birthday => l.birthdayOf(item.person!.shownName),
+      AgendaKind.event => item.title!,
+      AgendaKind.commitment => commitment!.name,
+    };
     final cancelled = event?.status == EventStatus.cancelled;
     final subtitleParts = <String>[
       if (item.endDate != null)
@@ -123,16 +129,30 @@ class AgendaTile extends ConsumerWidget {
       if (!isBirthday && item.time != null) context.formatTime(item.time!),
       if (event != null && event.isRecurring) l.repeatsLabel,
       if (event != null && event.status != EventStatus.planned) event.status.label(l),
+      if (commitment != null) CommitmentType.fromId(commitment.typeId).label(l),
+      if (commitment?.amountMinor != null) context.formatMoney(commitment!.amountMinor!, commitment.currency),
     ];
     return Card(
       child: ListTile(
         onTap: onTap,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         leading: CircleAvatar(
-          backgroundColor: isBirthday ? scheme.tertiaryContainer : scheme.primaryContainer,
+          backgroundColor: switch (item.kind) {
+            AgendaKind.birthday => scheme.tertiaryContainer,
+            AgendaKind.event => scheme.primaryContainer,
+            AgendaKind.commitment => scheme.secondaryContainer,
+          },
           child: Icon(
-            isBirthday ? Icons.cake_outlined : (type?.icon ?? Icons.event_note_outlined),
-            color: isBirthday ? scheme.onTertiaryContainer : scheme.onPrimaryContainer,
+            switch (item.kind) {
+              AgendaKind.birthday => Icons.cake_outlined,
+              AgendaKind.event => type?.icon ?? Icons.event_note_outlined,
+              AgendaKind.commitment => CommitmentType.fromId(commitment!.typeId).icon,
+            },
+            color: switch (item.kind) {
+              AgendaKind.birthday => scheme.onTertiaryContainer,
+              AgendaKind.event => scheme.onPrimaryContainer,
+              AgendaKind.commitment => scheme.onSecondaryContainer,
+            },
           ),
         ),
         title: Text(

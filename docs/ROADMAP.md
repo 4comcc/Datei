@@ -11,7 +11,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | 3 | Authentication | ⏳ (deferred until Firebase/Facebook setup by owner) | AuthService + Firebase impl, Google, Facebook, linking, account page, sign-out, delete (re-auth), guest→registered; mocked tests; **real-config device test before marking ready** |
 | 4 | People | ✅ 2026-11-20 | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
 | 5 | Events & calendar | ✅ 2026-11-20 | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
-| 6 | Commitments & reminders | ⏳ | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
+| 6 | Commitments & reminders | ✅ 2026-11-20 (device test of notifications pending) | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
 | 7 | Memories, milestones, timeline, projects | ⏳ | CRUD + global & per-person timeline with filters |
 | 8 | Search & reports | ⏳ | FTS unified search, AND/OR filter builder, saved filters, charts, CSV (UTF-8 BOM) |
 | 9 | Backup & security | ⏳ | .datei backup/restore with attachments, encryption, integrity, app lock PIN/biometric, privacy policy |
@@ -70,3 +70,11 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Settings: show Hijri, Hijri adjustment −2…+2 days; Home shows today's Hijri date.
 - Fixed during testing: navigation crash when a form is opened without history; Hijri dialog field overflow; an outdated Phase 4 test assertion.
 - `flutter analyze` clean; 104 tests.
+
+## Phase 6 outcome (2026-11-20)
+- Schema v4: commitment_types (15 built-in), commitments, commitment_renewals, reminders; verified migrations v1…v4.
+- Commitments: list with status filters, form (type, provider, expiry, renew-by, start, period, amount+currency, reference, link, reminders, status), detail with renew dialog and renewal history; Home "Important reminders" and overdue count; commitments on the calendar (filterable) and in calendar search; quick add.
+- Reminders: per-event offsets (at time / minutes / hours / days), per-commitment days, birthday reminders setting, default reminder time, precise timing (exact alarms on request), test notification, notification tap opens the right screen (also when launching the app).
+- Planner + sync: 60-day rolling window, stable ids, rebuilt on changes and app start; boot receiver.
+- `flutter analyze` clean; 131 tests (planner, rules, repositories, migrations, widget flows with a fake notification gateway).
+- Not verifiable here: real notification delivery, reboot rescheduling and exact-alarm permission — needs the owner's device.

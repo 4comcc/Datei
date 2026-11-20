@@ -6,13 +6,18 @@ import '../../core/time_engine/local_date.dart';
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
 import '../agenda/agenda.dart';
+import '../commitments/domain/commitment.dart';
+import '../commitments/presentation/commitments_providers.dart';
+import '../commitments/presentation/commitments_screen.dart';
 import '../settings/settings_controller.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   static void openItem(BuildContext context, AgendaItem item) {
-    if (item.kind == AgendaKind.birthday) {
+    if (item.kind == AgendaKind.commitment) {
+      context.push('/commitments/${item.commitment!.id}');
+    } else if (item.kind == AgendaKind.birthday) {
       context.push('/people/${item.person!.id}');
     } else {
       final e = item.event!;
@@ -30,9 +35,17 @@ class HomeScreen extends ConsumerWidget {
     final upcoming = ref.watch(upcomingAgendaProvider(30));
     final hijriToday =
         ref.watch(settingsProvider.select((s) => s.showHijri)) ? ref.watch(hijriConverterProvider).fromGregorian(today) : null;
-    final todayItems = upcoming.where((i) => i.coversDay(today)).toList();
+    final todayItems = upcoming.where((i) => i.coversDay(today) && i.kind != AgendaKind.commitment).toList();
     final birthdays = upcoming.where((i) => i.kind == AgendaKind.birthday && !i.coversDay(today)).toList();
     final events = upcoming.where((i) => i.kind == AgendaKind.event && !i.coversDay(today)).toList();
+    final rules = ref.watch(commitmentRulesProvider);
+    final commitments = ref.watch(commitmentsProvider);
+    final overdue = [for (final c in commitments) if (rules.statusOf(c, today) == CommitmentStatus.overdue) c];
+    final dueSoon = [
+      ...overdue,
+      for (final c in commitments)
+        if (const {CommitmentStatus.dueSoon, CommitmentStatus.upcoming}.contains(rules.statusOf(c, today))) c,
+    ];
 
     return Scaffold(
       body: SafeArea(
@@ -64,6 +77,7 @@ class HomeScreen extends ConsumerWidget {
                       children: [
                         _StatPill(text: l.todaySummaryEvents(todayItems.length)),
                         _StatPill(text: l.todaySummaryUpcoming(upcoming.length - todayItems.length)),
+                        if (overdue.isNotEmpty) _StatPill(text: l.todaySummaryOverdue(overdue.length)),
                       ],
                     ),
                   ],
@@ -75,6 +89,18 @@ class HomeScreen extends ConsumerWidget {
               InlineEmpty(l.emptyToday)
             else
               ..._tiles(context, todayItems, today),
+            SectionHeader(
+              l.sectionReminders,
+              trailing: TextButton(onPressed: () => context.push('/commitments'), child: Text(l.commitments)),
+            ),
+            if (dueSoon.isEmpty)
+              InlineEmpty(l.emptyReminders)
+            else
+              for (final c in dueSoon.take(5))
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: CommitmentTile(commitment: c, status: rules.statusOf(c, today)),
+                ),
             SectionHeader(l.sectionBirthdays),
             if (birthdays.isEmpty) InlineEmpty(l.emptyBirthdays) else ..._tiles(context, birthdays.take(5), today),
             SectionHeader(l.sectionUpcomingEvents),

@@ -13,6 +13,10 @@ class AppSettings {
     required this.themeMode,
     this.showHijri = false,
     this.hijriOffset = 0,
+    this.remindersEnabled = false,
+    this.reminderTime = '09:00',
+    this.birthdayReminderDays,
+    this.preciseReminders = false,
   });
 
   factory AppSettings.fromMap(Map<String, String> m) => AppSettings(
@@ -21,6 +25,13 @@ class AppSettings {
         themeMode: ThemeMode.values.asNameMap()[m[SettingKeys.themeMode]] ?? ThemeMode.system,
         showHijri: m[SettingKeys.showHijri] == 'true',
         hijriOffset: (int.tryParse(m[SettingKeys.hijriOffset] ?? '') ?? 0).clamp(-2, 2),
+        remindersEnabled: m[SettingKeys.remindersEnabled] == 'true',
+        reminderTime: RegExp(r'^\d{2}:\d{2}$').hasMatch(m[SettingKeys.reminderTime] ?? '') ? m[SettingKeys.reminderTime]! : '09:00',
+        birthdayReminderDays: switch (int.tryParse(m[SettingKeys.birthdayReminderDays] ?? '')) {
+          final d? when d >= 0 => d,
+          _ => m.containsKey(SettingKeys.birthdayReminderDays) ? null : 1,
+        },
+        preciseReminders: m[SettingKeys.preciseReminders] == 'true',
       );
 
   /// null until the user picks a language on first launch.
@@ -31,6 +42,14 @@ class AppSettings {
 
   /// −2…+2 days added to Umm al-Qura dates (local moon sighting).
   final int hijriOffset;
+  final bool remindersEnabled;
+
+  /// `HH:mm` for reminders of all-day items.
+  final String reminderTime;
+
+  /// Days before birthdays (null = off). Defaults to 1 until the user changes it.
+  final int? birthdayReminderDays;
+  final bool preciseReminders;
 
   Locale? get locale => languageCode == null ? null : Locale(languageCode!);
 
@@ -40,6 +59,10 @@ class AppSettings {
     ThemeMode? themeMode,
     bool? showHijri,
     int? hijriOffset,
+    bool? remindersEnabled,
+    String? reminderTime,
+    int? Function()? birthdayReminderDays,
+    bool? preciseReminders,
   }) =>
       AppSettings(
         languageCode: languageCode ?? this.languageCode,
@@ -47,6 +70,10 @@ class AppSettings {
         themeMode: themeMode ?? this.themeMode,
         showHijri: showHijri ?? this.showHijri,
         hijriOffset: hijriOffset ?? this.hijriOffset,
+        remindersEnabled: remindersEnabled ?? this.remindersEnabled,
+        reminderTime: reminderTime ?? this.reminderTime,
+        birthdayReminderDays: birthdayReminderDays != null ? birthdayReminderDays() : this.birthdayReminderDays,
+        preciseReminders: preciseReminders ?? this.preciseReminders,
       );
 }
 
@@ -56,6 +83,11 @@ abstract final class SettingKeys {
   static const themeMode = 'general.theme_mode';
   static const showHijri = 'calendar.show_hijri';
   static const hijriOffset = 'calendar.hijri_offset';
+  static const remindersEnabled = 'notifications.enabled';
+  static const reminderTime = 'notifications.default_time';
+  static const birthdayReminderDays = 'notifications.birthday_days';
+  static const preciseReminders = 'notifications.precise';
+  static const lastCurrency = 'commitments.last_currency';
 }
 
 final settingsRepositoryProvider =
@@ -100,7 +132,27 @@ class SettingsController extends Notifier<AppSettings> {
     await _repo.set(SettingKeys.hijriOffset, '$v');
     state = state.copyWith(hijriOffset: v);
   }
-}
+
+  Future<void> setRemindersEnabled(bool v) async {
+    await _repo.set(SettingKeys.remindersEnabled, '$v');
+    state = state.copyWith(remindersEnabled: v);
+  }
+
+  Future<void> setReminderTime(String hhmm) async {
+    await _repo.set(SettingKeys.reminderTime, hhmm);
+    state = state.copyWith(reminderTime: hhmm);
+  }
+
+  /// null turns birthday reminders off.
+  Future<void> setBirthdayReminderDays(int? days) async {
+    await _repo.set(SettingKeys.birthdayReminderDays, '${days ?? -1}');
+    state = state.copyWith(birthdayReminderDays: () => days);
+  }
+
+  Future<void> setPreciseReminders(bool v) async {
+    await _repo.set(SettingKeys.preciseReminders, '$v');
+    state = state.copyWith(preciseReminders: v);
+  }}
 
 final hijriConverterProvider = Provider<HijriConverter>(
   (ref) => HijriConverter(offsetDays: ref.watch(settingsProvider.select((s) => s.hijriOffset))),

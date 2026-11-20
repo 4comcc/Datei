@@ -4,6 +4,9 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../core/time_engine/local_date.dart';
 import '../../features/calendar/calendar_screen.dart';
+import '../../features/commitments/presentation/commitment_detail_screen.dart';
+import '../../features/commitments/presentation/commitment_form_screen.dart';
+import '../../features/commitments/presentation/commitments_screen.dart';
 import '../../features/events/presentation/event_form_screen.dart';
 import '../../features/events/presentation/event_types_screen.dart';
 import '../../features/events/presentation/events_screen.dart';
@@ -89,6 +92,26 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/settings/custom-fields',
         parentNavigatorKey: _rootKey,
         builder: (_, _) => const CustomFieldsScreen(),
+      ),
+      GoRoute(
+        path: '/commitments',
+        parentNavigatorKey: _rootKey,
+        builder: (_, _) => const CommitmentsScreen(),
+      ),
+      GoRoute(
+        path: '/commitments/new',
+        parentNavigatorKey: _rootKey,
+        builder: (_, _) => const CommitmentFormScreen(),
+      ),
+      GoRoute(
+        path: '/commitments/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => CommitmentDetailScreen(commitmentId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/commitments/:id/edit',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => CommitmentFormScreen(commitmentId: state.pathParameters['id']),
       ),
       GoRoute(
         path: '/settings/event-types',

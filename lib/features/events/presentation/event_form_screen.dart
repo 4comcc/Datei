@@ -16,6 +16,7 @@ import 'event_types_screen.dart';
 import 'events_providers.dart';
 import 'hijri_date_dialog.dart';
 import 'recurrence_editor.dart';
+import '../../reminders/reminders_banner.dart';
 
 /// Creates or edits an event. When opened from one occurrence of a recurring
 /// event ([occurrenceDate]), saving and deleting ask for the edit scope.
@@ -44,6 +45,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
   late EventPriority _priority;
   late EventStatus _status;
   late Set<String> _personIds;
+  late Set<int> _reminders;
   DateiEvent? _existing;
   OccurrenceOverride? _override;
   bool _saving = false;
@@ -83,6 +85,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
     _priority = e?.priority ?? EventPriority.normal;
     _status = e?.status ?? EventStatus.planned;
     _personIds = {...?e?.personIds, ?widget.initialPersonId};
+    _reminders = {...?e?.reminderMinutes};
   }
 
   @override
@@ -112,6 +115,7 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
       notes: _trimOrNull(_notes),
       priority: _priority,
       status: _status,
+      reminderMinutes: (_reminders.toList()..sort()),
       createdAt: createdAt,
     );
   }
@@ -392,6 +396,12 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
               ],
             ),
             gap,
+            _RemindersChips(
+              allDay: _time == null,
+              selected: _reminders,
+              onChanged: (v) => setState(() => _reminders = v),
+            ),
+            gap,
             if (people.isNotEmpty) ...[
               Text(l.fieldLinkedPeople, style: Theme.of(context).textTheme.labelLarge),
               const SizedBox(height: 8),
@@ -425,6 +435,49 @@ class _EventFormScreenState extends ConsumerState<EventFormScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Reminder offsets for an event (minutes before; all-day events use days before the default time).
+class _RemindersChips extends StatelessWidget {
+  const _RemindersChips({required this.allDay, required this.selected, required this.onChanged});
+  final bool allDay;
+  final Set<int> selected;
+  final ValueChanged<Set<int>> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final presets = allDay ? const [0, 1440, 4320, 10080] : const [0, 10, 30, 60, 1440, 10080];
+    String label(int m) {
+      if (m == 0) return allDay ? l.reminderDaysBefore(0) : l.reminderAtTime;
+      if (m < 60) return l.reminderMinutesBefore(m);
+      if (m < 1440) return l.reminderHoursBefore(m ~/ 60);
+      return l.reminderDaysBefore(m ~/ 1440);
+    }
+
+    final all = {...presets, ...selected}.toList()..sort();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l.fieldReminders, style: Theme.of(context).textTheme.labelLarge),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 4,
+          children: [
+            for (final m in all)
+              FilterChip(
+                key: Key('event-reminder-$m'),
+                label: Text(label(m)),
+                selected: selected.contains(m),
+                onSelected: (s) => onChanged(s ? {...selected, m} : ({...selected}..remove(m))),
+              ),
+          ],
+        ),
+        if (selected.isNotEmpty) const RemindersOffBanner(),
+      ],
     );
   }
 }

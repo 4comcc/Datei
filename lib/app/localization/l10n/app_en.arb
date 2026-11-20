@@ -581,5 +581,180 @@
         "type": "int"
       }
     }
-  }
+  },
+  "commitmentTypeDomain": "Domain",
+  "commitmentTypeHosting": "Hosting",
+  "commitmentTypeSsl": "SSL certificate",
+  "commitmentTypeContract": "Contract",
+  "commitmentTypeLicense": "License",
+  "commitmentTypeInsurance": "Insurance",
+  "commitmentTypeWarranty": "Warranty",
+  "commitmentTypeSubscription": "Subscription",
+  "commitmentTypeBill": "Bill",
+  "commitmentTypePayment": "Payment",
+  "commitmentTypeInstallment": "Installment",
+  "commitmentTypePassport": "Passport",
+  "commitmentTypeNationalId": "ID card",
+  "commitmentTypeVehicleLicense": "Vehicle license",
+  "commitmentTypeOther": "Other",
+  "cstatusActive": "Active",
+  "cstatusUpcoming": "Upcoming",
+  "cstatusDueSoon": "Due soon",
+  "cstatusOverdue": "Overdue",
+  "cstatusCompleted": "Completed",
+  "cstatusCancelled": "Cancelled",
+  "commitments": "Commitments & renewals",
+  "commitmentsEmptyTitle": "No commitments yet",
+  "commitmentsEmptyBody": "Track renewals like domains, subscriptions, insurance, passports and IDs — Datei reminds you before they're due.",
+  "editCommitment": "Edit commitment",
+  "fieldName": "Name",
+  "fieldCommitmentType": "Type",
+  "fieldProvider": "Provider or company",
+  "fieldStartDate": "Start date (optional)",
+  "fieldExpiryDate": "Expiry or due date",
+  "fieldRenewalDate": "Renew by (optional)",
+  "fieldAmount": "Amount (optional)",
+  "fieldCurrency": "Currency",
+  "fieldRenewalPeriod": "Renewal period",
+  "periodNone": "No fixed period",
+  "fieldReference": "Reference number (optional)",
+  "fieldServiceUrl": "Service link (optional)",
+  "fieldLifecycle": "Status",
+  "remindersLabel": "Reminders",
+  "reminderDaysBefore": "{count, plural, =0{On the day} =1{1 day before} other{{count} days before}}",
+  "@reminderDaysBefore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addCustomReminder": "Custom…",
+  "customReminderDays": "Days before",
+  "renew": "Renew",
+  "renewTitle": "Renew",
+  "newExpiryDate": "New expiry date",
+  "renewalHistory": "Renewal history",
+  "noRenewals": "No renewals recorded yet.",
+  "renewalFromTo": "{from} → {to}",
+  "@renewalFromTo": {
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "renewedOn": "Renewed on {date}",
+  "@renewedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "renewedSuccessfully": "Renewed",
+  "errorRenewDate": "Choose a date after the current expiry",
+  "errorExpiryBeforeStart": "Expiry can't be before the start date",
+  "errorInvalidAmount": "Enter an amount like 250 or 99.50",
+  "confirmDeleteCommitment": "Delete “{name}” and its renewal history?",
+  "@confirmDeleteCommitment": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overdueBy": "{count, plural, =1{Overdue by 1 day} other{Overdue by {count} days}}",
+  "@overdueBy": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterAllCommitments": "All",
+  "sectionReminders": "Important reminders",
+  "emptyReminders": "Nothing due in the next 30 days.",
+  "todaySummaryOverdue": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "@todaySummaryOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsNotifications": "Notifications",
+  "enableReminders": "Reminders",
+  "enableRemindersHint": "Get notified before birthdays, events and renewals.",
+  "remindersPermissionDenied": "Notifications are blocked for Datei. Allow them in Android settings to get reminders.",
+  "defaultReminderTime": "Reminder time for all-day items",
+  "birthdayReminders": "Birthday reminders",
+  "reminderOff": "Off",
+  "preciseReminders": "Precise timing",
+  "preciseRemindersHint": "Reminders arrive on the exact minute. Without it, Android may delay them a little to save battery.",
+  "testNotification": "Send a test notification",
+  "testNotificationBody": "Notifications are working.",
+  "remindersOffBanner": "Reminders are off, so you won't be notified before due dates.",
+  "turnOn": "Turn on",
+  "notifBirthdayTitle": "{name}'s birthday",
+  "@notifBirthdayTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notifBirthdayTurning": "{name} turns {age}",
+  "@notifBirthdayTurning": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "notifCommitmentTitle": "{name} is due",
+  "@notifCommitmentTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notifWhen": "{relative} · {date}",
+  "@notifWhen": {
+    "placeholders": {
+      "relative": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldReminders": "Reminders",
+  "reminderAtTime": "At the time",
+  "reminderMinutesBefore": "{count} min before",
+  "@reminderMinutesBefore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reminderHoursBefore": "{count, plural, =1{1 hour before} other{{count} hours before}}",
+  "@reminderHoursBefore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commitmentsLabel": "Renewals & commitments",
+  "addReminder": "Add"
 }

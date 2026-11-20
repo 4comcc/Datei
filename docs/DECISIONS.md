@@ -101,3 +101,15 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-048 · Accepted · Multi-day events store `end_date`; every occurrence spans the same number of days.** The agenda marks each covered day; ongoing events count as "today" and as the next occurrence.
 
 **ADR-049 · Accepted · Screens closed after save/delete use `popOrGo(fallback)`.** Safe when a screen is opened directly (future notification deep links) — found by widget tests.
+
+**ADR-050 · Accepted · Local notifications with `flutter_local_notifications` 23.0.3 + `timezone` + `flutter_timezone`.** Requires compileSdk 37 (`platforms;android-37.0`), core-library desugaring, `RECEIVE_BOOT_COMPLETED` and the plugin's scheduled/boot receivers. A monochrome vector status icon (`ic_stat_datei`) is kept from resource shrinking via `res/raw/keep.xml`. `SCHEDULE_EXACT_ALARM` is declared but only requested when the user enables "Precise timing"; otherwise inexact-while-idle (no `USE_EXACT_ALARM`).
+
+**ADR-051 · Accepted · Reminder planning is pure (`ReminderPlanner`): a 60-day rolling window, max 300, sorted, deduplicated, stable FNV-1a ids.** `ReminderSyncHost` rebuilds the whole schedule (cancel-all + schedule) 1.5 s after any change to people, events, commitments or reminder settings, and on every app start; the plugin's boot receiver restores schedules after a reboot. No `scheduled_notifications` table is needed because the schedule is fully derived.
+
+**ADR-052 · Accepted · Reminders table (`owner_type`, `owner_id`, `offset_minutes`).** Events: minutes before the start time; all-day items: days (×1440) before the default reminder time. Commitments default to 30/14/7/3/1/0 days. Birthday reminders are a global setting (default: 1 day before) rather than per person.
+
+**ADR-053 · Accepted · Commitments: stored lifecycle (active/completed/cancelled) + computed status (overdue < 0 days, due soon ≤ 7, upcoming ≤ 30, else active) from the renew-by date or the expiry.** Renewal period stored as months (`renewal_months`) instead of a full recurrence rule; renewing records history and moves expiry (and renew-by by the same number of days) in one transaction. Money as minor units + ISO code, displayed as "EGP 1,250" (codes render reliably in both languages).
+
+**ADR-054 · Deferred · Custom commitment types.** The table supports them; the UI offers the 15 built-in types (including "Other" with a free name). A management screen can reuse the event-types pattern later.
+
+**ADR-055 · Accepted · Notification permission is requested in context** (turning on Reminders in settings or the "Turn on" banner shown on commitment/event screens while reminders are off). Denial keeps reminders off with an explanation; a "Send a test notification" button lets the owner verify on device.

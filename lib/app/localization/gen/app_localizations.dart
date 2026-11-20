@@ -1927,6 +1927,498 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{time} other{times}}'**
   String unitTimes(int count);
+
+  /// No description provided for @commitmentTypeDomain.
+  ///
+  /// In en, this message translates to:
+  /// **'Domain'**
+  String get commitmentTypeDomain;
+
+  /// No description provided for @commitmentTypeHosting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hosting'**
+  String get commitmentTypeHosting;
+
+  /// No description provided for @commitmentTypeSsl.
+  ///
+  /// In en, this message translates to:
+  /// **'SSL certificate'**
+  String get commitmentTypeSsl;
+
+  /// No description provided for @commitmentTypeContract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get commitmentTypeContract;
+
+  /// No description provided for @commitmentTypeLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'License'**
+  String get commitmentTypeLicense;
+
+  /// No description provided for @commitmentTypeInsurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get commitmentTypeInsurance;
+
+  /// No description provided for @commitmentTypeWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty'**
+  String get commitmentTypeWarranty;
+
+  /// No description provided for @commitmentTypeSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get commitmentTypeSubscription;
+
+  /// No description provided for @commitmentTypeBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill'**
+  String get commitmentTypeBill;
+
+  /// No description provided for @commitmentTypePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get commitmentTypePayment;
+
+  /// No description provided for @commitmentTypeInstallment.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment'**
+  String get commitmentTypeInstallment;
+
+  /// No description provided for @commitmentTypePassport.
+  ///
+  /// In en, this message translates to:
+  /// **'Passport'**
+  String get commitmentTypePassport;
+
+  /// No description provided for @commitmentTypeNationalId.
+  ///
+  /// In en, this message translates to:
+  /// **'ID card'**
+  String get commitmentTypeNationalId;
+
+  /// No description provided for @commitmentTypeVehicleLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle license'**
+  String get commitmentTypeVehicleLicense;
+
+  /// No description provided for @commitmentTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get commitmentTypeOther;
+
+  /// No description provided for @cstatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get cstatusActive;
+
+  /// No description provided for @cstatusUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get cstatusUpcoming;
+
+  /// No description provided for @cstatusDueSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Due soon'**
+  String get cstatusDueSoon;
+
+  /// No description provided for @cstatusOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get cstatusOverdue;
+
+  /// No description provided for @cstatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get cstatusCompleted;
+
+  /// No description provided for @cstatusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get cstatusCancelled;
+
+  /// No description provided for @commitments.
+  ///
+  /// In en, this message translates to:
+  /// **'Commitments & renewals'**
+  String get commitments;
+
+  /// No description provided for @commitmentsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No commitments yet'**
+  String get commitmentsEmptyTitle;
+
+  /// No description provided for @commitmentsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Track renewals like domains, subscriptions, insurance, passports and IDs — Datei reminds you before they\'re due.'**
+  String get commitmentsEmptyBody;
+
+  /// No description provided for @editCommitment.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit commitment'**
+  String get editCommitment;
+
+  /// No description provided for @fieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get fieldName;
+
+  /// No description provided for @fieldCommitmentType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get fieldCommitmentType;
+
+  /// No description provided for @fieldProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider or company'**
+  String get fieldProvider;
+
+  /// No description provided for @fieldStartDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start date (optional)'**
+  String get fieldStartDate;
+
+  /// No description provided for @fieldExpiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry or due date'**
+  String get fieldExpiryDate;
+
+  /// No description provided for @fieldRenewalDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew by (optional)'**
+  String get fieldRenewalDate;
+
+  /// No description provided for @fieldAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (optional)'**
+  String get fieldAmount;
+
+  /// No description provided for @fieldCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get fieldCurrency;
+
+  /// No description provided for @fieldRenewalPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal period'**
+  String get fieldRenewalPeriod;
+
+  /// No description provided for @periodNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No fixed period'**
+  String get periodNone;
+
+  /// No description provided for @fieldReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference number (optional)'**
+  String get fieldReference;
+
+  /// No description provided for @fieldServiceUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Service link (optional)'**
+  String get fieldServiceUrl;
+
+  /// No description provided for @fieldLifecycle.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get fieldLifecycle;
+
+  /// No description provided for @remindersLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remindersLabel;
+
+  /// No description provided for @reminderDaysBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{On the day} =1{1 day before} other{{count} days before}}'**
+  String reminderDaysBefore(int count);
+
+  /// No description provided for @addCustomReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom…'**
+  String get addCustomReminder;
+
+  /// No description provided for @customReminderDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Days before'**
+  String get customReminderDays;
+
+  /// No description provided for @renew.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew'**
+  String get renew;
+
+  /// No description provided for @renewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Renew'**
+  String get renewTitle;
+
+  /// No description provided for @newExpiryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'New expiry date'**
+  String get newExpiryDate;
+
+  /// No description provided for @renewalHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewal history'**
+  String get renewalHistory;
+
+  /// No description provided for @noRenewals.
+  ///
+  /// In en, this message translates to:
+  /// **'No renewals recorded yet.'**
+  String get noRenewals;
+
+  /// No description provided for @renewalFromTo.
+  ///
+  /// In en, this message translates to:
+  /// **'{from} → {to}'**
+  String renewalFromTo(String from, String to);
+
+  /// No description provided for @renewedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewed on {date}'**
+  String renewedOn(String date);
+
+  /// No description provided for @renewedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewed'**
+  String get renewedSuccessfully;
+
+  /// No description provided for @errorRenewDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a date after the current expiry'**
+  String get errorRenewDate;
+
+  /// No description provided for @errorExpiryBeforeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry can\'t be before the start date'**
+  String get errorExpiryBeforeStart;
+
+  /// No description provided for @errorInvalidAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount like 250 or 99.50'**
+  String get errorInvalidAmount;
+
+  /// No description provided for @confirmDeleteCommitment.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{name}” and its renewal history?'**
+  String confirmDeleteCommitment(String name);
+
+  /// No description provided for @overdueBy.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Overdue by 1 day} other{Overdue by {count} days}}'**
+  String overdueBy(int count);
+
+  /// No description provided for @filterAllCommitments.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get filterAllCommitments;
+
+  /// No description provided for @sectionReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Important reminders'**
+  String get sectionReminders;
+
+  /// No description provided for @emptyReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing due in the next 30 days.'**
+  String get emptyReminders;
+
+  /// No description provided for @todaySummaryOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 overdue} other{{count} overdue}}'**
+  String todaySummaryOverdue(int count);
+
+  /// No description provided for @settingsNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotifications;
+
+  /// No description provided for @enableReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get enableReminders;
+
+  /// No description provided for @enableRemindersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified before birthdays, events and renewals.'**
+  String get enableRemindersHint;
+
+  /// No description provided for @remindersPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are blocked for Datei. Allow them in Android settings to get reminders.'**
+  String get remindersPermissionDenied;
+
+  /// No description provided for @defaultReminderTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder time for all-day items'**
+  String get defaultReminderTime;
+
+  /// No description provided for @birthdayReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday reminders'**
+  String get birthdayReminders;
+
+  /// No description provided for @reminderOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get reminderOff;
+
+  /// No description provided for @preciseReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Precise timing'**
+  String get preciseReminders;
+
+  /// No description provided for @preciseRemindersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders arrive on the exact minute. Without it, Android may delay them a little to save battery.'**
+  String get preciseRemindersHint;
+
+  /// No description provided for @testNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a test notification'**
+  String get testNotification;
+
+  /// No description provided for @testNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are working.'**
+  String get testNotificationBody;
+
+  /// No description provided for @remindersOffBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders are off, so you won\'t be notified before due dates.'**
+  String get remindersOffBanner;
+
+  /// No description provided for @turnOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get turnOn;
+
+  /// No description provided for @notifBirthdayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s birthday'**
+  String notifBirthdayTitle(String name);
+
+  /// No description provided for @notifBirthdayTurning.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} turns {age}'**
+  String notifBirthdayTurning(String name, int age);
+
+  /// No description provided for @notifCommitmentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is due'**
+  String notifCommitmentTitle(String name);
+
+  /// No description provided for @notifWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'{relative} · {date}'**
+  String notifWhen(String relative, String date);
+
+  /// No description provided for @fieldReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get fieldReminders;
+
+  /// No description provided for @reminderAtTime.
+  ///
+  /// In en, this message translates to:
+  /// **'At the time'**
+  String get reminderAtTime;
+
+  /// No description provided for @reminderMinutesBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} min before'**
+  String reminderMinutesBefore(int count);
+
+  /// No description provided for @reminderHoursBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 hour before} other{{count} hours before}}'**
+  String reminderHoursBefore(int count);
+
+  /// No description provided for @commitmentsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Renewals & commitments'**
+  String get commitmentsLabel;
+
+  /// No description provided for @addReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addReminder;
 }
 
 class _AppLocalizationsDelegate

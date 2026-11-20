@@ -1097,4 +1097,304 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get commitmentTypeDomain => 'Domain';
+
+  @override
+  String get commitmentTypeHosting => 'Hosting';
+
+  @override
+  String get commitmentTypeSsl => 'SSL certificate';
+
+  @override
+  String get commitmentTypeContract => 'Contract';
+
+  @override
+  String get commitmentTypeLicense => 'License';
+
+  @override
+  String get commitmentTypeInsurance => 'Insurance';
+
+  @override
+  String get commitmentTypeWarranty => 'Warranty';
+
+  @override
+  String get commitmentTypeSubscription => 'Subscription';
+
+  @override
+  String get commitmentTypeBill => 'Bill';
+
+  @override
+  String get commitmentTypePayment => 'Payment';
+
+  @override
+  String get commitmentTypeInstallment => 'Installment';
+
+  @override
+  String get commitmentTypePassport => 'Passport';
+
+  @override
+  String get commitmentTypeNationalId => 'ID card';
+
+  @override
+  String get commitmentTypeVehicleLicense => 'Vehicle license';
+
+  @override
+  String get commitmentTypeOther => 'Other';
+
+  @override
+  String get cstatusActive => 'Active';
+
+  @override
+  String get cstatusUpcoming => 'Upcoming';
+
+  @override
+  String get cstatusDueSoon => 'Due soon';
+
+  @override
+  String get cstatusOverdue => 'Overdue';
+
+  @override
+  String get cstatusCompleted => 'Completed';
+
+  @override
+  String get cstatusCancelled => 'Cancelled';
+
+  @override
+  String get commitments => 'Commitments & renewals';
+
+  @override
+  String get commitmentsEmptyTitle => 'No commitments yet';
+
+  @override
+  String get commitmentsEmptyBody =>
+      'Track renewals like domains, subscriptions, insurance, passports and IDs — Datei reminds you before they\'re due.';
+
+  @override
+  String get editCommitment => 'Edit commitment';
+
+  @override
+  String get fieldName => 'Name';
+
+  @override
+  String get fieldCommitmentType => 'Type';
+
+  @override
+  String get fieldProvider => 'Provider or company';
+
+  @override
+  String get fieldStartDate => 'Start date (optional)';
+
+  @override
+  String get fieldExpiryDate => 'Expiry or due date';
+
+  @override
+  String get fieldRenewalDate => 'Renew by (optional)';
+
+  @override
+  String get fieldAmount => 'Amount (optional)';
+
+  @override
+  String get fieldCurrency => 'Currency';
+
+  @override
+  String get fieldRenewalPeriod => 'Renewal period';
+
+  @override
+  String get periodNone => 'No fixed period';
+
+  @override
+  String get fieldReference => 'Reference number (optional)';
+
+  @override
+  String get fieldServiceUrl => 'Service link (optional)';
+
+  @override
+  String get fieldLifecycle => 'Status';
+
+  @override
+  String get remindersLabel => 'Reminders';
+
+  @override
+  String reminderDaysBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days before',
+      one: '1 day before',
+      zero: 'On the day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get addCustomReminder => 'Custom…';
+
+  @override
+  String get customReminderDays => 'Days before';
+
+  @override
+  String get renew => 'Renew';
+
+  @override
+  String get renewTitle => 'Renew';
+
+  @override
+  String get newExpiryDate => 'New expiry date';
+
+  @override
+  String get renewalHistory => 'Renewal history';
+
+  @override
+  String get noRenewals => 'No renewals recorded yet.';
+
+  @override
+  String renewalFromTo(String from, String to) {
+    return '$from → $to';
+  }
+
+  @override
+  String renewedOn(String date) {
+    return 'Renewed on $date';
+  }
+
+  @override
+  String get renewedSuccessfully => 'Renewed';
+
+  @override
+  String get errorRenewDate => 'Choose a date after the current expiry';
+
+  @override
+  String get errorExpiryBeforeStart => 'Expiry can\'t be before the start date';
+
+  @override
+  String get errorInvalidAmount => 'Enter an amount like 250 or 99.50';
+
+  @override
+  String confirmDeleteCommitment(String name) {
+    return 'Delete “$name” and its renewal history?';
+  }
+
+  @override
+  String overdueBy(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Overdue by $count days',
+      one: 'Overdue by 1 day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get filterAllCommitments => 'All';
+
+  @override
+  String get sectionReminders => 'Important reminders';
+
+  @override
+  String get emptyReminders => 'Nothing due in the next 30 days.';
+
+  @override
+  String todaySummaryOverdue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count overdue',
+      one: '1 overdue',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsNotifications => 'Notifications';
+
+  @override
+  String get enableReminders => 'Reminders';
+
+  @override
+  String get enableRemindersHint =>
+      'Get notified before birthdays, events and renewals.';
+
+  @override
+  String get remindersPermissionDenied =>
+      'Notifications are blocked for Datei. Allow them in Android settings to get reminders.';
+
+  @override
+  String get defaultReminderTime => 'Reminder time for all-day items';
+
+  @override
+  String get birthdayReminders => 'Birthday reminders';
+
+  @override
+  String get reminderOff => 'Off';
+
+  @override
+  String get preciseReminders => 'Precise timing';
+
+  @override
+  String get preciseRemindersHint =>
+      'Reminders arrive on the exact minute. Without it, Android may delay them a little to save battery.';
+
+  @override
+  String get testNotification => 'Send a test notification';
+
+  @override
+  String get testNotificationBody => 'Notifications are working.';
+
+  @override
+  String get remindersOffBanner =>
+      'Reminders are off, so you won\'t be notified before due dates.';
+
+  @override
+  String get turnOn => 'Turn on';
+
+  @override
+  String notifBirthdayTitle(String name) {
+    return '$name\'s birthday';
+  }
+
+  @override
+  String notifBirthdayTurning(String name, int age) {
+    return '$name turns $age';
+  }
+
+  @override
+  String notifCommitmentTitle(String name) {
+    return '$name is due';
+  }
+
+  @override
+  String notifWhen(String relative, String date) {
+    return '$relative · $date';
+  }
+
+  @override
+  String get fieldReminders => 'Reminders';
+
+  @override
+  String get reminderAtTime => 'At the time';
+
+  @override
+  String reminderMinutesBefore(int count) {
+    return '$count min before';
+  }
+
+  @override
+  String reminderHoursBefore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours before',
+      one: '1 hour before',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get commitmentsLabel => 'Renewals & commitments';
+
+  @override
+  String get addReminder => 'Add';
 }

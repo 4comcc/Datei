@@ -40,10 +40,12 @@ class AppShell extends StatelessWidget {
                 },
               ),
               ListTile(
-                enabled: false,
                 leading: const Icon(Icons.autorenew),
                 title: Text(l.addCommitment),
-                subtitle: Text(l.comingInFullVersion),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  context.push('/commitments/new');
+                },
               ),
               ListTile(
                 enabled: false,

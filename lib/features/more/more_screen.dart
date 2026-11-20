@@ -4,9 +4,10 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../shared/l10n_labels.dart';
 import '../../shared/widgets/common.dart';
+import '../reminders/notification_settings.dart';
 import '../settings/settings_controller.dart';
 
-const appVersion = '0.5.0';
+const appVersion = '0.6.0';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -69,6 +70,17 @@ class MoreScreen extends ConsumerWidget {
             selected: {settings.themeMode},
             onSelectionChanged: (s) => controller.setThemeMode(s.first),
           ),
+          Card(
+            child: ListTile(
+              key: const Key('open-commitments'),
+              leading: const Icon(Icons.autorenew),
+              title: Text(l.commitments),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/commitments'),
+            ),
+          ),
+          SectionHeader(l.settingsNotifications),
+          const NotificationSettingsCard(),
           SectionHeader(l.settingsCalendar),
           Card(
             child: Column(
@@ -148,7 +160,6 @@ class MoreScreen extends ConsumerWidget {
             child: Column(
               children: [
                 for (final (icon, title) in [
-                  (Icons.autorenew, l.moduleCommitments),
                   (Icons.auto_stories_outlined, l.moduleMemories),
                   (Icons.timeline, l.moduleTimeline),
                   (Icons.bar_chart, l.moduleReports),

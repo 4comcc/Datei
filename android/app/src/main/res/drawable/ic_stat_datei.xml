@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Status-bar icon: the Datei "D" with its point, single colour (system tints it). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M271,250 L491,250 A262,262 0 0 1 491,774 L271,774 Z M381,360 L491,360 A152,152 0 0 1 491,664 L381,664 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M500,450 A62,62 0 1 1 499.9,450 Z" />
+</vector>

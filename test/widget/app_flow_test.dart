@@ -67,6 +67,7 @@ void main() {
 
     await tester.pageBack();
     await settle(tester);
+    await tester.scrollUntilVisible(find.text("Sara Ahmed's birthday"), 200, scrollable: find.byType(Scrollable).first);
     expect(find.text("Sara Ahmed's birthday"), findsOneWidget);
     expect(find.text('In 5 days'), findsOneWidget);
   });
