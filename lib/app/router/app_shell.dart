@@ -48,10 +48,20 @@ class AppShell extends StatelessWidget {
                 },
               ),
               ListTile(
-                enabled: false,
                 leading: const Icon(Icons.auto_stories_outlined),
                 title: Text(l.addMemory),
-                subtitle: Text(l.comingInFullVersion),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  context.push('/memories/new');
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.flag_outlined),
+                title: Text(l.addMilestone),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  context.push('/milestones/new');
+                },
               ),
             ],
           ),

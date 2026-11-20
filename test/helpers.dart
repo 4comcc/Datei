@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:datei/app/bootstrap.dart';
 import 'package:datei/core/database/app_database.dart';
 import 'package:datei/core/database/database_providers.dart';
+import 'package:datei/core/services/attachment_store.dart';
 import 'package:datei/core/time_engine/local_date.dart';
 import 'package:datei/features/agenda/agenda.dart';
 import 'package:datei/features/reminders/reminder_sync.dart';
@@ -8,6 +11,7 @@ import 'package:datei/features/settings/settings_controller.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'fakes.dart';
@@ -26,6 +30,7 @@ Future<(ProviderContainer, AppDatabase)> createTestContainer({
   Map<String, Object> legacyPrefs = const {},
   Map<String, String> settings = const {},
   FakeNotificationGateway? notifications,
+  List<Override> extraOverrides = const [],
 }) async {
   SharedPreferences.setMockInitialValues(legacyPrefs);
   final prefs = await SharedPreferences.getInstance();
@@ -38,6 +43,8 @@ Future<(ProviderContainer, AppDatabase)> createTestContainer({
     initialSettingsProvider.overrideWithValue(merged),
     todayProvider.overrideWithValue(testToday),
     notificationGatewayProvider.overrideWithValue(notifications ?? FakeNotificationGateway()),
+    attachmentStoreProvider.overrideWithValue(LocalAttachmentStore(Directory.systemTemp.createTempSync('datei_test_').path)),
+    ...extraOverrides,
   ]);
   return (container, db);
 }

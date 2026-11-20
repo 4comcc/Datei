@@ -2419,6 +2419,420 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add'**
   String get addReminder;
+
+  /// No description provided for @memories.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories'**
+  String get memories;
+
+  /// No description provided for @memoriesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No memories yet'**
+  String get memoriesEmptyTitle;
+
+  /// No description provided for @memoriesEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Save moments with their date, people and photos — even ones from years ago.'**
+  String get memoriesEmptyBody;
+
+  /// No description provided for @editMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit memory'**
+  String get editMemory;
+
+  /// No description provided for @fieldMemoryText.
+  ///
+  /// In en, this message translates to:
+  /// **'What happened?'**
+  String get fieldMemoryText;
+
+  /// No description provided for @fieldTags.
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get fieldTags;
+
+  /// No description provided for @addTagHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a tag and press Enter'**
+  String get addTagHint;
+
+  /// No description provided for @fieldCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category (optional)'**
+  String get fieldCategory;
+
+  /// No description provided for @fieldLinkedEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked event (optional)'**
+  String get fieldLinkedEvent;
+
+  /// No description provided for @noneOption.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get noneOption;
+
+  /// No description provided for @photos.
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get photos;
+
+  /// No description provided for @addPhotos.
+  ///
+  /// In en, this message translates to:
+  /// **'Add photos'**
+  String get addPhotos;
+
+  /// No description provided for @removePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get removePhoto;
+
+  /// No description provided for @photoCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 photo} other{{count} photos}}'**
+  String photoCount(int count);
+
+  /// No description provided for @photosPickFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t add the photos. Try again.'**
+  String get photosPickFailed;
+
+  /// No description provided for @confirmDeleteMemory.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{title}” and its photos?'**
+  String confirmDeleteMemory(String title);
+
+  /// No description provided for @milestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Life milestones'**
+  String get milestones;
+
+  /// No description provided for @milestonesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No milestones yet'**
+  String get milestonesEmptyTitle;
+
+  /// No description provided for @milestonesEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Record turning points: graduations, first jobs, weddings, moving home, achievements.'**
+  String get milestonesEmptyBody;
+
+  /// No description provided for @addMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Add milestone'**
+  String get addMilestone;
+
+  /// No description provided for @editMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit milestone'**
+  String get editMilestone;
+
+  /// No description provided for @fieldMilestoneKind.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind'**
+  String get fieldMilestoneKind;
+
+  /// No description provided for @fieldPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person (optional)'**
+  String get fieldPerson;
+
+  /// No description provided for @fieldProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Project (optional)'**
+  String get fieldProject;
+
+  /// No description provided for @fieldDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get fieldDescription;
+
+  /// No description provided for @confirmDeleteMilestone.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the milestone “{title}”?'**
+  String confirmDeleteMilestone(String title);
+
+  /// No description provided for @milestoneFirstSchoolDay.
+  ///
+  /// In en, this message translates to:
+  /// **'First school day'**
+  String get milestoneFirstSchoolDay;
+
+  /// No description provided for @milestoneGraduation.
+  ///
+  /// In en, this message translates to:
+  /// **'Graduation'**
+  String get milestoneGraduation;
+
+  /// No description provided for @milestoneFirstJob.
+  ///
+  /// In en, this message translates to:
+  /// **'First job'**
+  String get milestoneFirstJob;
+
+  /// No description provided for @milestoneMarriage.
+  ///
+  /// In en, this message translates to:
+  /// **'Marriage'**
+  String get milestoneMarriage;
+
+  /// No description provided for @milestoneNewHome.
+  ///
+  /// In en, this message translates to:
+  /// **'New home'**
+  String get milestoneNewHome;
+
+  /// No description provided for @milestoneAchievement.
+  ///
+  /// In en, this message translates to:
+  /// **'Achievement'**
+  String get milestoneAchievement;
+
+  /// No description provided for @milestoneProjectStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Project start'**
+  String get milestoneProjectStart;
+
+  /// No description provided for @milestoneGoalReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Goal reached'**
+  String get milestoneGoalReached;
+
+  /// No description provided for @milestoneCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get milestoneCustom;
+
+  /// No description provided for @projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects & goals'**
+  String get projects;
+
+  /// No description provided for @projectsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No projects yet'**
+  String get projectsEmptyTitle;
+
+  /// No description provided for @projectsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep goals and projects with their dates, people and related events.'**
+  String get projectsEmptyBody;
+
+  /// No description provided for @addProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Add project'**
+  String get addProject;
+
+  /// No description provided for @editProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit project'**
+  String get editProject;
+
+  /// No description provided for @fieldDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date (optional)'**
+  String get fieldDueDate;
+
+  /// No description provided for @errorDueBeforeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'The due date can\'t be before the start'**
+  String get errorDueBeforeStart;
+
+  /// No description provided for @fieldParticipants.
+  ///
+  /// In en, this message translates to:
+  /// **'People involved'**
+  String get fieldParticipants;
+
+  /// No description provided for @fieldRelatedEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Related events'**
+  String get fieldRelatedEvents;
+
+  /// No description provided for @projectPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get projectPlanned;
+
+  /// No description provided for @projectActive.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get projectActive;
+
+  /// No description provided for @projectOnHold.
+  ///
+  /// In en, this message translates to:
+  /// **'On hold'**
+  String get projectOnHold;
+
+  /// No description provided for @projectDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get projectDone;
+
+  /// No description provided for @projectCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get projectCancelled;
+
+  /// No description provided for @projectOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Past due'**
+  String get projectOverdue;
+
+  /// No description provided for @confirmDeleteProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the project “{name}”?'**
+  String confirmDeleteProject(String name);
+
+  /// No description provided for @timeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get timeline;
+
+  /// No description provided for @timelineOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\'s timeline'**
+  String timelineOf(String name);
+
+  /// No description provided for @timelineEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing in this period yet.'**
+  String get timelineEmpty;
+
+  /// No description provided for @periodAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get periodAll;
+
+  /// No description provided for @periodPastYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Past year'**
+  String get periodPastYear;
+
+  /// No description provided for @periodThisYear.
+  ///
+  /// In en, this message translates to:
+  /// **'This year'**
+  String get periodThisYear;
+
+  /// No description provided for @periodUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get periodUpcoming;
+
+  /// No description provided for @groupEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get groupEvents;
+
+  /// No description provided for @groupBirthdays.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthdays'**
+  String get groupBirthdays;
+
+  /// No description provided for @groupMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories'**
+  String get groupMemories;
+
+  /// No description provided for @groupMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Milestones'**
+  String get groupMilestones;
+
+  /// No description provided for @groupProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Projects'**
+  String get groupProjects;
+
+  /// No description provided for @timelineBorn.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} was born'**
+  String timelineBorn(String name);
+
+  /// No description provided for @timelineProjectStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Started: {name}'**
+  String timelineProjectStarted(String name);
+
+  /// No description provided for @timelineProjectDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due: {name}'**
+  String timelineProjectDue(String name);
+
+  /// No description provided for @todayMarker.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayMarker;
+
+  /// No description provided for @viewTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'View timeline'**
+  String get viewTimeline;
+
+  /// No description provided for @sectionMemories.
+  ///
+  /// In en, this message translates to:
+  /// **'Memories'**
+  String get sectionMemories;
 }
 
 class _AppLocalizationsDelegate

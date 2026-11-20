@@ -121,5 +121,9 @@ ORDER BY COALESCE(NULLIF(p.display_name, ''), p.full_name) COLLATE NOCASE
         await (_db.delete(_db.personRelationships)
               ..where((t) => t.personId.equals(id) | t.relatedPersonId.equals(id)))
             .go();
+        await (_db.delete(_db.memoryPersonRelations)..where((t) => t.personId.equals(id))).go();
+        await (_db.delete(_db.projectPersonRelations)..where((t) => t.personId.equals(id))).go();
+        await (_db.update(_db.milestones)..where((t) => t.personId.equals(id)))
+            .write(MilestonesCompanion(personId: const Value(null), updatedAt: Value(now)));
       });
 }

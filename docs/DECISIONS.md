@@ -115,3 +115,11 @@ Format: ID · Status · Decision · Rationale · Alternatives. Status: Accepted 
 **ADR-055 · Accepted · Notification permission is requested in context** (turning on Reminders in settings or the "Turn on" banner shown on commitment/event screens while reminders are off). Denial keeps reminders off with an explanation; a "Send a test notification" button lets the owner verify on device.
 
 **ADR-050 update (2026-11-20):** Owner confirmed on their Android phone that enabling reminders, the test notification and scheduled reminders all work with v0.6.0.
+
+**ADR-056 · Accepted · Photos via `image_picker` 1.2.4 (system photo picker; no storage permissions), compressed by the picker (max 1920 px, quality 82) and copied into `<documents>/attachments/` with relative paths in `attachments` (schema v5).** Files of removed photos are deleted after the transaction commits; photos imported but abandoned in the form are deleted when the form closes; "Erase all data" deletes the folder. `fileFor` rejects `..` paths.
+
+**ADR-057 · Accepted · Schema v5: tags + entity_tag_relations (case-insensitive unique names, unused tags pruned), memories (+ people), milestones (person/project/event, SET NULL), projects (+ people, + events), attachments.** Soft-deleting a person or event unlinks memories, milestones and projects in the same transaction.
+
+**ADR-058 · Accepted · Timeline is a pure service, newest first with a "Today" marker.** One-off items are never cut; birthdays and yearly anniversaries are expanded within ±1 year; frequent series (daily/weekly/monthly) show only where they started and their next occurrence — the timeline is for life events, not schedules. Per-person timelines include birth (when the year is known), linked events, memories, milestones and projects.
+
+**ADR-059 · Accepted · Projects reuse `EventPriority`; status planned/active/onHold/done/cancelled; "past due" = open and due date before today.** Kept deliberately light (no tasks/subtasks), per PRD.

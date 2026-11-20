@@ -1447,4 +1447,240 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get addReminder => 'إضافة';
+
+  @override
+  String get memories => 'الذكريات';
+
+  @override
+  String get memoriesEmptyTitle => 'لا توجد ذكريات بعد';
+
+  @override
+  String get memoriesEmptyBody =>
+      'احفظ اللحظات بتاريخها وأشخاصها وصورها، حتى لو كانت قبل سنوات.';
+
+  @override
+  String get editMemory => 'تعديل الذكرى';
+
+  @override
+  String get fieldMemoryText => 'ماذا حدث؟';
+
+  @override
+  String get fieldTags => 'الوسوم';
+
+  @override
+  String get addTagHint => 'أضف وسمًا ثم اضغط إدخال';
+
+  @override
+  String get fieldCategory => 'التصنيف (اختياري)';
+
+  @override
+  String get fieldLinkedEvent => 'الحدث المرتبط (اختياري)';
+
+  @override
+  String get noneOption => 'لا شيء';
+
+  @override
+  String get photos => 'الصور';
+
+  @override
+  String get addPhotos => 'إضافة صور';
+
+  @override
+  String get removePhoto => 'إزالة الصورة';
+
+  @override
+  String photoCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count صورة',
+      many: '$count صورة',
+      few: '$count صور',
+      two: 'صورتان',
+      one: 'صورة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get photosPickFailed => 'تعذّرت إضافة الصور. أعد المحاولة.';
+
+  @override
+  String confirmDeleteMemory(String title) {
+    return 'هل تريد حذف «$title» وصورها؟';
+  }
+
+  @override
+  String get milestones => 'محطات الحياة';
+
+  @override
+  String get milestonesEmptyTitle => 'لا توجد محطات بعد';
+
+  @override
+  String get milestonesEmptyBody =>
+      'سجّل المحطات المهمة: التخرج، وأول وظيفة، والزواج، والانتقال إلى منزل جديد، والإنجازات.';
+
+  @override
+  String get addMilestone => 'إضافة محطة';
+
+  @override
+  String get editMilestone => 'تعديل المحطة';
+
+  @override
+  String get fieldMilestoneKind => 'النوع';
+
+  @override
+  String get fieldPerson => 'الشخص (اختياري)';
+
+  @override
+  String get fieldProject => 'المشروع (اختياري)';
+
+  @override
+  String get fieldDescription => 'الوصف (اختياري)';
+
+  @override
+  String confirmDeleteMilestone(String title) {
+    return 'هل تريد حذف المحطة «$title»؟';
+  }
+
+  @override
+  String get milestoneFirstSchoolDay => 'أول يوم دراسة';
+
+  @override
+  String get milestoneGraduation => 'التخرج';
+
+  @override
+  String get milestoneFirstJob => 'أول وظيفة';
+
+  @override
+  String get milestoneMarriage => 'الزواج';
+
+  @override
+  String get milestoneNewHome => 'منزل جديد';
+
+  @override
+  String get milestoneAchievement => 'إنجاز';
+
+  @override
+  String get milestoneProjectStart => 'بداية مشروع';
+
+  @override
+  String get milestoneGoalReached => 'تحقيق هدف';
+
+  @override
+  String get milestoneCustom => 'أخرى';
+
+  @override
+  String get projects => 'المشروعات والأهداف';
+
+  @override
+  String get projectsEmptyTitle => 'لا توجد مشروعات بعد';
+
+  @override
+  String get projectsEmptyBody =>
+      'احتفظ بأهدافك ومشروعاتك بتواريخها وأشخاصها وأحداثها.';
+
+  @override
+  String get addProject => 'إضافة مشروع';
+
+  @override
+  String get editProject => 'تعديل المشروع';
+
+  @override
+  String get fieldDueDate => 'الموعد النهائي (اختياري)';
+
+  @override
+  String get errorDueBeforeStart =>
+      'لا يمكن أن يكون الموعد النهائي قبل البداية';
+
+  @override
+  String get fieldParticipants => 'الأشخاص المشاركون';
+
+  @override
+  String get fieldRelatedEvents => 'الأحداث المرتبطة';
+
+  @override
+  String get projectPlanned => 'مخطط';
+
+  @override
+  String get projectActive => 'قيد التنفيذ';
+
+  @override
+  String get projectOnHold => 'متوقف مؤقتًا';
+
+  @override
+  String get projectDone => 'منجز';
+
+  @override
+  String get projectCancelled => 'ملغى';
+
+  @override
+  String get projectOverdue => 'تجاوز الموعد';
+
+  @override
+  String confirmDeleteProject(String name) {
+    return 'هل تريد حذف المشروع «$name»؟';
+  }
+
+  @override
+  String get timeline => 'الخط الزمني';
+
+  @override
+  String timelineOf(String name) {
+    return 'الخط الزمني لـ $name';
+  }
+
+  @override
+  String get timelineEmpty => 'لا يوجد شيء في هذه الفترة بعد.';
+
+  @override
+  String get periodAll => 'الكل';
+
+  @override
+  String get periodPastYear => 'السنة الماضية';
+
+  @override
+  String get periodThisYear => 'هذا العام';
+
+  @override
+  String get periodUpcoming => 'القادم';
+
+  @override
+  String get groupEvents => 'الأحداث';
+
+  @override
+  String get groupBirthdays => 'أعياد الميلاد';
+
+  @override
+  String get groupMemories => 'الذكريات';
+
+  @override
+  String get groupMilestones => 'المحطات';
+
+  @override
+  String get groupProjects => 'المشروعات';
+
+  @override
+  String timelineBorn(String name) {
+    return 'وُلد $name';
+  }
+
+  @override
+  String timelineProjectStarted(String name) {
+    return 'بداية: $name';
+  }
+
+  @override
+  String timelineProjectDue(String name) {
+    return 'موعد إنجاز: $name';
+  }
+
+  @override
+  String get todayMarker => 'اليوم';
+
+  @override
+  String get viewTimeline => 'عرض الخط الزمني';
+
+  @override
+  String get sectionMemories => 'الذكريات';
 }

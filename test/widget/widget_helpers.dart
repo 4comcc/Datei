@@ -2,6 +2,7 @@ import 'package:datei/app/app.dart';
 import 'package:datei/app/router/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -14,11 +15,12 @@ Future<ProviderContainer> pumpApp(
   Map<String, String> settings = const {},
   Future<void> Function(ProviderContainer c)? seed,
   FakeNotificationGateway? notifications,
+  List<Override> extraOverrides = const [],
 }) async {
   tester.view.physicalSize = const Size(1080, 2340);
   tester.view.devicePixelRatio = 2.75;
   addTearDown(tester.view.reset);
-  final (container, db) = await tester.runAsync(() => createTestContainer(settings: settings, notifications: notifications)) ??
+  final (container, db) = await tester.runAsync(() => createTestContainer(settings: settings, notifications: notifications, extraOverrides: extraOverrides)) ??
       (throw StateError('setup failed'));
   if (seed != null) await tester.runAsync(() => seed(container));
   addTearDown(() async {

@@ -756,5 +756,130 @@
     }
   },
   "commitmentsLabel": "Renewals & commitments",
-  "addReminder": "Add"
+  "addReminder": "Add",
+  "memories": "Memories",
+  "memoriesEmptyTitle": "No memories yet",
+  "memoriesEmptyBody": "Save moments with their date, people and photos — even ones from years ago.",
+  "editMemory": "Edit memory",
+  "fieldMemoryText": "What happened?",
+  "fieldTags": "Tags",
+  "addTagHint": "Add a tag and press Enter",
+  "fieldCategory": "Category (optional)",
+  "fieldLinkedEvent": "Linked event (optional)",
+  "noneOption": "None",
+  "photos": "Photos",
+  "addPhotos": "Add photos",
+  "removePhoto": "Remove photo",
+  "photoCount": "{count, plural, =1{1 photo} other{{count} photos}}",
+  "@photoCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photosPickFailed": "Couldn't add the photos. Try again.",
+  "confirmDeleteMemory": "Delete “{title}” and its photos?",
+  "@confirmDeleteMemory": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "milestones": "Life milestones",
+  "milestonesEmptyTitle": "No milestones yet",
+  "milestonesEmptyBody": "Record turning points: graduations, first jobs, weddings, moving home, achievements.",
+  "addMilestone": "Add milestone",
+  "editMilestone": "Edit milestone",
+  "fieldMilestoneKind": "Kind",
+  "fieldPerson": "Person (optional)",
+  "fieldProject": "Project (optional)",
+  "fieldDescription": "Description (optional)",
+  "confirmDeleteMilestone": "Delete the milestone “{title}”?",
+  "@confirmDeleteMilestone": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "milestoneFirstSchoolDay": "First school day",
+  "milestoneGraduation": "Graduation",
+  "milestoneFirstJob": "First job",
+  "milestoneMarriage": "Marriage",
+  "milestoneNewHome": "New home",
+  "milestoneAchievement": "Achievement",
+  "milestoneProjectStart": "Project start",
+  "milestoneGoalReached": "Goal reached",
+  "milestoneCustom": "Other",
+  "projects": "Projects & goals",
+  "projectsEmptyTitle": "No projects yet",
+  "projectsEmptyBody": "Keep goals and projects with their dates, people and related events.",
+  "addProject": "Add project",
+  "editProject": "Edit project",
+  "fieldDueDate": "Due date (optional)",
+  "errorDueBeforeStart": "The due date can't be before the start",
+  "fieldParticipants": "People involved",
+  "fieldRelatedEvents": "Related events",
+  "projectPlanned": "Planned",
+  "projectActive": "In progress",
+  "projectOnHold": "On hold",
+  "projectDone": "Done",
+  "projectCancelled": "Cancelled",
+  "projectOverdue": "Past due",
+  "confirmDeleteProject": "Delete the project “{name}”?",
+  "@confirmDeleteProject": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "timeline": "Timeline",
+  "timelineOf": "{name}'s timeline",
+  "@timelineOf": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "timelineEmpty": "Nothing in this period yet.",
+  "periodAll": "All",
+  "periodPastYear": "Past year",
+  "periodThisYear": "This year",
+  "periodUpcoming": "Upcoming",
+  "groupEvents": "Events",
+  "groupBirthdays": "Birthdays",
+  "groupMemories": "Memories",
+  "groupMilestones": "Milestones",
+  "groupProjects": "Projects",
+  "timelineBorn": "{name} was born",
+  "@timelineBorn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "timelineProjectStarted": "Started: {name}",
+  "@timelineProjectStarted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "timelineProjectDue": "Due: {name}",
+  "@timelineProjectDue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "todayMarker": "Today",
+  "viewTimeline": "View timeline",
+  "sectionMemories": "Memories"
 }

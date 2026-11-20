@@ -29,6 +29,15 @@ part 'app_database.g.dart';
   Commitments,
   CommitmentRenewals,
   Reminders,
+  Tags,
+  EntityTagRelations,
+  Memories,
+  MemoryPersonRelations,
+  Projects,
+  ProjectPersonRelations,
+  ProjectEventRelations,
+  Milestones,
+  Attachments,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
@@ -37,7 +46,7 @@ class AppDatabase extends _$AppDatabase {
   factory AppDatabase.open() => AppDatabase(driftDatabase(name: 'datei'));
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -65,6 +74,30 @@ class AppDatabase extends _$AppDatabase {
             await m.createIndex(schema.idxRenewalsCommitment);
             await m.createTable(schema.reminders);
             await m.createIndex(schema.idxRemindersOwner);
+          },
+          from4To5: (m, schema) async {
+            for (final t in [
+              schema.tags,
+              schema.entityTagRelations,
+              schema.memories,
+              schema.memoryPersonRelations,
+              schema.projects,
+              schema.projectPersonRelations,
+              schema.projectEventRelations,
+              schema.milestones,
+              schema.attachments,
+            ]) {
+              await m.createTable(t);
+            }
+            for (final i in [
+              schema.idxEntityTagsEntity,
+              schema.idxMemoriesDate,
+              schema.idxMprPerson,
+              schema.idxMilestonesDate,
+              schema.idxAttachmentsOwner,
+            ]) {
+              await m.createIndex(i);
+            }
           },
         ),
         beforeOpen: (details) async {

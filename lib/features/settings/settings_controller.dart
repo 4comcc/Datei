@@ -94,7 +94,9 @@ final settingsRepositoryProvider =
     Provider<SettingsRepository>((ref) => DriftSettingsRepository(ref.watch(appDatabaseProvider)));
 
 final dataMaintenanceRepositoryProvider =
-    Provider<DataMaintenanceRepository>((ref) => DriftDataMaintenanceRepository(ref.watch(appDatabaseProvider)));
+    Provider<DataMaintenanceRepository>(
+  (ref) => DriftDataMaintenanceRepository(ref.watch(appDatabaseProvider), ref.watch(attachmentStoreProvider)),
+);
 
 /// Settings loaded before `runApp` so the router can decide the first screen synchronously.
 final initialSettingsProvider = Provider<Map<String, String>>(

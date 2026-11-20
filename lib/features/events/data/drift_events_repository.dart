@@ -182,7 +182,9 @@ ORDER BY e.start_date, e.start_time
   }
 
   @override
-  Future<void> delete(String id) async {
+  Future<void> delete(String id) => _db.transaction(() => _delete(id));
+
+  Future<void> _delete(String id) async {
     final now = nowUtcMs();
     await (_db.update(_db.events)..where((t) => t.id.equals(id))).write(
       EventsCompanion.custom(
@@ -192,6 +194,11 @@ ORDER BY e.start_date, e.start_time
       ),
     );
     await (_db.delete(_db.reminders)..where((t) => t.ownerType.equals('event') & t.ownerId.equals(id))).go();
+    await (_db.update(_db.memories)..where((t) => t.eventId.equals(id)))
+        .write(MemoriesCompanion(eventId: const Value(null), updatedAt: Value(now)));
+    await (_db.update(_db.milestones)..where((t) => t.eventId.equals(id)))
+        .write(MilestonesCompanion(eventId: const Value(null), updatedAt: Value(now)));
+    await (_db.delete(_db.projectEventRelations)..where((t) => t.eventId.equals(id))).go();
   }
 
   Future<void> _putException(String eventId, LocalDate original, String kind, String? json) async {
@@ -227,7 +234,7 @@ ORDER BY e.start_date, e.start_time
         const editing = SeriesEditing();
         final split = editing.split(original.date, original.recurrence!, at);
         if (split.before == null) {
-          await delete(eventId);
+          await _delete(eventId);
         } else {
           await _save(original.copyWith(recurrence: () => split.before));
           await (_db.delete(_db.eventExceptions)

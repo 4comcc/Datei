@@ -2338,10 +2338,996 @@ i1.GeneratedColumn<int> _column_88(String aliasedName) =>
       type: i1.DriftSqlType.int,
       $customConstraints: 'NOT NULL',
     );
+
+final class Schema5 extends i0.VersionedSchema {
+  Schema5({required super.database}) : super(version: 5);
+  @override
+  late final List<i1.DatabaseSchemaEntity> entities = [
+    localUserProfiles,
+    accountMetadata,
+    appSettings,
+    persons,
+    personCategories,
+    personCategoryRelations,
+    eventTypes,
+    recurrenceRules,
+    events,
+    eventPersonRelations,
+    personRelationships,
+    customFieldDefinitions,
+    customFieldValues,
+    savedFilters,
+    eventExceptions,
+    commitmentTypes,
+    commitments,
+    commitmentRenewals,
+    reminders,
+    tags,
+    entityTagRelations,
+    memories,
+    memoryPersonRelations,
+    projects,
+    projectPersonRelations,
+    projectEventRelations,
+    milestones,
+    attachments,
+    idxPersonsFullName,
+    idxPersonsBirthDate,
+    idxPersonsDeletedAt,
+    idxPcrCategory,
+    idxEventsStartDate,
+    idxEventsType,
+    idxEventsDeletedAt,
+    idxEprPerson,
+    idxRelPerson,
+    idxRelRelated,
+    idxEventExceptionsEvent,
+    idxCommitmentsExpiry,
+    idxCommitmentsDeletedAt,
+    idxRenewalsCommitment,
+    idxRemindersOwner,
+    idxEntityTagsEntity,
+    idxMemoriesDate,
+    idxMprPerson,
+    idxMilestonesDate,
+    idxAttachmentsOwner,
+  ];
+  late final Shape0 localUserProfiles = Shape0(
+    source: i0.VersionedTable(
+      entityName: 'local_user_profiles',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [_column_0, _column_1, _column_2, _column_3, _column_4],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape1 accountMetadata = Shape1(
+    source: i0.VersionedTable(
+      entityName: 'account_metadata',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_5,
+        _column_6,
+        _column_7,
+        _column_8,
+        _column_3,
+        _column_9,
+        _column_10,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape2 appSettings = Shape2(
+    source: i0.VersionedTable(
+      entityName: 'app_settings',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY("key")'],
+      columns: [_column_11, _column_12, _column_1],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape3 persons = Shape3(
+    source: i0.VersionedTable(
+      entityName: 'persons',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_13,
+        _column_14,
+        _column_2,
+        _column_15,
+        _column_16,
+        _column_3,
+        _column_17,
+        _column_18,
+        _column_19,
+        _column_20,
+        _column_8,
+        _column_21,
+        _column_22,
+        _column_23,
+        _column_24,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape4 personCategories = Shape4(
+    source: i0.VersionedTable(
+      entityName: 'person_categories',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_25,
+        _column_26,
+        _column_27,
+        _column_28,
+        _column_29,
+        _column_30,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape5 personCategoryRelations = Shape5(
+    source: i0.VersionedTable(
+      entityName: 'person_category_relations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(person_id, category_id)'],
+      columns: [_column_31, _column_32],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape4 eventTypes = Shape4(
+    source: i0.VersionedTable(
+      entityName: 'event_types',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_25,
+        _column_26,
+        _column_28,
+        _column_27,
+        _column_29,
+        _column_30,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape6 recurrenceRules = Shape6(
+    source: i0.VersionedTable(
+      entityName: 'recurrence_rules',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(interval >= 1)',
+        'CHECK(NOT(until_date IS NOT NULL AND count IS NOT NULL))',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_33,
+        _column_34,
+        _column_35,
+        _column_36,
+        _column_37,
+        _column_38,
+        _column_39,
+        _column_40,
+        _column_41,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape7 events = Shape7(
+    source: i0.VersionedTable(
+      entityName: 'events',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(end_date IS NULL OR end_date >= start_date)',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_13,
+        _column_14,
+        _column_2,
+        _column_15,
+        _column_42,
+        _column_43,
+        _column_44,
+        _column_45,
+        _column_46,
+        _column_47,
+        _column_48,
+        _column_49,
+        _column_50,
+        _column_51,
+        _column_52,
+        _column_27,
+        _column_53,
+        _column_54,
+        _column_24,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape8 eventPersonRelations = Shape8(
+    source: i0.VersionedTable(
+      entityName: 'event_person_relations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(event_id, person_id)'],
+      columns: [_column_55, _column_31, _column_56],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape9 personRelationships = Shape9(
+    source: i0.VersionedTable(
+      entityName: 'person_relationships',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(related_person_id IS NULL OR related_person_id <> person_id)',
+        'CHECK(relation_type <> \'custom\' OR(custom_label IS NOT NULL AND length(trim(custom_label)) > 0))',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_31,
+        _column_57,
+        _column_58,
+        _column_59,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape10 customFieldDefinitions = Shape10(
+    source: i0.VersionedTable(
+      entityName: 'custom_field_definitions',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_60,
+        _column_61,
+        _column_62,
+        _column_29,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape11 customFieldValues = Shape11(
+    source: i0.VersionedTable(
+      entityName: 'custom_field_values',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(definition_id, entity_id)'],
+      columns: [_column_63, _column_64, _column_12],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape12 savedFilters = Shape12(
+    source: i0.VersionedTable(
+      entityName: 'saved_filters',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_65,
+        _column_66,
+        _column_67,
+        _column_29,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape13 eventExceptions = Shape13(
+    source: i0.VersionedTable(
+      entityName: 'event_exceptions',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)', 'UNIQUE(event_id, original_date)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_55,
+        _column_68,
+        _column_69,
+        _column_70,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape14 commitmentTypes = Shape14(
+    source: i0.VersionedTable(
+      entityName: 'commitment_types',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_25,
+        _column_26,
+        _column_27,
+        _column_29,
+        _column_30,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape15 commitments = Shape15(
+    source: i0.VersionedTable(
+      entityName: 'commitments',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(renewal_months IS NULL OR renewal_months >= 1)',
+        'CHECK(amount_minor IS NULL OR amount_minor >= 0)',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_13,
+        _column_14,
+        _column_2,
+        _column_15,
+        _column_66,
+        _column_71,
+        _column_72,
+        _column_73,
+        _column_74,
+        _column_75,
+        _column_76,
+        _column_77,
+        _column_78,
+        _column_79,
+        _column_80,
+        _column_24,
+        _column_81,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape16 commitmentRenewals = Shape16(
+    source: i0.VersionedTable(
+      entityName: 'commitment_renewals',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_2,
+        _column_82,
+        _column_83,
+        _column_84,
+        _column_85,
+        _column_76,
+        _column_77,
+        _column_24,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape17 reminders = Shape17(
+    source: i0.VersionedTable(
+      entityName: 'reminders',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'UNIQUE(owner_type, owner_id, offset_minutes)',
+        'CHECK(offset_minutes >= 0)',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_2,
+        _column_86,
+        _column_87,
+        _column_88,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape18 tags = Shape18(
+    source: i0.VersionedTable(
+      entityName: 'tags',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [_column_0, _column_1, _column_2, _column_89, _column_27],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape19 entityTagRelations = Shape19(
+    source: i0.VersionedTable(
+      entityName: 'entity_tag_relations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(tag_id, entity_type, entity_id)'],
+      columns: [_column_90, _column_91, _column_64],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape20 memories = Shape20(
+    source: i0.VersionedTable(
+      entityName: 'memories',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_13,
+        _column_14,
+        _column_2,
+        _column_15,
+        _column_42,
+        _column_92,
+        _column_93,
+        _column_94,
+        _column_95,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape21 memoryPersonRelations = Shape21(
+    source: i0.VersionedTable(
+      entityName: 'memory_person_relations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(memory_id, person_id)'],
+      columns: [_column_96, _column_31],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape22 projects = Shape22(
+    source: i0.VersionedTable(
+      entityName: 'projects',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: [
+        'PRIMARY KEY(id)',
+        'CHECK(due_date IS NULL OR start_date IS NULL OR due_date >= start_date)',
+      ],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_13,
+        _column_14,
+        _column_2,
+        _column_15,
+        _column_66,
+        _column_43,
+        _column_73,
+        _column_97,
+        _column_53,
+        _column_52,
+        _column_24,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape23 projectPersonRelations = Shape23(
+    source: i0.VersionedTable(
+      entityName: 'project_person_relations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(project_id, person_id)'],
+      columns: [_column_98, _column_31],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape24 projectEventRelations = Shape24(
+    source: i0.VersionedTable(
+      entityName: 'project_event_relations',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(project_id, event_id)'],
+      columns: [_column_98, _column_55],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape25 milestones = Shape25(
+    source: i0.VersionedTable(
+      entityName: 'milestones',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_0,
+        _column_1,
+        _column_13,
+        _column_14,
+        _column_2,
+        _column_15,
+        _column_42,
+        _column_43,
+        _column_99,
+        _column_100,
+        _column_101,
+        _column_102,
+        _column_94,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  late final Shape26 attachments = Shape26(
+    source: i0.VersionedTable(
+      entityName: 'attachments',
+      withoutRowId: false,
+      isStrict: false,
+      tableConstraints: ['PRIMARY KEY(id)'],
+      columns: [
+        _column_2,
+        _column_86,
+        _column_87,
+        _column_103,
+        _column_104,
+        _column_105,
+        _column_106,
+        _column_29,
+        _column_0,
+      ],
+      attachedDatabase: database,
+    ),
+    alias: null,
+  );
+  final i1.Index idxPersonsFullName = i1.Index(
+    'idx_persons_full_name',
+    'CREATE INDEX idx_persons_full_name ON persons (full_name)',
+  );
+  final i1.Index idxPersonsBirthDate = i1.Index(
+    'idx_persons_birth_date',
+    'CREATE INDEX idx_persons_birth_date ON persons (birth_date)',
+  );
+  final i1.Index idxPersonsDeletedAt = i1.Index(
+    'idx_persons_deleted_at',
+    'CREATE INDEX idx_persons_deleted_at ON persons (deleted_at)',
+  );
+  final i1.Index idxPcrCategory = i1.Index(
+    'idx_pcr_category',
+    'CREATE INDEX idx_pcr_category ON person_category_relations (category_id)',
+  );
+  final i1.Index idxEventsStartDate = i1.Index(
+    'idx_events_start_date',
+    'CREATE INDEX idx_events_start_date ON events (start_date)',
+  );
+  final i1.Index idxEventsType = i1.Index(
+    'idx_events_type',
+    'CREATE INDEX idx_events_type ON events (event_type_id)',
+  );
+  final i1.Index idxEventsDeletedAt = i1.Index(
+    'idx_events_deleted_at',
+    'CREATE INDEX idx_events_deleted_at ON events (deleted_at)',
+  );
+  final i1.Index idxEprPerson = i1.Index(
+    'idx_epr_person',
+    'CREATE INDEX idx_epr_person ON event_person_relations (person_id)',
+  );
+  final i1.Index idxRelPerson = i1.Index(
+    'idx_rel_person',
+    'CREATE INDEX idx_rel_person ON person_relationships (person_id)',
+  );
+  final i1.Index idxRelRelated = i1.Index(
+    'idx_rel_related',
+    'CREATE INDEX idx_rel_related ON person_relationships (related_person_id)',
+  );
+  final i1.Index idxEventExceptionsEvent = i1.Index(
+    'idx_event_exceptions_event',
+    'CREATE INDEX idx_event_exceptions_event ON event_exceptions (event_id)',
+  );
+  final i1.Index idxCommitmentsExpiry = i1.Index(
+    'idx_commitments_expiry',
+    'CREATE INDEX idx_commitments_expiry ON commitments (expiry_date)',
+  );
+  final i1.Index idxCommitmentsDeletedAt = i1.Index(
+    'idx_commitments_deleted_at',
+    'CREATE INDEX idx_commitments_deleted_at ON commitments (deleted_at)',
+  );
+  final i1.Index idxRenewalsCommitment = i1.Index(
+    'idx_renewals_commitment',
+    'CREATE INDEX idx_renewals_commitment ON commitment_renewals (commitment_id)',
+  );
+  final i1.Index idxRemindersOwner = i1.Index(
+    'idx_reminders_owner',
+    'CREATE INDEX idx_reminders_owner ON reminders (owner_type, owner_id)',
+  );
+  final i1.Index idxEntityTagsEntity = i1.Index(
+    'idx_entity_tags_entity',
+    'CREATE INDEX idx_entity_tags_entity ON entity_tag_relations (entity_type, entity_id)',
+  );
+  final i1.Index idxMemoriesDate = i1.Index(
+    'idx_memories_date',
+    'CREATE INDEX idx_memories_date ON memories (memory_date)',
+  );
+  final i1.Index idxMprPerson = i1.Index(
+    'idx_mpr_person',
+    'CREATE INDEX idx_mpr_person ON memory_person_relations (person_id)',
+  );
+  final i1.Index idxMilestonesDate = i1.Index(
+    'idx_milestones_date',
+    'CREATE INDEX idx_milestones_date ON milestones (milestone_date)',
+  );
+  final i1.Index idxAttachmentsOwner = i1.Index(
+    'idx_attachments_owner',
+    'CREATE INDEX idx_attachments_owner ON attachments (owner_type, owner_id)',
+  );
+}
+
+class Shape18 extends i0.VersionedTable {
+  Shape18({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get name =>
+      columnsByName['name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get color =>
+      columnsByName['color']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<String> _column_89(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'name',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL UNIQUE',
+    );
+
+class Shape19 extends i0.VersionedTable {
+  Shape19({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get tagId =>
+      columnsByName['tag_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get entityType =>
+      columnsByName['entity_type']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get entityId =>
+      columnsByName['entity_id']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_90(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'tag_id',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL REFERENCES tags(id)ON DELETE CASCADE',
+    );
+i1.GeneratedColumn<String> _column_91(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'entity_type',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+
+class Shape20 extends i0.VersionedTable {
+  Shape20({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get deletedAt =>
+      columnsByName['deleted_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get rowVersion =>
+      columnsByName['row_version']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownerProfileId =>
+      columnsByName['owner_profile_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get title =>
+      columnsByName['title']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get body =>
+      columnsByName['body']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get memoryDate =>
+      columnsByName['memory_date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get eventId =>
+      columnsByName['event_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get category =>
+      columnsByName['category']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_92(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'body',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL',
+    );
+i1.GeneratedColumn<String> _column_93(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'memory_date',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<String> _column_94(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'event_id',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL REFERENCES events(id)ON DELETE SET NULL',
+    );
+i1.GeneratedColumn<String> _column_95(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'category',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL',
+    );
+
+class Shape21 extends i0.VersionedTable {
+  Shape21({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get memoryId =>
+      columnsByName['memory_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get personId =>
+      columnsByName['person_id']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_96(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'memory_id',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL REFERENCES memories(id)ON DELETE CASCADE',
+    );
+
+class Shape22 extends i0.VersionedTable {
+  Shape22({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get deletedAt =>
+      columnsByName['deleted_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get rowVersion =>
+      columnsByName['row_version']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownerProfileId =>
+      columnsByName['owner_profile_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get name =>
+      columnsByName['name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get description =>
+      columnsByName['description']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get startDate =>
+      columnsByName['start_date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get dueDate =>
+      columnsByName['due_date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get status =>
+      columnsByName['status']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get priority =>
+      columnsByName['priority']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get notes =>
+      columnsByName['notes']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_97(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'due_date',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL',
+    );
+
+class Shape23 extends i0.VersionedTable {
+  Shape23({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get projectId =>
+      columnsByName['project_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get personId =>
+      columnsByName['person_id']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_98(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'project_id',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL REFERENCES projects(id)ON DELETE CASCADE',
+    );
+
+class Shape24 extends i0.VersionedTable {
+  Shape24({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get projectId =>
+      columnsByName['project_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get eventId =>
+      columnsByName['event_id']! as i1.GeneratedColumn<String>;
+}
+
+class Shape25 extends i0.VersionedTable {
+  Shape25({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<int> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get updatedAt =>
+      columnsByName['updated_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get deletedAt =>
+      columnsByName['deleted_at']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get rowVersion =>
+      columnsByName['row_version']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownerProfileId =>
+      columnsByName['owner_profile_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get title =>
+      columnsByName['title']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get description =>
+      columnsByName['description']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get milestoneDate =>
+      columnsByName['milestone_date']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get kind =>
+      columnsByName['kind']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get personId =>
+      columnsByName['person_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get projectId =>
+      columnsByName['project_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get eventId =>
+      columnsByName['event_id']! as i1.GeneratedColumn<String>;
+}
+
+i1.GeneratedColumn<String> _column_99(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'milestone_date',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<String> _column_100(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'kind',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL DEFAULT \'custom\'',
+      defaultValue: const i1.CustomExpression('\'custom\''),
+    );
+i1.GeneratedColumn<String> _column_101(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'person_id',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL REFERENCES persons(id)ON DELETE SET NULL',
+    );
+i1.GeneratedColumn<String> _column_102(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'project_id',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL REFERENCES projects(id)ON DELETE SET NULL',
+    );
+
+class Shape26 extends i0.VersionedTable {
+  Shape26({required super.source, required super.alias}) : super.aliased();
+  i1.GeneratedColumn<String> get id =>
+      columnsByName['id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownerType =>
+      columnsByName['owner_type']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get ownerId =>
+      columnsByName['owner_id']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get relativePath =>
+      columnsByName['relative_path']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<String> get mimeType =>
+      columnsByName['mime_type']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get sizeBytes =>
+      columnsByName['size_bytes']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<String> get originalName =>
+      columnsByName['original_name']! as i1.GeneratedColumn<String>;
+  i1.GeneratedColumn<int> get sortOrder =>
+      columnsByName['sort_order']! as i1.GeneratedColumn<int>;
+  i1.GeneratedColumn<int> get createdAt =>
+      columnsByName['created_at']! as i1.GeneratedColumn<int>;
+}
+
+i1.GeneratedColumn<String> _column_103(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'relative_path',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<String> _column_104(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'mime_type',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<int> _column_105(String aliasedName) =>
+    i1.GeneratedColumn<int>(
+      'size_bytes',
+      aliasedName,
+      false,
+      type: i1.DriftSqlType.int,
+      $customConstraints: 'NOT NULL',
+    );
+i1.GeneratedColumn<String> _column_106(String aliasedName) =>
+    i1.GeneratedColumn<String>(
+      'original_name',
+      aliasedName,
+      true,
+      type: i1.DriftSqlType.string,
+      $customConstraints: 'NULL',
+    );
 i0.MigrationStepWithVersion migrationSteps({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) {
   return (currentVersion, database) async {
     switch (currentVersion) {
@@ -2360,6 +3346,11 @@ i0.MigrationStepWithVersion migrationSteps({
         final migrator = i1.Migrator(database, schema);
         await from3To4(migrator, schema);
         return 4;
+      case 4:
+        final schema = Schema5(database: database);
+        final migrator = i1.Migrator(database, schema);
+        await from4To5(migrator, schema);
+        return 5;
       default:
         throw ArgumentError.value('Unknown migration from $currentVersion');
     }
@@ -2370,10 +3361,12 @@ i1.OnUpgrade stepByStep({
   required Future<void> Function(i1.Migrator m, Schema2 schema) from1To2,
   required Future<void> Function(i1.Migrator m, Schema3 schema) from2To3,
   required Future<void> Function(i1.Migrator m, Schema4 schema) from3To4,
+  required Future<void> Function(i1.Migrator m, Schema5 schema) from4To5,
 }) => i0.VersionedSchema.stepByStepHelper(
   step: migrationSteps(
     from1To2: from1To2,
     from2To3: from2To3,
     from3To4: from3To4,
+    from4To5: from4To5,
   ),
 );

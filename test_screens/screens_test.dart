@@ -9,6 +9,10 @@ import 'package:datei/core/time_engine/local_date.dart';
 import 'package:datei/features/commitments/domain/commitment.dart';
 import 'package:datei/features/commitments/presentation/commitments_providers.dart';
 import 'package:datei/features/events/domain/event.dart';
+import 'package:datei/features/memories/domain/memory.dart';
+import 'package:datei/features/memories/presentation/memories_providers.dart';
+import 'package:datei/features/milestones/domain/milestone.dart';
+import 'package:datei/features/projects/domain/project.dart';
 import 'package:datei/features/events/presentation/events_providers.dart';
 import 'package:datei/features/people/domain/custom_field.dart';
 import 'package:datei/features/people/domain/person.dart';
@@ -101,6 +105,22 @@ Future<void> shoot(WidgetTester tester, String lang, String route, String name,
           reminderDays: const [30, 7], createdAt: DateTime(2026),
         ));
     await container.read(commitmentsRepositoryProvider).renew('c3', newExpiry: LocalDate.parse('2028-03-01'), amountMinor: 900000);
+    await container.read(memoriesRepositoryProvider).save(Memory(
+          id: 'm1', title: 'رحلة الأقصر مع العائلة', date: LocalDate.parse('2023-02-14'),
+          body: 'زرنا معبد الكرنك ووادي الملوك، وكان الجو جميلًا.', personIds: const ['p1'], tags: const ['سفر', 'عائلة'],
+          createdAt: DateTime(2026),
+        ));
+    await container.read(memoriesRepositoryProvider).save(Memory(
+          id: 'm2', title: 'أول يوم في العمل الجديد', date: LocalDate.parse('2024-09-01'), tags: const ['عمل'], createdAt: DateTime(2026),
+        ));
+    await container.read(projectsRepositoryProvider).save(Project(
+          id: 'pr1', name: 'تأليف كتاب عن تاريخ العائلة', startDate: LocalDate.parse('2026-01-10'),
+          dueDate: LocalDate.parse('2027-03-01'), status: ProjectStatus.active, personIds: const ['p1'], createdAt: DateTime(2026),
+        ));
+    await container.read(milestonesRepositoryProvider).save(Milestone(
+          id: 'ms1', title: 'تخرّج سارة من الجامعة', date: LocalDate.parse('2018-06-30'), kind: MilestoneKind.graduation,
+          personId: 'p1', createdAt: DateTime(2026),
+        ));
     await container.read(eventsRepositoryProvider).save(DateiEvent(
           id: 'trip',
           title: 'مؤتمر دبي',
@@ -153,5 +173,10 @@ void main() {
   testWidgets('ar commitments', (t) => shoot(t, 'ar', '/commitments', 'ar_14_commitments'));
   testWidgets('ar commitment', (t) => shoot(t, 'ar', '/commitments/c3', 'ar_15_commitment'));
   testWidgets('ar commitment form', (t) => shoot(t, 'ar', '/commitments/c1/edit', 'ar_16_commitment_form'));
+  testWidgets('ar timeline', (t) => shoot(t, 'ar', '/timeline', 'ar_17_timeline'));
+  testWidgets('ar memories', (t) => shoot(t, 'ar', '/memories', 'ar_18_memories'));
+  testWidgets('ar memory', (t) => shoot(t, 'ar', '/memories/m1', 'ar_19_memory'));
+  testWidgets('ar projects', (t) => shoot(t, 'ar', '/projects/pr1', 'ar_20_project'));
+  testWidgets('ar person timeline', (t) => shoot(t, 'ar', '/people/p1/timeline', 'ar_21_person_timeline'));
   testWidgets('ar home dark', (t) => shoot(t, 'ar', '/home', 'ar_6_home_dark', dark: true));
 }

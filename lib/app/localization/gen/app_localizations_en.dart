@@ -1397,4 +1397,236 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addReminder => 'Add';
+
+  @override
+  String get memories => 'Memories';
+
+  @override
+  String get memoriesEmptyTitle => 'No memories yet';
+
+  @override
+  String get memoriesEmptyBody =>
+      'Save moments with their date, people and photos — even ones from years ago.';
+
+  @override
+  String get editMemory => 'Edit memory';
+
+  @override
+  String get fieldMemoryText => 'What happened?';
+
+  @override
+  String get fieldTags => 'Tags';
+
+  @override
+  String get addTagHint => 'Add a tag and press Enter';
+
+  @override
+  String get fieldCategory => 'Category (optional)';
+
+  @override
+  String get fieldLinkedEvent => 'Linked event (optional)';
+
+  @override
+  String get noneOption => 'None';
+
+  @override
+  String get photos => 'Photos';
+
+  @override
+  String get addPhotos => 'Add photos';
+
+  @override
+  String get removePhoto => 'Remove photo';
+
+  @override
+  String photoCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count photos',
+      one: '1 photo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get photosPickFailed => 'Couldn\'t add the photos. Try again.';
+
+  @override
+  String confirmDeleteMemory(String title) {
+    return 'Delete “$title” and its photos?';
+  }
+
+  @override
+  String get milestones => 'Life milestones';
+
+  @override
+  String get milestonesEmptyTitle => 'No milestones yet';
+
+  @override
+  String get milestonesEmptyBody =>
+      'Record turning points: graduations, first jobs, weddings, moving home, achievements.';
+
+  @override
+  String get addMilestone => 'Add milestone';
+
+  @override
+  String get editMilestone => 'Edit milestone';
+
+  @override
+  String get fieldMilestoneKind => 'Kind';
+
+  @override
+  String get fieldPerson => 'Person (optional)';
+
+  @override
+  String get fieldProject => 'Project (optional)';
+
+  @override
+  String get fieldDescription => 'Description (optional)';
+
+  @override
+  String confirmDeleteMilestone(String title) {
+    return 'Delete the milestone “$title”?';
+  }
+
+  @override
+  String get milestoneFirstSchoolDay => 'First school day';
+
+  @override
+  String get milestoneGraduation => 'Graduation';
+
+  @override
+  String get milestoneFirstJob => 'First job';
+
+  @override
+  String get milestoneMarriage => 'Marriage';
+
+  @override
+  String get milestoneNewHome => 'New home';
+
+  @override
+  String get milestoneAchievement => 'Achievement';
+
+  @override
+  String get milestoneProjectStart => 'Project start';
+
+  @override
+  String get milestoneGoalReached => 'Goal reached';
+
+  @override
+  String get milestoneCustom => 'Other';
+
+  @override
+  String get projects => 'Projects & goals';
+
+  @override
+  String get projectsEmptyTitle => 'No projects yet';
+
+  @override
+  String get projectsEmptyBody =>
+      'Keep goals and projects with their dates, people and related events.';
+
+  @override
+  String get addProject => 'Add project';
+
+  @override
+  String get editProject => 'Edit project';
+
+  @override
+  String get fieldDueDate => 'Due date (optional)';
+
+  @override
+  String get errorDueBeforeStart => 'The due date can\'t be before the start';
+
+  @override
+  String get fieldParticipants => 'People involved';
+
+  @override
+  String get fieldRelatedEvents => 'Related events';
+
+  @override
+  String get projectPlanned => 'Planned';
+
+  @override
+  String get projectActive => 'In progress';
+
+  @override
+  String get projectOnHold => 'On hold';
+
+  @override
+  String get projectDone => 'Done';
+
+  @override
+  String get projectCancelled => 'Cancelled';
+
+  @override
+  String get projectOverdue => 'Past due';
+
+  @override
+  String confirmDeleteProject(String name) {
+    return 'Delete the project “$name”?';
+  }
+
+  @override
+  String get timeline => 'Timeline';
+
+  @override
+  String timelineOf(String name) {
+    return '$name\'s timeline';
+  }
+
+  @override
+  String get timelineEmpty => 'Nothing in this period yet.';
+
+  @override
+  String get periodAll => 'All';
+
+  @override
+  String get periodPastYear => 'Past year';
+
+  @override
+  String get periodThisYear => 'This year';
+
+  @override
+  String get periodUpcoming => 'Upcoming';
+
+  @override
+  String get groupEvents => 'Events';
+
+  @override
+  String get groupBirthdays => 'Birthdays';
+
+  @override
+  String get groupMemories => 'Memories';
+
+  @override
+  String get groupMilestones => 'Milestones';
+
+  @override
+  String get groupProjects => 'Projects';
+
+  @override
+  String timelineBorn(String name) {
+    return '$name was born';
+  }
+
+  @override
+  String timelineProjectStarted(String name) {
+    return 'Started: $name';
+  }
+
+  @override
+  String timelineProjectDue(String name) {
+    return 'Due: $name';
+  }
+
+  @override
+  String get todayMarker => 'Today';
+
+  @override
+  String get viewTimeline => 'View timeline';
+
+  @override
+  String get sectionMemories => 'Memories';
 }

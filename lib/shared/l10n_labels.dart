@@ -7,7 +7,9 @@ import '../core/time_engine/hijri.dart';
 import '../core/time_engine/local_date.dart';
 import '../features/commitments/domain/commitment.dart';
 import '../features/events/domain/event.dart';
+import '../features/milestones/domain/milestone.dart';
 import '../features/people/domain/category.dart';
+import '../features/projects/domain/project.dart';
 import '../features/people/domain/custom_field.dart';
 import '../features/people/domain/person.dart';
 import '../features/people/domain/relationship.dart';
@@ -220,6 +222,42 @@ extension MoneyFormatting on BuildContext {
         .format(minor / 100);
     return currency == null ? number : '\u2066$currency $number\u2069';
   }
+}
+
+extension MilestoneKindLabel on MilestoneKind {
+  String label(AppLocalizations l) => switch (this) {
+        MilestoneKind.firstSchoolDay => l.milestoneFirstSchoolDay,
+        MilestoneKind.graduation => l.milestoneGraduation,
+        MilestoneKind.firstJob => l.milestoneFirstJob,
+        MilestoneKind.marriage => l.milestoneMarriage,
+        MilestoneKind.newHome => l.milestoneNewHome,
+        MilestoneKind.achievement => l.milestoneAchievement,
+        MilestoneKind.projectStart => l.milestoneProjectStart,
+        MilestoneKind.goalReached => l.milestoneGoalReached,
+        MilestoneKind.custom => l.milestoneCustom,
+      };
+
+  IconData get icon => switch (this) {
+        MilestoneKind.firstSchoolDay => Icons.backpack_outlined,
+        MilestoneKind.graduation => Icons.school_outlined,
+        MilestoneKind.firstJob => Icons.work_outline,
+        MilestoneKind.marriage => Icons.celebration_outlined,
+        MilestoneKind.newHome => Icons.home_outlined,
+        MilestoneKind.achievement => Icons.emoji_events_outlined,
+        MilestoneKind.projectStart => Icons.rocket_launch_outlined,
+        MilestoneKind.goalReached => Icons.flag_outlined,
+        MilestoneKind.custom => Icons.star_border,
+      };
+}
+
+extension ProjectStatusLabel on ProjectStatus {
+  String label(AppLocalizations l) => switch (this) {
+        ProjectStatus.planned => l.projectPlanned,
+        ProjectStatus.active => l.projectActive,
+        ProjectStatus.onHold => l.projectOnHold,
+        ProjectStatus.done => l.projectDone,
+        ProjectStatus.cancelled => l.projectCancelled,
+      };
 }
 
 extension EventTypeLabel on EventType {

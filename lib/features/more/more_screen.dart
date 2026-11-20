@@ -7,7 +7,7 @@ import '../../shared/widgets/common.dart';
 import '../reminders/notification_settings.dart';
 import '../settings/settings_controller.dart';
 
-const appVersion = '0.6.0';
+const appVersion = '0.7.0';
 
 class MoreScreen extends ConsumerWidget {
   const MoreScreen({super.key});
@@ -71,12 +71,23 @@ class MoreScreen extends ConsumerWidget {
             onSelectionChanged: (s) => controller.setThemeMode(s.first),
           ),
           Card(
-            child: ListTile(
-              key: const Key('open-commitments'),
-              leading: const Icon(Icons.autorenew),
-              title: Text(l.commitments),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/commitments'),
+            child: Column(
+              children: [
+                for (final (key, icon, title, route) in [
+                  ('open-commitments', Icons.autorenew, l.commitments, '/commitments'),
+                  ('open-timeline', Icons.timeline, l.timeline, '/timeline'),
+                  ('open-memories', Icons.auto_stories_outlined, l.memories, '/memories'),
+                  ('open-milestones', Icons.flag_outlined, l.milestones, '/milestones'),
+                  ('open-projects', Icons.rocket_launch_outlined, l.projects, '/projects'),
+                ])
+                  ListTile(
+                    key: Key(key),
+                    leading: Icon(icon),
+                    title: Text(title),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => context.push(route),
+                  ),
+              ],
             ),
           ),
           SectionHeader(l.settingsNotifications),
@@ -160,8 +171,6 @@ class MoreScreen extends ConsumerWidget {
             child: Column(
               children: [
                 for (final (icon, title) in [
-                  (Icons.auto_stories_outlined, l.moduleMemories),
-                  (Icons.timeline, l.moduleTimeline),
                   (Icons.bar_chart, l.moduleReports),
                   (Icons.backup_outlined, l.moduleBackup),
                 ])

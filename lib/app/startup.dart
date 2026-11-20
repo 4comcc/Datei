@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:cupertino_ui/cupertino_ui.dart' show GlobalCupertinoLocalizations;
@@ -6,10 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart' show GlobalWidgetsLocalizations;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/database/app_database.dart';
 import '../core/database/database_providers.dart';
+import '../core/services/attachment_store.dart';
 import '../features/settings/settings_controller.dart';
 import '../shared/widgets/datei_logo.dart';
 import 'app.dart';
@@ -25,7 +28,8 @@ Future<(AppDatabase, BootstrapResult)> _defaultLoader() async {
   final db = AppDatabase.open();
   try {
     final prefs = await SharedPreferences.getInstance();
-    return (db, await bootstrap(db, prefs));
+    final docs = await getApplicationDocumentsDirectory();
+    return (db, await bootstrap(db, prefs, attachmentsRoot: docs.path));
   } catch (_) {
     await db.close();
     rethrow;
@@ -86,6 +90,7 @@ class _StartupAppState extends State<StartupApp> {
           appDatabaseProvider.overrideWithValue(_db!),
           currentProfileIdProvider.overrideWithValue(boot.profileId),
           initialSettingsProvider.overrideWithValue(boot.settings),
+          attachmentStoreProvider.overrideWithValue(LocalAttachmentStore(boot.attachmentsRoot ?? Directory.systemTemp.path)),
         ],
         child: const DateiApp(),
       );

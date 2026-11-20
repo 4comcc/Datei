@@ -7,18 +7,21 @@ import '../core/database/legacy_import.dart';
 import '../features/settings/data/drift_settings_repository.dart';
 
 class BootstrapResult {
-  const BootstrapResult({required this.profileId, required this.settings});
+  const BootstrapResult({required this.profileId, required this.settings, this.attachmentsRoot});
   final String profileId;
   final Map<String, String> settings;
+
+  /// Absolute directory for attachments (app documents directory).
+  final String? attachmentsRoot;
 }
 
 /// Prepares local state before the first frame: ensures the device's local
 /// profile exists, imports prototype data once, and loads settings.
-Future<BootstrapResult> bootstrap(AppDatabase db, SharedPreferences prefs) async {
+Future<BootstrapResult> bootstrap(AppDatabase db, SharedPreferences prefs, {String? attachmentsRoot}) async {
   final profileId = await ensureLocalProfile(db);
   await LegacyPrototypeImporter(db, prefs, profileId).run();
   final settings = await DriftSettingsRepository(db).loadAll();
-  return BootstrapResult(profileId: profileId, settings: settings);
+  return BootstrapResult(profileId: profileId, settings: settings, attachmentsRoot: attachmentsRoot);
 }
 
 Future<String> ensureLocalProfile(AppDatabase db) async {

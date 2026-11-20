@@ -380,3 +380,134 @@ class Reminders extends Table with Timestamps {
   @override
   List<String> get customConstraints => ['CHECK (offset_minutes >= 0)'];
 }
+
+/// v5. Free-form tags shared by memories (and later other entities).
+@DataClassName('TagRow')
+class Tags extends Table with Timestamps {
+  TextColumn get id => text()();
+  TextColumn get name => text().withLength(min: 1, max: 60).unique()();
+  IntColumn get color => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// v5. Tag links (polymorphic; owners are cleaned by repositories).
+@DataClassName('EntityTagRow')
+@TableIndex(name: 'idx_entity_tags_entity', columns: {#entityType, #entityId})
+class EntityTagRelations extends Table {
+  TextColumn get tagId => text().references(Tags, #id, onDelete: KeyAction.cascade)();
+  TextColumn get entityType => text()();
+  TextColumn get entityId => text()();
+
+  @override
+  Set<Column> get primaryKey => {tagId, entityType, entityId};
+}
+
+/// v5.
+@DataClassName('MemoryRow')
+@TableIndex(name: 'idx_memories_date', columns: {#memoryDate})
+class Memories extends Table with Timestamps, Syncable {
+  TextColumn get id => text()();
+  TextColumn get ownerProfileId => text().references(LocalUserProfiles, #id)();
+  TextColumn get title => text().withLength(min: 1, max: 200)();
+  TextColumn get body => text().nullable()();
+  TextColumn get memoryDate => text()();
+  TextColumn get eventId => text().nullable().references(Events, #id, onDelete: KeyAction.setNull)();
+  TextColumn get category => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+@DataClassName('MemoryPersonRow')
+@TableIndex(name: 'idx_mpr_person', columns: {#personId})
+class MemoryPersonRelations extends Table {
+  TextColumn get memoryId => text().references(Memories, #id, onDelete: KeyAction.cascade)();
+  TextColumn get personId => text().references(Persons, #id, onDelete: KeyAction.cascade)();
+
+  @override
+  Set<Column> get primaryKey => {memoryId, personId};
+}
+
+/// v5. Light projects and personal goals.
+@DataClassName('ProjectRow')
+class Projects extends Table with Timestamps, Syncable {
+  TextColumn get id => text()();
+  TextColumn get ownerProfileId => text().references(LocalUserProfiles, #id)();
+  TextColumn get name => text().withLength(min: 1, max: 200)();
+  TextColumn get description => text().nullable()();
+  TextColumn get startDate => text().nullable()();
+  TextColumn get dueDate => text().nullable()();
+
+  /// planned | active | onHold | done | cancelled
+  TextColumn get status => text().withDefault(const Constant('planned'))();
+
+  /// low | normal | high | critical
+  TextColumn get priority => text().withDefault(const Constant('normal'))();
+  TextColumn get notes => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+
+  @override
+  List<String> get customConstraints => ['CHECK (due_date IS NULL OR start_date IS NULL OR due_date >= start_date)'];
+}
+
+@DataClassName('ProjectPersonRow')
+class ProjectPersonRelations extends Table {
+  TextColumn get projectId => text().references(Projects, #id, onDelete: KeyAction.cascade)();
+  TextColumn get personId => text().references(Persons, #id, onDelete: KeyAction.cascade)();
+
+  @override
+  Set<Column> get primaryKey => {projectId, personId};
+}
+
+@DataClassName('ProjectEventRow')
+class ProjectEventRelations extends Table {
+  TextColumn get projectId => text().references(Projects, #id, onDelete: KeyAction.cascade)();
+  TextColumn get eventId => text().references(Events, #id, onDelete: KeyAction.cascade)();
+
+  @override
+  Set<Column> get primaryKey => {projectId, eventId};
+}
+
+/// v5. Life milestones.
+@DataClassName('MilestoneRow')
+@TableIndex(name: 'idx_milestones_date', columns: {#milestoneDate})
+class Milestones extends Table with Timestamps, Syncable {
+  TextColumn get id => text()();
+  TextColumn get ownerProfileId => text().references(LocalUserProfiles, #id)();
+  TextColumn get title => text().withLength(min: 1, max: 200)();
+  TextColumn get description => text().nullable()();
+  TextColumn get milestoneDate => text()();
+
+  /// firstSchoolDay | graduation | firstJob | marriage | newHome | achievement | projectStart | goalReached | custom
+  TextColumn get kind => text().withDefault(const Constant('custom'))();
+  TextColumn get personId => text().nullable().references(Persons, #id, onDelete: KeyAction.setNull)();
+  TextColumn get projectId => text().nullable().references(Projects, #id, onDelete: KeyAction.setNull)();
+  TextColumn get eventId => text().nullable().references(Events, #id, onDelete: KeyAction.setNull)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+/// v5. Files stored under the app's documents directory (relative paths).
+@DataClassName('AttachmentRow')
+@TableIndex(name: 'idx_attachments_owner', columns: {#ownerType, #ownerId})
+class Attachments extends Table {
+  TextColumn get id => text()();
+
+  /// memory (more owners later)
+  TextColumn get ownerType => text()();
+  TextColumn get ownerId => text()();
+  TextColumn get relativePath => text()();
+  TextColumn get mimeType => text()();
+  IntColumn get sizeBytes => integer()();
+  TextColumn get originalName => text().nullable()();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+  IntColumn get createdAt => integer()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}

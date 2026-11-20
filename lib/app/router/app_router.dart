@@ -11,6 +11,12 @@ import '../../features/events/presentation/event_form_screen.dart';
 import '../../features/events/presentation/event_types_screen.dart';
 import '../../features/events/presentation/events_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/memories/presentation/memories_screen.dart';
+import '../../features/memories/presentation/memory_detail_screen.dart';
+import '../../features/memories/presentation/memory_form_screen.dart';
+import '../../features/milestones/presentation/milestones_screens.dart';
+import '../../features/projects/presentation/projects_screens.dart';
+import '../../features/timeline/presentation/timeline_screen.dart';
 import '../../features/more/more_screen.dart';
 import '../../features/onboarding/language_screen.dart';
 import '../../features/onboarding/welcome_screen.dart';
@@ -112,6 +118,51 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/commitments/:id/edit',
         parentNavigatorKey: _rootKey,
         builder: (_, state) => CommitmentFormScreen(commitmentId: state.pathParameters['id']),
+      ),
+      GoRoute(path: '/memories', parentNavigatorKey: _rootKey, builder: (_, _) => const MemoriesScreen()),
+      GoRoute(
+        path: '/memories/new',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => MemoryFormScreen(initialPersonId: state.uri.queryParameters['person']),
+      ),
+      GoRoute(
+        path: '/memories/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => MemoryDetailScreen(memoryId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/memories/:id/edit',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => MemoryFormScreen(memoryId: state.pathParameters['id']),
+      ),
+      GoRoute(path: '/milestones', parentNavigatorKey: _rootKey, builder: (_, _) => const MilestonesScreen()),
+      GoRoute(
+        path: '/milestones/new',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => MilestoneFormScreen(initialPersonId: state.uri.queryParameters['person']),
+      ),
+      GoRoute(
+        path: '/milestones/:id/edit',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => MilestoneFormScreen(milestoneId: state.pathParameters['id']),
+      ),
+      GoRoute(path: '/projects', parentNavigatorKey: _rootKey, builder: (_, _) => const ProjectsScreen()),
+      GoRoute(path: '/projects/new', parentNavigatorKey: _rootKey, builder: (_, _) => const ProjectFormScreen()),
+      GoRoute(
+        path: '/projects/:id',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => ProjectDetailScreen(projectId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: '/projects/:id/edit',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => ProjectFormScreen(projectId: state.pathParameters['id']),
+      ),
+      GoRoute(path: '/timeline', parentNavigatorKey: _rootKey, builder: (_, _) => const TimelineScreen()),
+      GoRoute(
+        path: '/people/:id/timeline',
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => TimelineScreen(personId: state.pathParameters['id']),
       ),
       GoRoute(
         path: '/settings/event-types',

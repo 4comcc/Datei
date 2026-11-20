@@ -8,6 +8,8 @@ import '../../../shared/navigation.dart';
 import '../../../shared/widgets/common.dart';
 import '../../agenda/agenda.dart';
 import '../../events/presentation/events_providers.dart';
+import '../../memories/presentation/memories_providers.dart';
+import '../../memories/presentation/memories_screen.dart';
 import '../domain/custom_field.dart';
 import '../domain/person.dart';
 import '../domain/relationship.dart';
@@ -72,6 +74,7 @@ class PersonDetailScreen extends ConsumerWidget {
     final next = birth == null ? null : engine.nextBirthday(birth, today);
     final untilNext = next == null ? null : engine.difference(today, next);
     final eventTypes = ref.watch(eventTypeByIdProvider);
+    final memories = ref.watch(memoriesProvider).where((m) => m.personIds.contains(person.id)).toList();
     final linkedEvents = ref.watch(eventsProvider).where((e) => e.personIds.contains(person.id)).toList()
       ..sort((a, b) => a.date.compareTo(b.date));
 
@@ -222,6 +225,23 @@ class PersonDetailScreen extends ConsumerWidget {
                 ],
               ),
             ),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            key: const Key('person-timeline'),
+            onPressed: () => context.push('/people/${person.id}/timeline'),
+            icon: const Icon(Icons.timeline),
+            label: Text(l.viewTimeline),
+          ),
+          SectionHeader(
+            l.sectionMemories,
+            trailing: TextButton.icon(
+              onPressed: () => context.push('/memories/new?person=${person.id}'),
+              icon: const Icon(Icons.add, size: 18),
+              label: Text(l.addMemory),
+            ),
+          ),
+          for (final m in memories.take(3))
+            Padding(padding: const EdgeInsets.only(bottom: 8), child: MemoryCard(memory: m)),
           SectionHeader(
             l.labelLinkedEvents,
             trailing: TextButton.icon(

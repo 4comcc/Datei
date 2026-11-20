@@ -12,7 +12,7 @@ Legend: ✅ done · 🔄 in progress · ⏳ not started · ⛔ blocked
 | 4 | People | ✅ 2026-11-20 | Persons CRUD, categories, relationships, custom fields, age engine (+tests), filters + saved filters, profile screen |
 | 5 | Events & calendar | ✅ 2026-11-20 | Events CRUD, types, people links, recurrence engine (+tests), exceptions & edit scopes, month/week/day calendar, Hijri |
 | 6 | Commitments & reminders | ✅ 2026-11-20 (device-tested by owner) | Commitments, statuses, renewals history, reminders, local notifications w/ rolling window, boot reschedule |
-| 7 | Memories, milestones, timeline, projects | ⏳ | CRUD + global & per-person timeline with filters |
+| 7 | Memories, milestones, timeline, projects | ✅ 2026-11-20 | CRUD + global & per-person timeline with filters |
 | 8 | Search & reports | ⏳ | FTS unified search, AND/OR filter builder, saved filters, charts, CSV (UTF-8 BOM) |
 | 9 | Backup & security | ⏳ | .datei backup/restore with attachments, encryption, integrity, app lock PIN/biometric, privacy policy |
 | 10 | QA & release | ⏳ | Full test suite, perf pass, translation & RTL review, real auth tests, signed APK + AAB, Play listing & Data safety |
@@ -78,3 +78,12 @@ Built at the owner's request before Phase 1 to validate the experience.
 - Planner + sync: 60-day rolling window, stable ids, rebuilt on changes and app start; boot receiver.
 - `flutter analyze` clean; 131 tests (planner, rules, repositories, migrations, widget flows with a fake notification gateway).
 - Device test (owner, 2026-11-20): v0.6.0 installed; reminders, test notification and scheduled notifications confirmed working.
+
+## Phase 7 outcome (2026-11-20)
+- Schema v5 with verified migrations v1…v5.
+- Memories: list, form (date, text, photos from the system picker, people, linked event, tags with suggestions, category), detail with photo grid and zoomable full-screen viewer; quick add; latest memories on each person's page.
+- Milestones: 9 kinds, linked to person/project/event; list and form; quick add.
+- Projects & goals: list (open first, past-due badge), form, detail (people, related events, milestones).
+- Timeline: global (More → Timeline) and per person; periods all / past year / this year / upcoming; type filters; today marker.
+- `flutter analyze` clean; 151 tests.
+- Device check needed: picking photos from the gallery on the owner's phone.
